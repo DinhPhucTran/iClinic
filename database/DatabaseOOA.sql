@@ -115,3 +115,27 @@ create table CHI_TIET_DON_THUOC
 	constraint FK_CHITIETDONTHUOC_DONTHUOC foreign key (MaDonThuoc) references DON_THUOC(MaDonThuoc),
 	constraint PK_CHITIETDONTHUOC primary key (MaDonThuoc, MaThuoc)
 )
+
+create table PHIEU_YEU_CAU_KHAM
+(
+	MaPhieuYeuCauKham varchar(15) primary key,
+	MaBenhNhan varchar(15),
+	MaBacSiChiDinh varchar(15),
+	MaBacSiThucHien varchar(15),
+	ThoiGianThucHien SmallDateTime,
+	constraint FK_PHIEUYEUCAUKHAM_BENHNHAN foreign key (MaBenhNhan) references BENH_NHAN(MaBenhNhan),
+	constraint FK_PHIEUYEUCAUKHAM_NHANVIEN foreign key (MaBacSiChiDinh) references NHAN_VIEN(MaNhanVien),
+	constraint FK_PHIEUYEUCAUKHAM_NHANVIEN foreign key (MaBacSiThucHien) references NHAN_VIEN(MaNhanVien)
+)
+
+create table PHIEU_YEU_CAU_XN
+(
+	MaPhieuYeuCauXN varchar(15) primary key,
+	MaBenhNhan varchar(15),
+	MaBacSiChiDinh varchar(15),
+	MaBacSiThucHien varchar(15),
+	ThoiGianThucHien SmallDateTime,
+	constraint FK_PHIEUYEUCAUXN_BENHNHAN foreign key (MaBenhNhan) references BENH_NHAN(MaBenhNhan),
+	constraint FK_PHIEUYEUCAUXN_NHANVIEN foreign key (MaBacSiChiDinh) references NHAN_VIEN(MaNhanVien),
+	constraint FK_PHIEUYEUCAUXN_NHANVIEN foreign key (MaBacSiThucHien) references NHAN_VIEN(MaNhanVien)
+)
