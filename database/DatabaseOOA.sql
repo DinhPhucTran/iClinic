@@ -38,6 +38,7 @@ create table NHAN_VIEN
 (
 	MaNhanVien varchar(15) primary key,
 	TenNhanVien nvarchar(255),
+	*******Them gioi tinh, ngay sinh	
 	SoDT varchar(20),
 	DiaChi varchar(255),
 	MaChucVu varchar(15),
