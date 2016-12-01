@@ -38,7 +38,9 @@ create table NHAN_VIEN
 (
 	MaNhanVien varchar(15) primary key,
 	TenNhanVien nvarchar(255),
-	*******Them gioi tinh, ngay sinh	
+	--Them gioi tinh, ngay sinh
+	GioiTinh tinyint,
+	NgaySinh SmallDateTime,
 	SoDT varchar(20),
 	DiaChi varchar(255),
 	MaChucVu varchar(15),
