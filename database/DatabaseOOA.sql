@@ -34,18 +34,6 @@ create table CHUC_VU
 	TenChucVu nvarchar(255)
 )
 
-create table NHAN_VIEN 
-(
-	MaNhanVien varchar(15) primary key,
-	TenNhanVien nvarchar(255),
-	--Them gioi tinh, ngay sinh
-	GioiTinh tinyint,
-	NgaySinh SmallDateTime,
-	SoDT varchar(20),
-	DiaChi varchar(255),
-	MaChucVu varchar(15),
-	constraint FK_NHANVIEN_CHUCVU foreign key (MaChucVu) references CHUC_VU(MaChucVu)
-)
 
 --khoa kham benh, xet nghiem, nha thuoc, tiep tan
 create table BO_PHAN 
@@ -63,6 +51,21 @@ create table PHONG
 	TenPhong nvarchar(255),
 	MaBoPhan varchar(15),
 	constraint FK_PHONG_BOPHAN foreign key (MaBoPhan) references BO_PHAN(MaBoPhan)
+)
+
+create table NHAN_VIEN 
+(
+	MaNhanVien varchar(15) primary key,
+	TenNhanVien nvarchar(255),
+	--Them gioi tinh, ngay sinh
+	GioiTinh tinyint,
+	NgaySinh SmallDateTime,
+	SoDT varchar(20),
+	DiaChi varchar(255),
+	MaChucVu varchar(15), 
+	MaPhong varchar(15), 
+	constraint FK_NHANVIEN_PHONG foreign key (MaPhong) references PHONG(MaPhong),
+	constraint FK_NHANVIEN_CHUCVU foreign key (MaChucVu) references CHUC_VU(MaChucVu)
 )
 
 create table PHIEU_KHAM_BENH
