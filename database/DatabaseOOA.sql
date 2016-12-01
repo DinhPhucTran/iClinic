@@ -25,6 +25,7 @@ create table THUOC
 	TenThuoc nvarchar(255),
 	DonGia decimal(15, 5),
 	DonViTinh varchar(15),
+	SoLuong int,
 	constraint FK_THUOC_DVT foreign key (DonViTinh) references DON_VI_TINH(MaDonViTinh)
 )
 
