@@ -9,7 +9,8 @@ create table BENH_NHAN
 	NgheNghiep nvarchar(255),
 	DiaChi nvarchar(255),
 	SoDT varchar(20),
-	TienSuBenh nvarchar(255)
+	TienSuBenh nvarchar(255), 
+	NgayTiepNhan SmallDateTime
 )
 
 create table DON_VI_TINH 
