@@ -124,6 +124,7 @@ create table PHIEU_YEU_CAU_KHAM
 	MaBacSiChiDinh varchar(15),
 	MaBacSiThucHien varchar(15),
 	ThoiGianThucHien SmallDateTime,
+	NgayLap SmallDateTime,
 	constraint FK_PHIEUYEUCAUKHAM_BENHNHAN foreign key (MaBenhNhan) references BENH_NHAN(MaBenhNhan),
 	constraint FK_PHIEUYEUCAUKHAM_NHANVIEN foreign key (MaBacSiChiDinh) references NHAN_VIEN(MaNhanVien),
 	constraint FK_PHIEUYEUCAUKHAM_NHANVIEN foreign key (MaBacSiThucHien) references NHAN_VIEN(MaNhanVien)
@@ -136,6 +137,7 @@ create table PHIEU_YEU_CAU_XN
 	MaBacSiChiDinh varchar(15),
 	MaBacSiThucHien varchar(15),
 	ThoiGianThucHien SmallDateTime,
+	NgayLap SmallDateTime,
 	constraint FK_PHIEUYEUCAUXN_BENHNHAN foreign key (MaBenhNhan) references BENH_NHAN(MaBenhNhan),
 	constraint FK_PHIEUYEUCAUXN_NHANVIEN foreign key (MaBacSiChiDinh) references NHAN_VIEN(MaNhanVien),
 	constraint FK_PHIEUYEUCAUXN_NHANVIEN foreign key (MaBacSiThucHien) references NHAN_VIEN(MaNhanVien)
