@@ -12,7 +12,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>iClinic</RootNamespace>
-    <AssemblyName>iClinic</AssemblyName>
+    <AssemblyName>u</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -126,10 +126,33 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BenhNhanController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BenhNhan.cs" />
+    <Compile Include="Models\BoPhan.cs" />
+    <Compile Include="Models\ChiTietDieuTri.cs" />
+    <Compile Include="Models\ChiTietDonThuoc.cs" />
+    <Compile Include="Models\ChiTietHoaDon.cs" />
+    <Compile Include="Models\ChiTietPhieuKhamBenh.cs" />
+    <Compile Include="Models\ChucVu.cs" />
+    <Compile Include="Models\DichVu.cs" />
+    <Compile Include="Models\DonThuoc.cs" />
+    <Compile Include="Models\DonViTinh.cs" />
+    <Compile Include="Models\GiayChuyenVien.cs" />
+    <Compile Include="Models\GiayNhapVien.cs" />
+    <Compile Include="Models\GiayPhauThuat.cs" />
+    <Compile Include="Models\GiayRaVien.cs" />
+    <Compile Include="Models\HoaDon.cs" />
+    <Compile Include="Models\HoSoDieuTriNoiTru.cs" />
+    <Compile Include="Models\LoaiNhanVien.cs" />
+    <Compile Include="Models\NhanVien.cs" />
+    <Compile Include="Models\PhieuKhamBenh.cs" />
+    <Compile Include="Models\PhieuYeuCauDichVu.cs" />
+    <Compile Include="Models\Phong.cs" />
+    <Compile Include="Models\Thuoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1122,10 +1145,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\BenhNhan\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

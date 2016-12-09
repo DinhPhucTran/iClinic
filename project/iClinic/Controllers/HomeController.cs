@@ -10,11 +10,14 @@ namespace iClinic.Controllers
     {
         //
         // GET: /Home/
-
         public ActionResult Index()
         {
             return View();
         }
-
+        [ActionName("abc")]
+        public string GetCurrentTime()
+        {
+            return DateTime.Now.ToString("T");
+        }
     }
 }
