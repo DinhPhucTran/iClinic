@@ -1,0 +1,75 @@
+﻿@model IEnumerable<iClinic.Models.BenhNhan>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TenBenhNhan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GioiTinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgaySinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgheNghiep)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiaChi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoDT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TienSuBenh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayTiepNhan)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenBenhNhan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GioiTinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgaySinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgheNghiep)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiaChi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SoDT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TienSuBenh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayTiepNhan)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaBenhNhan }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaBenhNhan }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaBenhNhan })
+        </td>
+    </tr>
+}
+
+</table>

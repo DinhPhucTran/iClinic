@@ -1,0 +1,211 @@
+﻿@model iClinic.Models.BenhNhan
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section PageHeader 
+{
+    Tiếp nhận bệnh nhân
+}
+
+@section Breadcrumb
+{
+    <li class="active">Tiếp nhận</li>
+}
+
+@*<h2>Create</h2>*@
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Horizontal Form</h3>
+        </div>
+
+        <div class="form-horizontal">
+            <div class="box-body">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TenBenhNhan, new { @class = "col-sm-2 control-label" })
+
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.TenBenhNhan, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.TenBenhNhan)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NgaySinh, new { @class = "col-sm-2 control-label" })
+
+                    <div class="col-sm-10">
+                        @Html.EditorFor(model => model.NgaySinh, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.NgaySinh)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GioiTinh, new { @class = "col-sm-2 control-label" })
+
+                    <div class="col-sm-10">
+                        @{
+                            List<SelectListItem> listGt = new List<SelectListItem>();
+                            listGt.Add(new SelectListItem{Text = "Nam", Value="Nam"});
+                            listGt.Add(new SelectListItem{Text = "Nữ", Value="Nữ"});
+                            listGt.Add(new SelectListItem{Text = "Khác", Value="Khác"});
+                        }
+                        @*@Html.EditorFor(model => model.GioiTinh, new { @class = "form-control" })*@
+                        @Html.DropDownListFor(model => model.GioiTinh, listGt)
+                    </div>
+                    @*@Html.ValidationMessageFor(model => model.GioiTinh)*@
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NgheNghiep, new { @class = "col-sm-2 control-label" })
+
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.NgheNghiep, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.NgheNghiep)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DiaChi, new { @class = "col-sm-2 control-label" })
+
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.DiaChi, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.DiaChi)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SoDT, new { @class = "col-sm-2 control-label" })
+
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.SoDT, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.SoDT)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TienSuBenh, new { @class = "col-sm-2 control-label" })
+
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.TienSuBenh, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.TienSuBenh)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NgayTiepNhan, new { @class = "col-sm-2 control-label" })
+
+                    <div class="col-sm-10">
+                        @*@Html.EditorFor(model => model.NgayTiepNhan, new { @class = "form-control", @disabled = "disabled" })*@
+                        <h4>@DateTime.Now.ToString()</h4>                        
+                    </div>
+                    @*@Html.ValidationMessageFor(model => model.NgayTiepNhan)*@
+                    
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default">Hủy</button>
+                <button type="submit" class="btn btn-info pull-right">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    @*
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TenBenhNhan)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TenBenhNhan)
+            @Html.ValidationMessageFor(model => model.TenBenhNhan)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.GioiTinh)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.GioiTinh)
+            @Html.ValidationMessageFor(model => model.GioiTinh)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NgaySinh)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NgaySinh)
+            @Html.ValidationMessageFor(model => model.NgaySinh)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NgheNghiep)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NgheNghiep)
+            @Html.ValidationMessageFor(model => model.NgheNghiep)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DiaChi)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DiaChi)
+            @Html.ValidationMessageFor(model => model.DiaChi)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SoDT)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SoDT)
+            @Html.ValidationMessageFor(model => model.SoDT)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TienSuBenh)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TienSuBenh)
+            @Html.ValidationMessageFor(model => model.TienSuBenh)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NgayTiepNhan)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NgayTiepNhan)
+            @Html.ValidationMessageFor(model => model.NgayTiepNhan)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+        *@
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="@Url.Content("~/Scripts/js/pnotify.custom.min.js")"></script>
+
+    @if (ViewBag.MsgContent != "")
+    {
+        <script>
+            new PNotify({
+                title: '@ViewBag.MsgTitle',
+                text: '@ViewBag.MsgContent',
+                type: '@ViewBag.MsgType',
+                styling: 'bootstrap3'
+            });
+        </script>
+    }
+    
+}

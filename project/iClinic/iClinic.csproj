@@ -127,6 +127,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BenhNhanController.cs" />
+    <Compile Include="Controllers\DonTiepController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -141,6 +142,7 @@
     <Compile Include="Models\DichVu.cs" />
     <Compile Include="Models\DonThuoc.cs" />
     <Compile Include="Models\DonViTinh.cs" />
+    <Compile Include="Models\Entities.cs" />
     <Compile Include="Models\GiayChuyenVien.cs" />
     <Compile Include="Models\GiayNhapVien.cs" />
     <Compile Include="Models\GiayPhauThuat.cs" />
@@ -160,6 +162,7 @@
     <Content Include="Content\css\AdminLTE.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\pnotify.custom.min.css" />
     <Content Include="Content\css\skins\skin-black-light.css" />
     <Content Include="Content\css\skins\skin-black-light.min.css" />
     <Content Include="Content\css\skins\skin-black.css" />
@@ -1129,6 +1132,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\pnotify.custom.min.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -1146,6 +1150,11 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\BenhNhan\Index.cshtml" />
+    <Content Include="Views\DonTiep\Index.cshtml" />
+    <Content Include="Views\DonTiep\Details.cshtml" />
+    <Content Include="Views\DonTiep\Create.cshtml" />
+    <Content Include="Views\DonTiep\Edit.cshtml" />
+    <Content Include="Views\DonTiep\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

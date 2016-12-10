@@ -1,0 +1,94 @@
+﻿@model iClinic.Models.BenhNhan
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>BenhNhan</legend>
+
+        @Html.HiddenFor(model => model.MaBenhNhan)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TenBenhNhan)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TenBenhNhan)
+            @Html.ValidationMessageFor(model => model.TenBenhNhan)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.GioiTinh)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.GioiTinh)
+            @Html.ValidationMessageFor(model => model.GioiTinh)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NgaySinh)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NgaySinh)
+            @Html.ValidationMessageFor(model => model.NgaySinh)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NgheNghiep)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NgheNghiep)
+            @Html.ValidationMessageFor(model => model.NgheNghiep)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DiaChi)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DiaChi)
+            @Html.ValidationMessageFor(model => model.DiaChi)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SoDT)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SoDT)
+            @Html.ValidationMessageFor(model => model.SoDT)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TienSuBenh)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TienSuBenh)
+            @Html.ValidationMessageFor(model => model.TienSuBenh)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NgayTiepNhan)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NgayTiepNhan)
+            @Html.ValidationMessageFor(model => model.NgayTiepNhan)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

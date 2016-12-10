@@ -14,11 +14,12 @@ namespace iClinic.Controllers
 
         public ActionResult Index()
         {
-            var employees = from e in GetEmployeeList() orderby e.MaBenhNhan select e;
-            return View(employees);
+            //var employees = from e in GetEmployeeList() orderby e.MaBenhNhan select e;
+            //return View(employees);
+            return View();
         }
 
-        [NonAction]
+        /*[NonAction]
         public List<BenhNhan> GetEmployeeList() 
         {
             return new List<BenhNhan>{
@@ -53,6 +54,6 @@ namespace iClinic.Controllers
                     NgayTiepNhan = DateTime.Now
                 }
             };
-        }
+        }*/
     }
 }
