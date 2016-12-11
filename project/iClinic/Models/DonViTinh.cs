@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace iClinic.Models
 {
+    [Table("DonViTinh")]
     public class DonViTinh
     {
         [Key]
@@ -13,9 +15,5 @@ namespace iClinic.Models
 
         [Display(Name="Tên Đơn Vị Tính")]
         public String TenDonViTinh { get; set; }
-
-        public virtual ICollection<Thuoc> Thuocs { get; set; }
-        
-        public virtual ICollection<ChiTietDonThuoc> ChiTietDonThuocs { get; set; }
     }
 }

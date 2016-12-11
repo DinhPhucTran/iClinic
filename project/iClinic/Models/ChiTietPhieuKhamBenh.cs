@@ -7,6 +7,7 @@ using System.Web;
 
 namespace iClinic.Models
 {
+    [Table("ChiTietPhieuKhamBenh")]
     public class ChiTietPhieuKhamBenh
     {
         [Key]

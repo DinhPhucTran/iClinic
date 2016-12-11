@@ -7,6 +7,7 @@ using System.Web;
 
 namespace iClinic.Models
 {
+    [Table("DonThuoc")]
     public class DonThuoc
     {
         [Key]
@@ -14,10 +15,10 @@ namespace iClinic.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        [Display(Name="Ngày Kê Đơn")]
+        [Display(Name = "Ngày Kê Đơn")]
         public DateTime NgayKeDon { get; set; }
 
-        [Display(Name="Tổng Tiền")]
+        [Display(Name = "Tổng Tiền")]
         public Double TongTien { get; set; }
 
         public int PhieuKhamBenhID { get; set; }
@@ -29,7 +30,7 @@ namespace iClinic.Models
 
         [ForeignKey("PhieuKhamBenhID")]
         public virtual PhieuKhamBenh PhieuKhamBenh { get; set; }
-        
+
         public virtual ICollection<ChiTietDonThuoc> ChiTietDonThuocs { get; set; }
     }
 }

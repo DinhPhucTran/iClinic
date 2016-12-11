@@ -7,6 +7,7 @@ using System.Web;
 
 namespace iClinic.Models
 {
+    [Table("Thuoc")]
     public class Thuoc
     {
         [Key]
@@ -25,7 +26,5 @@ namespace iClinic.Models
         
         [ForeignKey("DonViTinhID")]
         public virtual DonViTinh DonViTinh { get; set; }
-        
-        public virtual ICollection<ChiTietDonThuoc> ChiTietDonThuocs { get; set; }
     }
 }

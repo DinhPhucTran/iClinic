@@ -7,6 +7,7 @@ using System.Web;
 
 namespace iClinic.Models
 {
+    [Table("ChiTietHoaDon")]
     public class ChiTietHoaDon
     {
         [Key]
@@ -14,18 +15,18 @@ namespace iClinic.Models
 
         public int HoaDonID { get; set; }
 
-        public int PhieuKhamBenhID { get; set; }
+        public int PhieuYeuCauDichVuID { get; set; }
 
-        [Display(Name="Số Lượng")]
+        [Display(Name = "Số Lượng")]
         public int SoLuong { get; set; }
 
-        [Display(Name="Đơn Giá")]
+        [Display(Name = "Đơn Giá")]
         public Double DonGia { get; set; }
 
         [ForeignKey("HoaDonID")]
         public virtual HoaDon HoaDon { get; set; }
-        
-        [ForeignKey("PhieuKhamBenhID")]
-        public virtual PhieuKhamBenh PhieuKhamBenh { get; set; }
+
+        [ForeignKey("PhieuYeuCauDichVuID")]
+        public virtual PhieuYeuCauDichVu PhieuYeuCauDichVu { get; set; }
     }
 }

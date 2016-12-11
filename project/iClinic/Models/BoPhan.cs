@@ -7,12 +7,13 @@ using System.Web;
 
 namespace iClinic.Models
 {
+    [Table("BoPhan")]
     public class BoPhan
     {
         [Key]
         public int MaBoPhan { get; set; }
 
-        [Display(Name="Tên Bộ Phận")]
+        [Display(Name = "Tên Bộ Phận")]
         public String TenBoPhan { get; set; }
 
         [Display(Name = "Trưởng Bộ Phận")]
