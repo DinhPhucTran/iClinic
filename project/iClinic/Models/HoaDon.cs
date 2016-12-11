@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -7,9 +9,22 @@ namespace iClinic.Models
 {
     public class HoaDon
     {
-        public String MaHoaDon { get; set; }
-        public DateTime String { get; set; }
+        [Key]
+        public int MaHoaDon { get; set; }
+        
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name="Ngày Thanh Toán")]
+        public DateTime NgayThanhToan { get; set; }
+        
+        [Display(Name="Tổng Tiền")]
         public Double TongTien { get; set; }
-        public String MaBenhNhan { get; set; }
+        
+        public int BenhNhanID { get; set; }
+        
+        [ForeignKey("BenhNhanID")]
+        public virtual BenhNhan BenhNhan { get; set; }
+        
+        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
     }
 }

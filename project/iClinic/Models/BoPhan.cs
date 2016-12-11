@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -7,8 +9,18 @@ namespace iClinic.Models
 {
     public class BoPhan
     {
-        public String MaBoPhan { get; set; }
+        [Key]
+        public int MaBoPhan { get; set; }
+
+        [Display(Name="Tên Bộ Phận")]
         public String TenBoPhan { get; set; }
-        public String TruongBoPhan { get; set; }
+
+        [Display(Name = "Trưởng Bộ Phận")]
+        public int NhanVienID { get; set; }
+
+        [ForeignKey("NhanVienID")]
+        public virtual NhanVien NhanVien { get; set; }
+
+        public virtual ICollection<Phong> Phongs { get; set; }
     }
 }

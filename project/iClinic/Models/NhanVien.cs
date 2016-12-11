@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -7,14 +9,40 @@ namespace iClinic.Models
 {
     public class NhanVien
     {
-        public String MaNhanVien { get; set; }
-        public String LoaiNhanVien { get; set; }
+        [Key]
+        public int MaNhanVien { get; set; }
+        public int LoaiNhanVienID { get; set; }
+        public int ChucVuID { get; set; }
+        public int PhongID { get; set; }
+       
+        [Display(Name="Tên Nhân Viên")]
         public String TenNhanVien { get; set; }
+       
+        [Display(Name="Giới Tính")]
         public bool GioiTinh { get; set; }
+       
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name="Ngày Sinh")]
         public DateTime NgaySinh { get; set; }
+       
+        [Display(Name="Số Điện Thoại")]
         public String SoDT { get; set; }
+       
+        [Display(Name="Địa Chỉ")]
         public String DiaChi { get; set; }
-        public String MaChucVu { get; set; }
-        public String MaPhong { get; set; }
+       
+        [ForeignKey("LoaiNhanVienID")]
+        public virtual LoaiNhanVien LoaiNhanVien { get; set; }
+       
+        [ForeignKey("ChucVuID")]
+        public virtual ChucVu ChucVu { get; set; }
+       
+        [ForeignKey("PhongID")]
+        public virtual Phong Phong { get; set; }
+       
+        public virtual ICollection<PhieuKhamBenh> PhieuKhamBenhs { get; set; }
+       
+        public virtual ICollection<DonThuoc> DonThuocs { get; set; }
     }
 }
