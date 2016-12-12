@@ -42,9 +42,13 @@ namespace iClinic.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.MsgType = msgType;
-            ViewBag.MsgTitle = msgTitle;
-            ViewBag.MsgContent = msgContent;
+            ViewBag.MsgType = "success";
+            ViewBag.MsgTitle = "msgTitle";
+            ViewBag.MsgContent = "msgContent";
+
+            msgType = "";
+            msgTitle = "";
+            msgContent = "";
             return View();
         }
 
@@ -128,5 +132,12 @@ namespace iClinic.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
+    }
+
+    public class Message
+    {
+        public string Type { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
     }
 }

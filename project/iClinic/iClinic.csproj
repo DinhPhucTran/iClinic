@@ -133,6 +133,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612100510209_InitialCreate.cs" />
+    <Compile Include="Migrations\201612100510209_InitialCreate.Designer.cs">
+      <DependentUpon>201612100510209_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612121057458_DataAnnotations.cs" />
+    <Compile Include="Migrations\201612121057458_DataAnnotations.Designer.cs">
+      <DependentUpon>201612121057458_DataAnnotations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BenhNhan.cs" />
     <Compile Include="Models\BoPhan.cs" />
     <Compile Include="Models\ChiTietDieuTri.cs" />
@@ -1162,6 +1171,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612100510209_InitialCreate.resx">
+      <DependentUpon>201612100510209_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612121057458_DataAnnotations.resx">
+      <DependentUpon>201612121057458_DataAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
