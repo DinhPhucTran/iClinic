@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using iClinic.Models;
+using PagedList;
 
 namespace iClinic.Controllers
 {
@@ -15,13 +16,56 @@ namespace iClinic.Controllers
         private string msgType = "";
         private string msgContent = "";
         private string msgTitle = "";
+        private Message msg;
 
         //
         // GET: /DonTiep/
 
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(db.DbSetBenhNhan.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var patients = from p in db.DbSetBenhNhan
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patients = patients.Where(p => p.TenBenhNhan.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    patients = patients.OrderByDescending(p => p.TenBenhNhan);
+                    break;
+                case "Date":
+                    patients = patients.OrderBy(p => p.NgayTiepNhan);
+                    break;
+                case "date_desc":
+                    patients = patients.OrderByDescending(p => p.NgayTiepNhan);
+                    break;
+                default:
+                    patients = patients.OrderBy(p => p.NgayTiepNhan);
+                    break;
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            //return View(db.DbSetBenhNhan.ToList());
+            return View(patients.ToPagedList(pageNumber, pageSize));
         }
 
         //
@@ -42,9 +86,11 @@ namespace iClinic.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.MsgType = "success";
-            ViewBag.MsgTitle = "msgTitle";
-            ViewBag.MsgContent = "msgContent";
+            Message msg = (Message)TempData["msg"];
+            //ViewBag.MsgType = "success";
+            //ViewBag.MsgTitle = "msgTitle";
+            //ViewBag.MsgContent = "msgContent";
+            ViewBag.Msg = msg;
 
             msgType = "";
             msgTitle = "";
@@ -64,9 +110,11 @@ namespace iClinic.Controllers
             {
                 db.DbSetBenhNhan.Add(benhnhan);
                 db.SaveChanges();
-                msgType = "success";
-                msgTitle = "Thành công";
-                msgContent = "Đã lưu thông tin bệnh nhân";
+                msg = new Message();
+                msg.Type = "success";
+                msg.Title = "Thành công";
+                msg.Content = "Đã lưu thông tin bệnh nhân";
+                TempData["msg"] = msg;
                 return RedirectToAction("Create");
             }
             return View(benhnhan);

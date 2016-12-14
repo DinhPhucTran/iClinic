@@ -196,13 +196,13 @@
 
     <script src="@Url.Content("~/Scripts/js/pnotify.custom.min.js")"></script>
 
-    @if (ViewBag.MsgContent != "")
+    @if (ViewBag.Msg != null)
     {
         <script>
             new PNotify({
-                title: '@ViewBag.MsgTitle',
-                text: '@ViewBag.MsgContent',
-                type: '@ViewBag.MsgType',
+                title: '@ViewBag.Msg.Title',
+                text: '@ViewBag.Msg.Content',
+                type: '@ViewBag.Msg.Type',
                 styling: 'bootstrap3'
             });
         </script>

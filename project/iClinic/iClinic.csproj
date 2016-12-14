@@ -39,7 +39,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <!--<Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>-->
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -59,9 +72,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -130,6 +140,7 @@
     <Compile Include="Controllers\DonTiepController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhamBenhController.cs" />
+    <Compile Include="Controllers\ThuocController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -141,6 +152,10 @@
     <Compile Include="Migrations\201612121057458_DataAnnotations.Designer.cs">
       <DependentUpon>201612121057458_DataAnnotations.cs</DependentUpon>
     </Compile>
+    <!--<Compile Include="Migrations\201612111718402_update.cs" />
+    <Compile Include="Migrations\201612111718402_update.Designer.cs">
+      <DependentUpon>201612111718402_update.cs</DependentUpon>
+    </Compile>-->
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BenhNhan.cs" />
     <Compile Include="Models\BoPhan.cs" />
@@ -160,6 +175,7 @@
     <Compile Include="Models\HoaDon.cs" />
     <Compile Include="Models\HoSoDieuTriNoiTru.cs" />
     <Compile Include="Models\LoaiNhanVien.cs" />
+    <Compile Include="Models\MultiModels\CreateThuoc.cs" />
     <Compile Include="Models\NhanVien.cs" />
     <Compile Include="Models\PhieuKhamBenh.cs" />
     <Compile Include="Models\PhieuYeuCauDichVu.cs" />
@@ -230,6 +246,7 @@
     <Content Include="Content\img\user6-128x128.jpg" />
     <Content Include="Content\img\user7-128x128.jpg" />
     <Content Include="Content\img\user8-128x128.jpg" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Scripts\js\app.js" />
     <Content Include="Scripts\js\app.min.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
@@ -1165,6 +1182,11 @@
     <Content Include="Views\DonTiep\Create.cshtml" />
     <Content Include="Views\DonTiep\Edit.cshtml" />
     <Content Include="Views\DonTiep\Delete.cshtml" />
+    <Content Include="Views\Thuoc\Index.cshtml" />
+    <Content Include="Views\Thuoc\Details.cshtml" />
+    <Content Include="Views\Thuoc\Create.cshtml" />
+    <Content Include="Views\Thuoc\Edit.cshtml" />
+    <Content Include="Views\Thuoc\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1179,6 +1201,9 @@
     <EmbeddedResource Include="Migrations\201612121057458_DataAnnotations.resx">
       <DependentUpon>201612121057458_DataAnnotations.cs</DependentUpon>
     </EmbeddedResource>
+    <!--<EmbeddedResource Include="Migrations\201612111718402_update.resx">
+      <DependentUpon>201612111718402_update.cs</DependentUpon>
+    </EmbeddedResource>-->
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

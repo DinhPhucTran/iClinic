@@ -1,0 +1,88 @@
+﻿@model iClinic.Models.MultiModels.CreateThuoc
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Thuoc</legend>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Thuoc.TenThuoc, new { @class = "col-sm-2 control-label" })
+
+            <div class="col-sm-10">
+                @Html.TextBoxFor(model => model.Thuoc.TenThuoc, new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(model => model.Thuoc.TenThuoc)
+        </div>
+
+        @*<div class="editor-label">
+                @Html.LabelFor(model => model.TenThuoc)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.TenThuoc)
+                @Html.ValidationMessageFor(model => model.TenThuoc)
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Thuoc.DonGia, new { @class = "col-sm-2 control-label" })
+
+            <div class="col-sm-10">
+                @Html.TextBoxFor(model => model.Thuoc.DonGia, new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(model => model.Thuoc.DonGia)
+        </div>
+
+        @*<div class="editor-label">
+                @Html.LabelFor(model => model.DonGia)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.DonGia)
+                @Html.ValidationMessageFor(model => model.DonGia)
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Thuoc.SoLuong, new { @class = "col-sm-2 control-label" })
+
+            <div class="col-sm-10">
+                @Html.TextBoxFor(model => model.Thuoc.SoLuong, new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(model => model.Thuoc.SoLuong)
+        </div>
+
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.SoLuong)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SoLuong)
+            @Html.ValidationMessageFor(model => model.SoLuong)
+        </div>*@
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Thuoc.DonViTinhID, "DonViTinh")
+        </div>
+        <div class="editor-field">
+                @*@Html.DropDownList("DonViTinhID", "--Chọn đơn vị tính--")*@
+                @*@Html.ValidationMessageFor(model => model.Thuoc.DonViTinhID)*@
+            </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

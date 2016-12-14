@@ -1,0 +1,62 @@
+﻿@model iClinic.Models.Thuoc
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Thuoc</legend>
+
+        @Html.HiddenFor(model => model.MaThuoc)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TenThuoc)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TenThuoc)
+            @Html.ValidationMessageFor(model => model.TenThuoc)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DonGia)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DonGia)
+            @Html.ValidationMessageFor(model => model.DonGia)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SoLuong)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SoLuong)
+            @Html.ValidationMessageFor(model => model.SoLuong)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DonViTinhID, "DonViTinh")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("DonViTinhID", String.Empty)
+            @Html.ValidationMessageFor(model => model.DonViTinhID)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
