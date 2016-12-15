@@ -138,6 +138,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BenhNhanController.cs" />
     <Compile Include="Controllers\DonTiepController.cs" />
+    <Compile Include="Controllers\DonViTinhController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhamBenhController.cs" />
     <Compile Include="Controllers\ThuocController.cs" />
@@ -1187,6 +1188,11 @@
     <Content Include="Views\Thuoc\Create.cshtml" />
     <Content Include="Views\Thuoc\Edit.cshtml" />
     <Content Include="Views\Thuoc\Delete.cshtml" />
+    <Content Include="Views\DonViTinh\Index.cshtml" />
+    <Content Include="Views\DonViTinh\Details.cshtml" />
+    <Content Include="Views\DonViTinh\Create.cshtml" />
+    <Content Include="Views\DonViTinh\Edit.cshtml" />
+    <Content Include="Views\DonViTinh\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
