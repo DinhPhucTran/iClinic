@@ -1,0 +1,114 @@
+﻿@model iClinic.Models.PhieuKhamBenh
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section PageHeader
+{
+    Khám Bệnh
+}
+
+@section Breadcrumb
+{
+    <li class="active">Khám Bệnh</li>
+}
+
+@*<h2>Create</h2>*@
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Phiếu Khám Bệnh</h3>
+        </div>
+        <div class="form-horizontal">
+            <div class="box-body">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BenhNhanID, "Bệnh Nhân", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.DropDownList("BenhNhanID", null, String.Empty, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.BenhNhanID)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BacSiID, "Bác Sĩ Khám", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.DropDownList("BacSiID", null, String.Empty, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.BacSiID)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BenhNhan.TienSuBenh, new { @class = "col-sm-2 control-label" })
+
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.BenhNhan.TienSuBenh, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.BenhNhan.TienSuBenh)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NgayKham, new { @class = "col-sm-2 control-label" })
+
+                    <div class="col-sm-10">
+                        @Html.EditorFor(model => model.NgayKham, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.NgayKham)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ChanDoan, new { @class = "col-sm-2 control-label" })
+
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.ChanDoan, (String)"Chẩn đoán", new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.ChanDoan)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LoiDan, new { @class = "col-sm-2 control-label" })
+
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.LoiDan, (String)"Lời Dặn", new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.LoiDan)
+                </div>
+            </div>
+        </div>
+        @*Chi Tiết Phiếu Khám*@
+        <div class="box-header with-border">
+            <div>
+                <h3 class="box-title">Chi Tiết Phiếu Khám Bệnh</h3>
+                <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;">Add</button>
+                @*<input type="button" value="Add"  />*@
+            </div>
+        </div>
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tr>
+                    <th>@Html.LabelFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.DichVuID, "Tên Dịch Vụ")</th>
+                    <th>@Html.LabelFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.DonGia, "Đơn Giá")</th>
+                    <th>@Html.LabelFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.NgayLap, "Ngày Lập")</th>
+                    <th>@Html.LabelFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.ThoiGianThucHien, "Thời Gian Thực Hiện")</th>
+                </tr>
+                @*<tr>
+                    <td>@Html.DropDownList("DichVuID", String.Empty)</td>
+                    <td>@Html.TextBoxFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.DonGia)</td>
+                    <td>@Html.EditorFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.NgayLap)</td>
+                    <td>@Html.EditorFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.ThoiGianThucHien)</td>
+                </tr>*@
+            </table>
+        </div>
+        <div class="box-footer">
+            <button type="reset" class="btn btn-default">Hủy</button>
+            <button type="submit" class="btn btn-info pull-right">Lưu</button>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

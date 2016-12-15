@@ -137,26 +137,25 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BenhNhanController.cs" />
+    <Compile Include="Controllers\BoPhanController.cs" />
     <Compile Include="Controllers\DonTiepController.cs" />
     <Compile Include="Controllers\DonViTinhController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhamBenhController.cs" />
+    <Compile Include="Controllers\NhanVienController.cs" />
+    <Compile Include="Controllers\PhongController.cs" />
     <Compile Include="Controllers\ThuocController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612100510209_InitialCreate.cs" />
-    <Compile Include="Migrations\201612100510209_InitialCreate.Designer.cs">
-      <DependentUpon>201612100510209_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612121057458_DataAnnotations.cs" />
-    <Compile Include="Migrations\201612121057458_DataAnnotations.Designer.cs">
-      <DependentUpon>201612121057458_DataAnnotations.cs</DependentUpon>
     </Compile>
     <!--<Compile Include="Migrations\201612111718402_update.cs" />
     <Compile Include="Migrations\201612111718402_update.Designer.cs">
       <DependentUpon>201612111718402_update.cs</DependentUpon>
     </Compile>-->
+    <Compile Include="Migrations\201612151453315_Initial.cs" />
+    <Compile Include="Migrations\201612151453315_Initial.Designer.cs">
+      <DependentUpon>201612151453315_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BenhNhan.cs" />
     <Compile Include="Models\BoPhan.cs" />
@@ -1193,6 +1192,26 @@
     <Content Include="Views\DonViTinh\Create.cshtml" />
     <Content Include="Views\DonViTinh\Edit.cshtml" />
     <Content Include="Views\DonViTinh\Delete.cshtml" />
+    <Content Include="Views\Phong\Index.cshtml" />
+    <Content Include="Views\Phong\Details.cshtml" />
+    <Content Include="Views\Phong\Create.cshtml" />
+    <Content Include="Views\Phong\Edit.cshtml" />
+    <Content Include="Views\Phong\Delete.cshtml" />
+    <Content Include="Views\KhamBenh\Index.cshtml" />
+    <Content Include="Views\KhamBenh\Details.cshtml" />
+    <Content Include="Views\KhamBenh\Create.cshtml" />
+    <Content Include="Views\KhamBenh\Edit.cshtml" />
+    <Content Include="Views\KhamBenh\Delete.cshtml" />
+    <Content Include="Views\NhanVien\Index.cshtml" />
+    <Content Include="Views\NhanVien\Details.cshtml" />
+    <Content Include="Views\NhanVien\Create.cshtml" />
+    <Content Include="Views\NhanVien\Edit.cshtml" />
+    <Content Include="Views\NhanVien\Delete.cshtml" />
+    <Content Include="Views\BoPhan\Index.cshtml" />
+    <Content Include="Views\BoPhan\Details.cshtml" />
+    <Content Include="Views\BoPhan\Create.cshtml" />
+    <Content Include="Views\BoPhan\Edit.cshtml" />
+    <Content Include="Views\BoPhan\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1201,15 +1220,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612100510209_InitialCreate.resx">
-      <DependentUpon>201612100510209_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612151453315_Initial.resx">
+      <DependentUpon>201612151453315_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612121057458_DataAnnotations.resx">
-      <DependentUpon>201612121057458_DataAnnotations.cs</DependentUpon>
-    </EmbeddedResource>
-    <!--<EmbeddedResource Include="Migrations\201612111718402_update.resx">
-      <DependentUpon>201612111718402_update.cs</DependentUpon>
-    </EmbeddedResource>-->
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

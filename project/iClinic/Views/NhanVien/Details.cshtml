@@ -1,0 +1,71 @@
+﻿@model iClinic.Models.NhanVien
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>NhanVien</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.LoaiNhanVien.TenLoaiNhanVien)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LoaiNhanVien.TenLoaiNhanVien)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ChucVu.TenChucVu)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ChucVu.TenChucVu)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Phong.TenPhong)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Phong.TenPhong)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TenNhanVien)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TenNhanVien)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.GioiTinh)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.GioiTinh)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NgaySinh)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NgaySinh)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.SoDT)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SoDT)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DiaChi)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DiaChi)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.MaNhanVien }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -16,8 +16,11 @@ namespace iClinic.Models
         [Display(Name = "Tên Bộ Phận")]
         public String TenBoPhan { get; set; }
 
+        [Display(Name = "Ghi Chú")]
+        public String GhiChu { get; set; }
+
         [Display(Name = "Trưởng Bộ Phận")]
-        public int NhanVienID { get; set; }
+        public Nullable<int> NhanVienID { get; set; }
 
         [ForeignKey("NhanVienID")]
         public virtual NhanVien NhanVien { get; set; }

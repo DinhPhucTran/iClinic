@@ -34,6 +34,10 @@ namespace iClinic.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<BoPhan>()
+            //    .HasOptional<NhanVien>(u => u.NhanVien)
+            //    .WithOptionalPrincipal();
+
             modelBuilder.Entity<Phong>()
                 .HasRequired(p => p.BoPhan)
                 .WithMany(b => b.Phongs)
