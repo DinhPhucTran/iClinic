@@ -152,9 +152,9 @@
     <Compile Include="Migrations\201612111718402_update.Designer.cs">
       <DependentUpon>201612111718402_update.cs</DependentUpon>
     </Compile>-->
-    <Compile Include="Migrations\201612151453315_Initial.cs" />
-    <Compile Include="Migrations\201612151453315_Initial.Designer.cs">
-      <DependentUpon>201612151453315_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201612151638192_Initial.cs" />
+    <Compile Include="Migrations\201612151638192_Initial.Designer.cs">
+      <DependentUpon>201612151638192_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BenhNhan.cs" />
@@ -1176,7 +1176,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\BenhNhan\Index.cshtml" />
     <Content Include="Views\DonTiep\Index.cshtml" />
     <Content Include="Views\DonTiep\Details.cshtml" />
     <Content Include="Views\DonTiep\Create.cshtml" />
@@ -1212,6 +1211,11 @@
     <Content Include="Views\BoPhan\Create.cshtml" />
     <Content Include="Views\BoPhan\Edit.cshtml" />
     <Content Include="Views\BoPhan\Delete.cshtml" />
+    <Content Include="Views\BenhNhan\Index.cshtml" />
+    <Content Include="Views\BenhNhan\Details.cshtml" />
+    <Content Include="Views\BenhNhan\Create.cshtml" />
+    <Content Include="Views\BenhNhan\Edit.cshtml" />
+    <Content Include="Views\BenhNhan\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1220,8 +1224,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612151453315_Initial.resx">
-      <DependentUpon>201612151453315_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612151638192_Initial.resx">
+      <DependentUpon>201612151638192_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

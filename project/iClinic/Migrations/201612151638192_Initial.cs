@@ -7,12 +7,12 @@ namespace iClinic.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.BoPhan", "GhiChu", c => c.String());
+            AlterColumn("dbo.NhanVien", "GioiTinh", c => c.String());
         }
         
         public override void Down()
         {
-            DropColumn("dbo.BoPhan", "GhiChu");
+            AlterColumn("dbo.NhanVien", "GioiTinh", c => c.Boolean(nullable: false));
         }
     }
 }

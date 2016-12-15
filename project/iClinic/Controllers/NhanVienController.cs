@@ -40,6 +40,8 @@ namespace iClinic.Controllers
 
         public ActionResult Create()
         {
+            IEnumerable<String> gioiTinh = new List<String> {"Nam", "Nữ"};
+            ViewBag.GioiTinhID = GetSelectListItems(gioiTinh);
             ViewBag.LoaiNhanVienID = new SelectList(db.DbSetLoaiNhanVien, "MaLoaiNhanVien", "TenLoaiNhanVien");
             ViewBag.ChucVuID = new SelectList(db.DbSetChucVu, "MaChucVu", "TenChucVu");
             ViewBag.PhongID = new SelectList(db.DbSetPhong, "MaPhong", "TenPhong");
@@ -59,7 +61,8 @@ namespace iClinic.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            IEnumerable<String> gioiTinh = new List<String> { "Nam", "Nữ" };
+            ViewBag.GioiTinhID = GetSelectListItems(gioiTinh);
             ViewBag.LoaiNhanVienID = new SelectList(db.DbSetLoaiNhanVien, "MaLoaiNhanVien", "TenLoaiNhanVien", nhanvien.LoaiNhanVienID);
             ViewBag.ChucVuID = new SelectList(db.DbSetChucVu, "MaChucVu", "TenChucVu", nhanvien.ChucVuID);
             ViewBag.PhongID = new SelectList(db.DbSetPhong, "MaPhong", "TenPhong", nhanvien.PhongID);
@@ -132,5 +135,22 @@ namespace iClinic.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
+
+        //add bussiness
+
+        public IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<String> elements)
+        {
+            var result = new List<SelectListItem>();
+            foreach (var item in elements)
+            {
+                result.Add(new SelectListItem
+                {
+                    Text = item,
+                    Value = item
+                });
+            }
+            return result;
+        }
+
     }
 }

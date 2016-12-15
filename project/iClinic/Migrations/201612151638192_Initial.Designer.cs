@@ -11,7 +11,7 @@ namespace iClinic.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201612151453315_Initial"; }
+            get { return "201612151638192_Initial"; }
         }
         
         string IMigrationMetadata.Source

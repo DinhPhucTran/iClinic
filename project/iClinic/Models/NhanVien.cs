@@ -20,7 +20,7 @@ namespace iClinic.Models
         public String TenNhanVien { get; set; }
 
         [Display(Name = "Giới Tính")]
-        public bool GioiTinh { get; set; }
+        public String GioiTinh { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
