@@ -1,0 +1,68 @@
+﻿@model iClinic.Models.BoPhan
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section PageHeader
+{
+    Bộ Phận
+}
+
+@section Breadcrumb
+{
+    <li class="active">Bộ Phận</li>
+}
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Bộ Phận</h3>
+        </div>
+        <div class="form-horizontal">
+            <div class="box-body">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TenBoPhan, "Tên Bộ Phận", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.TenBoPhan, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.TenBoPhan)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NhanVienID, "Trưởng Bộ Phận", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.DropDownList("NhanVienID", null, String.Empty, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.NhanVienID)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GhiChu, "Ghi Chú", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.GhiChu, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.GhiChu)
+                </div>
+
+            </div>
+        </div>
+
+        <div class="box-footer">
+            <button type="reset" class="btn btn-default">Hủy</button>
+            <button type="submit" class="btn btn-info pull-right">Lưu</button>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

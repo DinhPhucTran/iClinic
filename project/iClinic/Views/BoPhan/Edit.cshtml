@@ -1,0 +1,46 @@
+﻿@model iClinic.Models.BoPhan
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>BoPhan</legend>
+
+        @Html.HiddenFor(model => model.MaBoPhan)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TenBoPhan)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TenBoPhan)
+            @Html.ValidationMessageFor(model => model.TenBoPhan)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NhanVienID, "NhanVien")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("NhanVienID", String.Empty)
+            @Html.ValidationMessageFor(model => model.NhanVienID)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

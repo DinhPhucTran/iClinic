@@ -1,0 +1,43 @@
+﻿@model iClinic.Models.DonViTinh
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Thêm</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Đơn Vị Tính</h3>
+        </div>
+        <div class="form-horizontal">
+            <div class="box-body">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TenDonViTinh, "Tên Đơn Vị Tính", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.TenDonViTinh, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.TenDonViTinh)
+                </div>
+            </div>
+        </div>
+
+        <div class="box-footer">
+            <button type="reset" class="btn btn-default">Hủy</button>
+            <button type="submit" class="btn btn-info pull-right">Lưu</button>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

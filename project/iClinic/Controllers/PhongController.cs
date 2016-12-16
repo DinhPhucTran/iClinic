@@ -9,107 +9,112 @@ using iClinic.Models;
 
 namespace iClinic.Controllers
 {
-    public class BenhNhanController : Controller
+    public class PhongController : Controller
     {
         private Entities db = new Entities();
 
         //
-        // GET: /BenhNhan/
+        // GET: /Phong/
 
         public ActionResult Index()
         {
-            return View(db.DbSetBenhNhan.ToList());
+            var dbsetphong = db.DbSetPhong.Include(p => p.BoPhan);
+            return View(dbsetphong.ToList());
         }
 
         //
-        // GET: /BenhNhan/Details/5
+        // GET: /Phong/Details/5
 
         public ActionResult Details(int id = 0)
         {
-            BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
-            if (benhnhan == null)
+            Phong phong = db.DbSetPhong.Find(id);
+            if (phong == null)
             {
                 return HttpNotFound();
             }
-            return View(benhnhan);
+            return View(phong);
         }
 
         //
-        // GET: /BenhNhan/Create
+        // GET: /Phong/Create
 
         public ActionResult Create()
         {
+            ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan");
             return View();
         }
 
         //
-        // POST: /BenhNhan/Create
+        // POST: /Phong/Create
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BenhNhan benhnhan)
+        public ActionResult Create(Phong phong)
         {
             if (ModelState.IsValid)
             {
-                db.DbSetBenhNhan.Add(benhnhan);
+                db.DbSetPhong.Add(phong);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(benhnhan);
+            ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan", phong.BoPhanID);
+            return View(phong);
         }
 
         //
-        // GET: /BenhNhan/Edit/5
+        // GET: /Phong/Edit/5
 
         public ActionResult Edit(int id = 0)
         {
-            BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
-            if (benhnhan == null)
+            Phong phong = db.DbSetPhong.Find(id);
+            if (phong == null)
             {
                 return HttpNotFound();
             }
-            return View(benhnhan);
+            ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan", phong.BoPhanID);
+            return View(phong);
         }
 
         //
-        // POST: /BenhNhan/Edit/5
+        // POST: /Phong/Edit/5
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(BenhNhan benhnhan)
+        public ActionResult Edit(Phong phong)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(benhnhan).State = EntityState.Modified;
+                db.Entry(phong).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(benhnhan);
+            ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan", phong.BoPhanID);
+            return View(phong);
         }
 
         //
-        // GET: /BenhNhan/Delete/5
+        // GET: /Phong/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
-            BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
-            if (benhnhan == null)
+            Phong phong = db.DbSetPhong.Find(id);
+            if (phong == null)
             {
                 return HttpNotFound();
             }
-            return View(benhnhan);
+            return View(phong);
         }
 
         //
-        // POST: /BenhNhan/Delete/5
+        // POST: /Phong/Delete/5
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
-            db.DbSetBenhNhan.Remove(benhnhan);
+            Phong phong = db.DbSetPhong.Find(id);
+            db.DbSetPhong.Remove(phong);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

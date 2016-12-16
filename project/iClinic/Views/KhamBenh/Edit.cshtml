@@ -1,0 +1,70 @@
+﻿@model iClinic.Models.PhieuKhamBenh
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>PhieuKhamBenh</legend>
+
+        @Html.HiddenFor(model => model.MaPhieuKhamBenh)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NgayKham)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NgayKham)
+            @Html.ValidationMessageFor(model => model.NgayKham)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ChanDoan)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ChanDoan)
+            @Html.ValidationMessageFor(model => model.ChanDoan)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LoiDan)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LoiDan)
+            @Html.ValidationMessageFor(model => model.LoiDan)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BenhNhanID, "BenhNhan")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("BenhNhanID", String.Empty)
+            @Html.ValidationMessageFor(model => model.BenhNhanID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BacSiID, "BacSi")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("BacSiID", String.Empty)
+            @Html.ValidationMessageFor(model => model.BacSiID)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

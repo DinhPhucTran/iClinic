@@ -1,0 +1,52 @@
+﻿@model iClinic.Models.LoaiNhanVien
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section PageHeader
+{
+    Loại Nhân Viên
+}
+
+@section Breadcrumb
+{
+    <li class="active">Loại Nhân Viên</li>
+}
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Loại Nhân Viên</h3>
+        </div>
+        <div class="form-horizontal">
+            <div class="box-body">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TenLoaiNhanVien, "Tên Loại Nhân Viên", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.TenLoaiNhanVien, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.TenLoaiNhanVien)
+                </div>
+
+            </div>
+        </div>
+
+        <div class="box-footer">
+            <button type="reset" class="btn btn-default">Hủy</button>
+            <button type="submit" class="btn btn-info pull-right">Lưu</button>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -9,33 +9,33 @@ using iClinic.Models;
 
 namespace iClinic.Controllers
 {
-    public class BenhNhanController : Controller
+    public class LoaiNhanVienController : Controller
     {
         private Entities db = new Entities();
 
         //
-        // GET: /BenhNhan/
+        // GET: /LoaiNhanVien/
 
         public ActionResult Index()
         {
-            return View(db.DbSetBenhNhan.ToList());
+            return View(db.DbSetLoaiNhanVien.ToList());
         }
 
         //
-        // GET: /BenhNhan/Details/5
+        // GET: /LoaiNhanVien/Details/5
 
         public ActionResult Details(int id = 0)
         {
-            BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
-            if (benhnhan == null)
+            LoaiNhanVien loainhanvien = db.DbSetLoaiNhanVien.Find(id);
+            if (loainhanvien == null)
             {
                 return HttpNotFound();
             }
-            return View(benhnhan);
+            return View(loainhanvien);
         }
 
         //
-        // GET: /BenhNhan/Create
+        // GET: /LoaiNhanVien/Create
 
         public ActionResult Create()
         {
@@ -43,73 +43,73 @@ namespace iClinic.Controllers
         }
 
         //
-        // POST: /BenhNhan/Create
+        // POST: /LoaiNhanVien/Create
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BenhNhan benhnhan)
+        public ActionResult Create(LoaiNhanVien loainhanvien)
         {
             if (ModelState.IsValid)
             {
-                db.DbSetBenhNhan.Add(benhnhan);
+                db.DbSetLoaiNhanVien.Add(loainhanvien);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(benhnhan);
+            return View(loainhanvien);
         }
 
         //
-        // GET: /BenhNhan/Edit/5
+        // GET: /LoaiNhanVien/Edit/5
 
         public ActionResult Edit(int id = 0)
         {
-            BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
-            if (benhnhan == null)
+            LoaiNhanVien loainhanvien = db.DbSetLoaiNhanVien.Find(id);
+            if (loainhanvien == null)
             {
                 return HttpNotFound();
             }
-            return View(benhnhan);
+            return View(loainhanvien);
         }
 
         //
-        // POST: /BenhNhan/Edit/5
+        // POST: /LoaiNhanVien/Edit/5
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(BenhNhan benhnhan)
+        public ActionResult Edit(LoaiNhanVien loainhanvien)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(benhnhan).State = EntityState.Modified;
+                db.Entry(loainhanvien).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(benhnhan);
+            return View(loainhanvien);
         }
 
         //
-        // GET: /BenhNhan/Delete/5
+        // GET: /LoaiNhanVien/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
-            BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
-            if (benhnhan == null)
+            LoaiNhanVien loainhanvien = db.DbSetLoaiNhanVien.Find(id);
+            if (loainhanvien == null)
             {
                 return HttpNotFound();
             }
-            return View(benhnhan);
+            return View(loainhanvien);
         }
 
         //
-        // POST: /BenhNhan/Delete/5
+        // POST: /LoaiNhanVien/Delete/5
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
-            db.DbSetBenhNhan.Remove(benhnhan);
+            LoaiNhanVien loainhanvien = db.DbSetLoaiNhanVien.Find(id);
+            db.DbSetLoaiNhanVien.Remove(loainhanvien);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

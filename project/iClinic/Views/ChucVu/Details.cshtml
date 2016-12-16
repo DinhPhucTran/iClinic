@@ -1,0 +1,22 @@
+﻿@model iClinic.Models.ChucVu
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>ChucVu</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TenChucVu)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TenChucVu)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.MaChucVu }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

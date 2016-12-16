@@ -9,33 +9,33 @@ using iClinic.Models;
 
 namespace iClinic.Controllers
 {
-    public class BenhNhanController : Controller
+    public class DonViTinhController : Controller
     {
         private Entities db = new Entities();
 
         //
-        // GET: /BenhNhan/
+        // GET: /DonViTinh/
 
         public ActionResult Index()
         {
-            return View(db.DbSetBenhNhan.ToList());
+            return View(db.DbSetDonViTinh.ToList());
         }
 
         //
-        // GET: /BenhNhan/Details/5
+        // GET: /DonViTinh/Details/5
 
         public ActionResult Details(int id = 0)
         {
-            BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
-            if (benhnhan == null)
+            DonViTinh donvitinh = db.DbSetDonViTinh.Find(id);
+            if (donvitinh == null)
             {
                 return HttpNotFound();
             }
-            return View(benhnhan);
+            return View(donvitinh);
         }
 
         //
-        // GET: /BenhNhan/Create
+        // GET: /DonViTinh/Create
 
         public ActionResult Create()
         {
@@ -43,73 +43,73 @@ namespace iClinic.Controllers
         }
 
         //
-        // POST: /BenhNhan/Create
+        // POST: /DonViTinh/Create
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BenhNhan benhnhan)
+        public ActionResult Create(DonViTinh donvitinh)
         {
             if (ModelState.IsValid)
             {
-                db.DbSetBenhNhan.Add(benhnhan);
+                db.DbSetDonViTinh.Add(donvitinh);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(benhnhan);
+            return View(donvitinh);
         }
 
         //
-        // GET: /BenhNhan/Edit/5
+        // GET: /DonViTinh/Edit/5
 
         public ActionResult Edit(int id = 0)
         {
-            BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
-            if (benhnhan == null)
+            DonViTinh donvitinh = db.DbSetDonViTinh.Find(id);
+            if (donvitinh == null)
             {
                 return HttpNotFound();
             }
-            return View(benhnhan);
+            return View(donvitinh);
         }
 
         //
-        // POST: /BenhNhan/Edit/5
+        // POST: /DonViTinh/Edit/5
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(BenhNhan benhnhan)
+        public ActionResult Edit(DonViTinh donvitinh)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(benhnhan).State = EntityState.Modified;
+                db.Entry(donvitinh).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(benhnhan);
+            return View(donvitinh);
         }
 
         //
-        // GET: /BenhNhan/Delete/5
+        // GET: /DonViTinh/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
-            BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
-            if (benhnhan == null)
+            DonViTinh donvitinh = db.DbSetDonViTinh.Find(id);
+            if (donvitinh == null)
             {
                 return HttpNotFound();
             }
-            return View(benhnhan);
+            return View(donvitinh);
         }
 
         //
-        // POST: /BenhNhan/Delete/5
+        // POST: /DonViTinh/Delete/5
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
-            db.DbSetBenhNhan.Remove(benhnhan);
+            DonViTinh donvitinh = db.DbSetDonViTinh.Find(id);
+            db.DbSetDonViTinh.Remove(donvitinh);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

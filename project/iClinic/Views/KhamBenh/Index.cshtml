@@ -1,0 +1,57 @@
+﻿@model IEnumerable<iClinic.Models.PhieuKhamBenh>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayKham)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChanDoan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoiDan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BenhNhan.TenBenhNhan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BacSi.TenNhanVien)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayKham)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChanDoan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoiDan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BenhNhan.TenBenhNhan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BacSi.TenNhanVien)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaPhieuKhamBenh }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaPhieuKhamBenh }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaPhieuKhamBenh })
+        </td>
+    </tr>
+}
+
+</table>
