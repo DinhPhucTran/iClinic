@@ -14,6 +14,7 @@ namespace iClinic.Models
         public int MaBenhNhan { get; set; }
 
         [Display(Name = "Tên bệnh nhân")]
+        [Required(ErrorMessage = "Vui lòng nhập tên bệnh nhân")]
         public String TenBenhNhan { get; set; }
 
         [Display(Name = "Giới tính")]
@@ -22,6 +23,7 @@ namespace iClinic.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày sinh")]
+        [Required(ErrorMessage = "Vui lòng chọn ngày sinh")]
         public DateTime NgaySinh { get; set; }
 
         [Display(Name = "Nghề nghiệp")]

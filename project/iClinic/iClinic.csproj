@@ -154,10 +154,15 @@
     <Compile Include="Migrations\201612111718402_update.Designer.cs">
       <DependentUpon>201612111718402_update.cs</DependentUpon>
     </Compile>-->
+
+    <!--<Compile Include="Migrations\201612161455525_annotation.cs" />
+    <Compile Include="Migrations\201612161455525_annotation.Designer.cs">
+      <DependentUpon>201612161455525_annotation.cs</DependentUpon>
     <Compile Include="Migrations\201612151638192_Initial.cs" />
     <Compile Include="Migrations\201612151638192_Initial.Designer.cs">
       <DependentUpon>201612151638192_Initial.cs</DependentUpon>
-    </Compile>
+    </Compile>-->
+	
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BenhNhan.cs" />
     <Compile Include="Models\BoPhan.cs" />
@@ -1166,7 +1171,9 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1188,6 +1195,7 @@
     <Content Include="Views\Thuoc\Create.cshtml" />
     <Content Include="Views\Thuoc\Edit.cshtml" />
     <Content Include="Views\Thuoc\Delete.cshtml" />
+    <Content Include="Views\DonTiep\_SideListBN.cshtml" />
     <Content Include="Views\DonViTinh\Index.cshtml" />
     <Content Include="Views\DonViTinh\Details.cshtml" />
     <Content Include="Views\DonViTinh\Create.cshtml" />
@@ -1236,9 +1244,16 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612151638192_Initial.resx">
+    <!--<EmbeddedResource Include="Migrations\201612151638192_Initial.resx">
       <DependentUpon>201612151638192_Initial.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612161455525_annotation.resx">
+      <DependentUpon>201612161455525_annotation.cs</DependentUpon>
+    </EmbeddedResource>-->
+	
+    <!--<EmbeddedResource Include="Migrations\201612111718402_update.resx">
+      <DependentUpon>201612111718402_update.cs</DependentUpon>
+    </EmbeddedResource>-->
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
