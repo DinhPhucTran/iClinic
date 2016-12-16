@@ -92,10 +92,55 @@ namespace iClinic.Controllers
             //ViewBag.MsgContent = "msgContent";
             ViewBag.Msg = msg;
 
-            msgType = "";
-            msgTitle = "";
-            msgContent = "";
+            
+
             return View();
+        }
+
+        public ActionResult _SideListBN(string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var patients = from p in db.DbSetBenhNhan
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patients = patients.Where(p => p.TenBenhNhan.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    patients = patients.OrderByDescending(p => p.TenBenhNhan);
+                    break;
+                case "Date":
+                    patients = patients.OrderBy(p => p.NgayTiepNhan);
+                    break;
+                case "date_desc":
+                    patients = patients.OrderByDescending(p => p.NgayTiepNhan);
+                    break;
+                default:
+                    patients = patients.OrderBy(p => p.NgayTiepNhan);
+                    break;
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return PartialView(patients.ToPagedList(pageNumber, pageSize));
         }
 
         //

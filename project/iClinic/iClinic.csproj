@@ -156,6 +156,10 @@
     <Compile Include="Migrations\201612111718402_update.Designer.cs">
       <DependentUpon>201612111718402_update.cs</DependentUpon>
     </Compile>-->
+    <Compile Include="Migrations\201612161455525_annotation.cs" />
+    <Compile Include="Migrations\201612161455525_annotation.Designer.cs">
+      <DependentUpon>201612161455525_annotation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BenhNhan.cs" />
     <Compile Include="Models\BoPhan.cs" />
@@ -1164,7 +1168,9 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1187,6 +1193,7 @@
     <Content Include="Views\Thuoc\Create.cshtml" />
     <Content Include="Views\Thuoc\Edit.cshtml" />
     <Content Include="Views\Thuoc\Delete.cshtml" />
+    <Content Include="Views\DonTiep\_SideListBN.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1200,6 +1207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612121057458_DataAnnotations.resx">
       <DependentUpon>201612121057458_DataAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612161455525_annotation.resx">
+      <DependentUpon>201612161455525_annotation.cs</DependentUpon>
     </EmbeddedResource>
     <!--<EmbeddedResource Include="Migrations\201612111718402_update.resx">
       <DependentUpon>201612111718402_update.cs</DependentUpon>
