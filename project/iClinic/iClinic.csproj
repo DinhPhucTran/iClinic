@@ -138,10 +138,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BenhNhanController.cs" />
     <Compile Include="Controllers\BoPhanController.cs" />
+    <Compile Include="Controllers\ChucVuController.cs" />
     <Compile Include="Controllers\DonTiepController.cs" />
     <Compile Include="Controllers\DonViTinhController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhamBenhController.cs" />
+    <Compile Include="Controllers\LoaiNhanVienController.cs" />
     <Compile Include="Controllers\NhanVienController.cs" />
     <Compile Include="Controllers\PhongController.cs" />
     <Compile Include="Controllers\ThuocController.cs" />
@@ -1216,6 +1218,16 @@
     <Content Include="Views\BenhNhan\Create.cshtml" />
     <Content Include="Views\BenhNhan\Edit.cshtml" />
     <Content Include="Views\BenhNhan\Delete.cshtml" />
+    <Content Include="Views\LoaiNhanVien\Index.cshtml" />
+    <Content Include="Views\LoaiNhanVien\Details.cshtml" />
+    <Content Include="Views\LoaiNhanVien\Create.cshtml" />
+    <Content Include="Views\LoaiNhanVien\Edit.cshtml" />
+    <Content Include="Views\LoaiNhanVien\Delete.cshtml" />
+    <Content Include="Views\ChucVu\Index.cshtml" />
+    <Content Include="Views\ChucVu\Details.cshtml" />
+    <Content Include="Views\ChucVu\Create.cshtml" />
+    <Content Include="Views\ChucVu\Edit.cshtml" />
+    <Content Include="Views\ChucVu\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

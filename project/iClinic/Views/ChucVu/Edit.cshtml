@@ -1,0 +1,38 @@
+﻿@model iClinic.Models.ChucVu
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>ChucVu</legend>
+
+        @Html.HiddenFor(model => model.MaChucVu)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TenChucVu)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TenChucVu)
+            @Html.ValidationMessageFor(model => model.TenChucVu)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

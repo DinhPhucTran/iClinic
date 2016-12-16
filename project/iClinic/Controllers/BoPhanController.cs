@@ -40,7 +40,12 @@ namespace iClinic.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.NhanVienID = new SelectList(db.DbSetNhanVien, "MaNhanVien", "TenNhanVien");
+            var dsNV = db.DbSetNhanVien.Select(s => new
+            {
+                Id = s.MaNhanVien,
+                NhanVien = s.TenNhanVien + " - " + s.Phong.BoPhan.TenBoPhan
+            }).ToList();
+            ViewBag.NhanVienID = new SelectList(dsNV, "Id", "NhanVien");
             return View();
         }
 
@@ -57,8 +62,12 @@ namespace iClinic.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.NhanVienID = new SelectList(db.DbSetNhanVien, "MaNhanVien", "TenNhanVien", bophan.NhanVienID);
+            var dsNV = db.DbSetNhanVien.Select(s => new
+            {
+                Id = s.MaNhanVien,
+                NhanVien = s.MaNhanVien + " - " + s.TenNhanVien
+            }).ToList();
+            ViewBag.NhanVienID = new SelectList(dsNV, "Id", "NhanVien");
             return View(bophan);
         }
 

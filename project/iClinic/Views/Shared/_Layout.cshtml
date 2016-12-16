@@ -139,7 +139,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="@Url.Action("Create", "DonTiep")"><i class="fa fa-circle-o text-red"></i> Tiếp nhận bệnh nhân</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Lập phiếu khám bệnh</a></li>
+                            <li><a href="@Url.Action("Create", "KhamBenh")"><i class="fa fa-circle-o"></i> Lập phiếu khám bệnh</a></li>
                             <li><a href="#"><i class="fa fa-circle-o"></i> Bán thuốc</a></li>
                             <li><a href="#"><i class="fa fa-circle-o"></i> Thanh toán</a></li>
                             <li><a href="@Url.Action("Index", "DonTiep")"><i class="fa fa-circle-o"></i> Danh sách bệnh nhân</a></li>
@@ -154,7 +154,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o text-red"></i> Khám bệnh</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o text-red"></i> Khám bệnh theo yêu cầu</a></li>
                             <li><a href="#"><i class="fa fa-circle-o"></i> Lập phiếu xét nghiệm</a></li>
                             <li><a href="#"><i class="fa fa-circle-o"></i> Lập phiếu khám chuyên khoa</a></li>
                             <li><a href="#"><i class="fa fa-circle-o"></i> Lập giấy nhập viện</a></li>
@@ -185,8 +185,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Danh mục thuốc</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Nhập thuốc</a></li>
+                            <li><a href="@Url.Action("Index", "Thuoc")"><i class="fa fa-circle-o"></i> Danh mục thuốc</a></li>
+                            <li><a href="@Url.Action("Create", "Thuoc")"><i class="fa fa-circle-o"></i> Nhập thuốc</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
