@@ -15,6 +15,9 @@
             @Html.DisplayNameFor(model => model.LoaiNhanVien.TenLoaiNhanVien)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Phong.BoPhan.TenBoPhan)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.ChucVu.TenChucVu)
         </th>
         <th>
@@ -42,6 +45,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.LoaiNhanVien.TenLoaiNhanVien)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phong.BoPhan.TenBoPhan)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ChucVu.TenChucVu)

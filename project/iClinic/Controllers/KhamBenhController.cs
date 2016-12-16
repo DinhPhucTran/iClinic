@@ -41,7 +41,12 @@ namespace iClinic.Controllers
         public ActionResult Create()
         {
             ViewBag.BenhNhanID = new SelectList(db.DbSetBenhNhan, "MaBenhNhan", "TenBenhNhan");
-            ViewBag.BacSiID = new SelectList(db.DbSetNhanVien, "MaNhanVien", "TenNhanVien");
+            var dsNhanVien = db.DbSetNhanVien.ToList().Select(s => new
+            {
+                IdNV = s.MaNhanVien,
+                InfoNV = s.TenNhanVien + " - " + "NV" + s.MaNhanVien + " - " + s.Phong.BoPhan.TenBoPhan + " - " + s.Phong.TenPhong
+            });
+            ViewBag.BacSiID = new SelectList(dsNhanVien, "IdNV", "InfoNV");
             ViewBag.DichVuID = new SelectList(db.DbSetDichVu, "MaDichVu", "TenDichVu");
             return View();
         }
