@@ -154,7 +154,6 @@
     <Compile Include="Migrations\201612111718402_update.Designer.cs">
       <DependentUpon>201612111718402_update.cs</DependentUpon>
     </Compile>-->
-
     <!--<Compile Include="Migrations\201612161455525_annotation.cs" />
     <Compile Include="Migrations\201612161455525_annotation.Designer.cs">
       <DependentUpon>201612161455525_annotation.cs</DependentUpon>
@@ -1250,7 +1249,6 @@
     <EmbeddedResource Include="Migrations\201612161455525_annotation.resx">
       <DependentUpon>201612161455525_annotation.cs</DependentUpon>
     </EmbeddedResource>-->
-	
     <!--<EmbeddedResource Include="Migrations\201612111718402_update.resx">
       <DependentUpon>201612111718402_update.cs</DependentUpon>
     </EmbeddedResource>-->

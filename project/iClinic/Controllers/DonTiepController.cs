@@ -62,7 +62,7 @@ namespace iClinic.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             //return View(db.DbSetBenhNhan.ToList());
             return View(patients.ToPagedList(pageNumber, pageSize));
@@ -84,17 +84,14 @@ namespace iClinic.Controllers
         //
         // GET: /DonTiep/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int id = 0)
         {
             Message msg = (Message)TempData["msg"];
-            //ViewBag.MsgType = "success";
-            //ViewBag.MsgTitle = "msgTitle";
-            //ViewBag.MsgContent = "msgContent";
             ViewBag.Msg = msg;
 
-            
+            BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
 
-            return View();
+            return View(benhnhan);
         }
 
         public ActionResult _SideListBN(string sortOrder, string currentFilter, string searchString, int? page)
