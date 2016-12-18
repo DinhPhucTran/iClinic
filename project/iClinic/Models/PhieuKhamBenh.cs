@@ -35,6 +35,6 @@ namespace iClinic.Models
         [ForeignKey("BacSiID")]
         public virtual NhanVien BacSi { get; set; }
         
-        public virtual ICollection<ChiTietPhieuKhamBenh> ChiTietPhieuKhamBenhs { get; set; }
+        public virtual ICollection<PhieuYeuCauDichVu> PhieuYeuCauDichVus { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@model iClinic.Models.PhieuKhamBenh
+@using iClinic.Models
 
 @{
     ViewBag.Title = "Create";
@@ -78,17 +79,19 @@
         <div class="box-header with-border">
             <div>
                 <h3 class="box-title">Chi Tiết Phiếu Khám Bệnh</h3>
-                <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;">Add</button>
+                <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;" onclick="clickAdd()">Add</button>
                 @*<input type="button" value="Add"  />*@
             </div>
         </div>
         <div class="box-body table-responsive no-padding">
-            <table class="table table-hover" id="tb_ChiTietPhieuKham">
+            <table class="table table-hover" id="tb_dsPhieuYeuCauDichVu">
+                @{IEnumerable<PhieuYeuCauDichVu> lstSanPham = ViewBag.DsPhieuYeuCauDichVu as IEnumerable<PhieuYeuCauDichVu>;}
                 <tr>
-                    <th>@Html.LabelFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.DichVuID, "Tên Dịch Vụ")</th>
-                    <th>@Html.LabelFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.DonGia, "Đơn Giá")</th>
-                    <th>@Html.LabelFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.NgayLap, "Ngày Lập")</th>
-                    <th>@Html.LabelFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.ThoiGianThucHien, "Thời Gian Thực Hiện")</th>
+                    <th>"Tên Dịch Vụ"</th>
+                    <th>"Đơn Giá"</th>
+                    <th>"Ngày Lập"</th>
+                    <th>"Thời Gian Thực Hiện"</th>
+                    <th></th>
                 </tr>
                 @*<tr>
                     <td>@Html.DropDownList("DichVuID", String.Empty)</td>
@@ -97,6 +100,10 @@
                     <td>@Html.EditorFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.ThoiGianThucHien)</td>
                 </tr>*@
             </table>
+            <div id="dropDownListDv" hidden>@Html.DropDownList("DichVuID", String.Empty)</div>
+            <div id="dropDownListDv" hidden>@Html.TextBox("DichVuID", String.Empty)</div>
+            <div id="dropDownListDv" hidden>@Html.TextBox("")</div>
+            <div id="dropDownListDv" hidden><div>@Html.DropDownList("DichVuID", String.Empty)</div></div>
         </div>
         <div class="box-footer">
             <button type="reset" class="btn btn-default">Hủy</button>
@@ -108,7 +115,17 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<script>
+    function clickAdd() {
+        //var dichvu = String.valueOf('Html.DropDownList("DichVuID", String.Empty)');
+        //alert(dichvu);
+        var dichvu = $("#dropDownListDv").html();
 
+        $('#tb_dsPhieuYeuCauDichVu > tbody:last-child').append('<tr>'+ '<td>' + dichvu + '</td>' + '</tr>');
+        
+        //alert("hello");
+    }
+</script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

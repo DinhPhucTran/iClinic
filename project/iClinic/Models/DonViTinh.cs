@@ -14,6 +14,7 @@ namespace iClinic.Models
         public int MaDonViTinh { get; set; }
 
         [Display(Name="Tên Đơn Vị Tính")]
+        [Required]
         public String TenDonViTinh { get; set; }
     }
 }

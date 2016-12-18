@@ -139,6 +139,7 @@
     <Compile Include="Controllers\BenhNhanController.cs" />
     <Compile Include="Controllers\BoPhanController.cs" />
     <Compile Include="Controllers\ChucVuController.cs" />
+    <Compile Include="Controllers\DichVuController.cs" />
     <Compile Include="Controllers\DonTiepController.cs" />
     <Compile Include="Controllers\DonViTinhController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -154,7 +155,6 @@
     <Compile Include="Migrations\201612111718402_update.Designer.cs">
       <DependentUpon>201612111718402_update.cs</DependentUpon>
     </Compile>-->
-
     <!--<Compile Include="Migrations\201612161455525_annotation.cs" />
     <Compile Include="Migrations\201612161455525_annotation.Designer.cs">
       <DependentUpon>201612161455525_annotation.cs</DependentUpon>
@@ -162,14 +162,16 @@
     <Compile Include="Migrations\201612151638192_Initial.Designer.cs">
       <DependentUpon>201612151638192_Initial.cs</DependentUpon>
     </Compile>-->
-	
+    <Compile Include="Migrations\201612181659489_Initial.cs" />
+    <Compile Include="Migrations\201612181659489_Initial.Designer.cs">
+      <DependentUpon>201612181659489_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BenhNhan.cs" />
     <Compile Include="Models\BoPhan.cs" />
     <Compile Include="Models\ChiTietDieuTri.cs" />
     <Compile Include="Models\ChiTietDonThuoc.cs" />
     <Compile Include="Models\ChiTietHoaDon.cs" />
-    <Compile Include="Models\ChiTietPhieuKhamBenh.cs" />
     <Compile Include="Models\ChucVu.cs" />
     <Compile Include="Models\DichVu.cs" />
     <Compile Include="Models\DonThuoc.cs" />
@@ -1236,6 +1238,11 @@
     <Content Include="Views\ChucVu\Create.cshtml" />
     <Content Include="Views\ChucVu\Edit.cshtml" />
     <Content Include="Views\ChucVu\Delete.cshtml" />
+    <Content Include="Views\DichVu\Index.cshtml" />
+    <Content Include="Views\DichVu\Details.cshtml" />
+    <Content Include="Views\DichVu\Create.cshtml" />
+    <Content Include="Views\DichVu\Edit.cshtml" />
+    <Content Include="Views\DichVu\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1244,16 +1251,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <!--<EmbeddedResource Include="Migrations\201612151638192_Initial.resx">
-      <DependentUpon>201612151638192_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612181659489_Initial.resx">
+      <DependentUpon>201612181659489_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612161455525_annotation.resx">
-      <DependentUpon>201612161455525_annotation.cs</DependentUpon>
-    </EmbeddedResource>-->
-	
-    <!--<EmbeddedResource Include="Migrations\201612111718402_update.resx">
-      <DependentUpon>201612111718402_update.cs</DependentUpon>
-    </EmbeddedResource>-->
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

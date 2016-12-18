@@ -14,7 +14,6 @@ namespace iClinic.Models
         public DbSet<ChiTietDieuTri> DbSetChiTietDieuTri { get; set; }
         public DbSet<ChiTietDonThuoc> DbSetChiTietDonThuoc { get; set; }
         public DbSet<ChiTietHoaDon> DbSetChiTietHoaDon { get; set; }
-        public DbSet<ChiTietPhieuKhamBenh> DbSetChiTietPhieuKhamBenh { get; set; }
         public DbSet<ChucVu> DbSetChucVu { get; set; }
         public DbSet<DichVu> DbSetDichVu { get; set; }
         public DbSet<DonThuoc> DbSetDonThuoc { get; set; }
@@ -84,11 +83,6 @@ namespace iClinic.Models
                 .HasForeignKey(u => u.BacSiID).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<PhieuYeuCauDichVu>()
-                .HasRequired(a => a.BenhNhan)
-                .WithMany()
-                .HasForeignKey(u => u.BenhNhanID).WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<PhieuYeuCauDichVu>()
                 .HasRequired(a => a.DichVu)
                 .WithMany()
                 .HasForeignKey(u => u.DichVuID).WillCascadeOnDelete(false);
@@ -98,11 +92,7 @@ namespace iClinic.Models
                 .WithMany()
                 .HasForeignKey(u => u.DonViTinhID).WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<ChiTietPhieuKhamBenh>()
-                .HasRequired(a => a.PhieuYeuCauDichVu)
-                .WithMany()
-                .HasForeignKey(u => u.PhieuYeuCauDichVuID).WillCascadeOnDelete(false);
-
+            
             modelBuilder.Entity<DonThuoc>()
                 .HasRequired(a => a.PhieuKhamBenh)
                 .WithMany()

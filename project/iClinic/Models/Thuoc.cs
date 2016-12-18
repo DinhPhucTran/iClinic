@@ -14,6 +14,7 @@ namespace iClinic.Models
         public int MaThuoc { get; set; }
         
         [Display(Name="Tên Thuốc")]
+        [Required]
         public String TenThuoc { get; set; }
         
         [Display(Name="Đơn Giá")]

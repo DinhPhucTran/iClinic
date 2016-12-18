@@ -38,13 +38,15 @@ namespace iClinic.Models
 
         public int DichVuID { get; set; }
 
-        [ForeignKey("BenhNhanID")]
-        public virtual BenhNhan BenhNhan { get; set; }
+        public int PhieuKhamBenhID {get; set;}
 
         [ForeignKey("BacSiID")]
         public virtual NhanVien BacSi { get; set; }
 
         [ForeignKey("DichVuID")]
         public virtual DichVu DichVu { get; set; }
+
+        [ForeignKey("PhieuKhamBenhID")]
+        public virtual PhieuKhamBenh PhieuKhamBenh { get; set; }
     }
 }
