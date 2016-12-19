@@ -10,29 +10,36 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>DichVu</legend>
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Bộ Phận</h3>
+        </div>
+        <div class="form-horizontal">
+            <div class="box-body">
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.TenDichVu)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.TenDichVu)
-            @Html.ValidationMessageFor(model => model.TenDichVu)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TenDichVu, "Tên Dịch Vụ", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.TenDichVu, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.TenDichVu)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DonGia, "Đơn Giá", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.DonGia, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.DonGia)
+                </div>
+
+            </div>
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DonGia)
+        <div class="box-footer">
+            <button type="reset" class="btn btn-default">Hủy</button>
+            <button type="submit" class="btn btn-info pull-right">Lưu</button>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.DonGia)
-            @Html.ValidationMessageFor(model => model.DonGia)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
+    </div>
 }
 
 <div>

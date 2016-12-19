@@ -18,8 +18,8 @@ namespace iClinic.Controllers
 
         public ActionResult Index()
         {
-            var dbsetbophan = db.DbSetBoPhan.Include(b => b.NhanVien);
-            return View(dbsetbophan.ToList());
+            //var dbsetbophan = db.DbSetBoPhan.Include(b => b.NhanVien);
+            return View(db.DbSetBoPhan.ToList());
         }
 
         //
@@ -43,7 +43,7 @@ namespace iClinic.Controllers
             var dsNV = db.DbSetNhanVien.Select(s => new
             {
                 Id = s.MaNhanVien,
-                NhanVien = s.TenNhanVien + " - " + s.Phong.BoPhan.TenBoPhan
+                NhanVien = s.TenNhanVien + " - " + s.BoPhan.TenBoPhan
             }).ToList();
             ViewBag.NhanVienID = new SelectList(dsNV, "Id", "NhanVien");
             return View();
@@ -81,7 +81,7 @@ namespace iClinic.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.NhanVienID = new SelectList(db.DbSetNhanVien, "MaNhanVien", "TenNhanVien", bophan.NhanVienID);
+            //ViewBag.NhanVienID = new SelectList(db.DbSetNhanVien, "MaNhanVien", "TenNhanVien", bophan.NhanVienID);
             return View(bophan);
         }
 
@@ -98,7 +98,7 @@ namespace iClinic.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.NhanVienID = new SelectList(db.DbSetNhanVien, "MaNhanVien", "TenNhanVien", bophan.NhanVienID);
+            //ViewBag.NhanVienID = new SelectList(db.DbSetNhanVien, "MaNhanVien", "TenNhanVien", bophan.NhanVienID);
             return View(bophan);
         }
 

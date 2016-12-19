@@ -19,7 +19,8 @@ namespace iClinic.Controllers
 
         public ActionResult Index()
         {
-            var dbsetnhanvien = db.DbSetNhanVien.Include(n => n.LoaiNhanVien).Include(n => n.ChucVu).Include(n => n.Phong);
+            var dbsetnhanvien = db.DbSetNhanVien.Include(n => n.LoaiNhanVien).Include(n => n.BoPhan).Include(n => n.ChucVu);
+            //var dbsetnhanvien = db.DbSetNhanVien.Include(n => n.LoaiNhanVien).Include(n => n.ChucVu).Include(n => n.BoPhan);
             return View(dbsetnhanvien.ToList());
         }
 
@@ -45,11 +46,12 @@ namespace iClinic.Controllers
             ViewBag.GioiTinhID = GetSelectListItems(gioiTinh);
             ViewBag.LoaiNhanVienID = new SelectList(db.DbSetLoaiNhanVien, "MaLoaiNhanVien", "TenLoaiNhanVien");
             ViewBag.ChucVuID = new SelectList(db.DbSetChucVu, "MaChucVu", "TenChucVu");
-            var membersPhong = db.DbSetPhong.Select(s => new { 
-                Id = s.MaPhong,
-                NamePhong = s.TenPhong + " - " + s.BoPhan.TenBoPhan
-            }).ToList();
-            ViewBag.PhongID = new SelectList(membersPhong, "Id", "NamePhong");
+            //var membersPhong = db.DbSetPhong.Select(s => new { 
+            //    Id = s.MaPhong,
+            //    NamePhong = s.TenPhong + " - " + s.BoPhan.TenBoPhan
+            //}).ToList();
+            //ViewBag.PhongID = new SelectList(membersPhong, "Id", "NamePhong");
+            ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan");
             return View();
         }
 
@@ -70,12 +72,13 @@ namespace iClinic.Controllers
             ViewBag.GioiTinhID = GetSelectListItems(gioiTinh);
             ViewBag.LoaiNhanVienID = new SelectList(db.DbSetLoaiNhanVien, "MaLoaiNhanVien", "TenLoaiNhanVien", nhanvien.LoaiNhanVienID);
             ViewBag.ChucVuID = new SelectList(db.DbSetChucVu, "MaChucVu", "TenChucVu", nhanvien.ChucVuID);
-            var membersPhong = db.DbSetPhong.Select(s => new
-            {
-                Id = s.MaPhong,
-                NamePhong = s.TenPhong + " - " + s.BoPhan.TenBoPhan
-            }).ToList();
-            ViewBag.PhongID = new SelectList(membersPhong, "Id", "NamePhong");
+            ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan", nhanvien.BoPhanID);
+            //var membersPhong = db.DbSetPhong.Select(s => new
+            //{
+            //    Id = s.MaPhong,
+            //    NamePhong = s.TenPhong + " - " + s.BoPhan.TenBoPhan
+            //}).ToList();
+            //ViewBag.PhongID = new SelectList(membersPhong, "Id", "NamePhong");
             return View(nhanvien);
         }
 
@@ -91,7 +94,7 @@ namespace iClinic.Controllers
             }
             ViewBag.LoaiNhanVienID = new SelectList(db.DbSetLoaiNhanVien, "MaLoaiNhanVien", "TenLoaiNhanVien", nhanvien.LoaiNhanVienID);
             ViewBag.ChucVuID = new SelectList(db.DbSetChucVu, "MaChucVu", "TenChucVu", nhanvien.ChucVuID);
-            ViewBag.PhongID = new SelectList(db.DbSetPhong, "MaPhong", "TenPhong", nhanvien.PhongID);
+            ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan", nhanvien.BoPhanID);
             return View(nhanvien);
         }
 
@@ -110,7 +113,7 @@ namespace iClinic.Controllers
             }
             ViewBag.LoaiNhanVienID = new SelectList(db.DbSetLoaiNhanVien, "MaLoaiNhanVien", "TenLoaiNhanVien", nhanvien.LoaiNhanVienID);
             ViewBag.ChucVuID = new SelectList(db.DbSetChucVu, "MaChucVu", "TenChucVu", nhanvien.ChucVuID);
-            ViewBag.PhongID = new SelectList(db.DbSetPhong, "MaPhong", "TenPhong", nhanvien.PhongID);
+            ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan", nhanvien.BoPhanID);
             return View(nhanvien);
         }
 

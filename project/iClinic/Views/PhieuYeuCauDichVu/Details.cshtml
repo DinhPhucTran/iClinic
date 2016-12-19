@@ -1,0 +1,78 @@
+﻿@model iClinic.Models.PhieuYeuCauDichVu
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>PhieuYeuCauDichVu</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ThoiGianThucHien)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ThoiGianThucHien)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NgayLap)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NgayLap)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DonGia)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DonGia)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ChanDoan)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ChanDoan)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.LoiDan)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LoiDan)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BenhNhanID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BenhNhanID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BacSi.TenNhanVien)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BacSi.TenNhanVien)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DichVu.TenDichVu)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DichVu.TenDichVu)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PhieuKhamBenh.ChanDoan)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PhieuKhamBenh.ChanDoan)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.MaPhieuYeuCauDichVu }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

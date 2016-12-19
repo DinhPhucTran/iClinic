@@ -18,8 +18,8 @@ namespace iClinic.Controllers
 
         public ActionResult Index()
         {
-            var dbsetphong = db.DbSetPhong.Include(p => p.BoPhan);
-            return View(dbsetphong.ToList());
+            //var dbsetphong = db.DbSetPhong.Include(p => p.BoPhan);
+            return View(db.DbSetPhong.ToList());
         }
 
         //
@@ -40,7 +40,7 @@ namespace iClinic.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan");
+            ViewBag.DichVuID = new SelectList(db.DbSetDichVu, "MaDichVu", "TenDichVu");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace iClinic.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan", phong.BoPhanID);
+            ViewBag.DichVuID = new SelectList(db.DbSetDichVu, "MaDichVu", "TenDichVu", phong.DichVuID);
             return View(phong);
         }
 
@@ -72,7 +72,7 @@ namespace iClinic.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan", phong.BoPhanID);
+            //ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan", phong.BoPhanID);
             return View(phong);
         }
 
@@ -89,7 +89,7 @@ namespace iClinic.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan", phong.BoPhanID);
+            //ViewBag.BoPhanID = new SelectList(db.DbSetBoPhan, "MaBoPhan", "TenBoPhan", phong.BoPhanID);
             return View(phong);
         }
 

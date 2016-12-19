@@ -17,7 +17,8 @@
 
 @*<h2>Create</h2>*@
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -85,25 +86,60 @@
         </div>
         <div class="box-body table-responsive no-padding">
             <table class="table table-hover" id="tb_dsPhieuYeuCauDichVu">
-                @{IEnumerable<PhieuYeuCauDichVu> lstSanPham = ViewBag.DsPhieuYeuCauDichVu as IEnumerable<PhieuYeuCauDichVu>;}
-                <tr>
-                    <th>"Tên Dịch Vụ"</th>
-                    <th>"Đơn Giá"</th>
-                    <th>"Ngày Lập"</th>
-                    <th>"Thời Gian Thực Hiện"</th>
+                @{
+                    IEnumerable<DichVu> dsDichVu = ViewBag.DichVuID as IEnumerable<DichVu>;
+                    IEnumerable<Phong> dsPhong = ViewBag.DanhSachPhong as IEnumerable<Phong>;
+                    IEnumerable<NhanVien> dsBacSi = ViewBag.DanhSachBacSi as IEnumerable<NhanVien>;
+                }
+
+                <tr class="tr_structure" id="tr_PhieuYCDV" hidden>
+                    <td>
+                        <select class="form-control ddl_DichVuID" name="">
+                            @foreach (var itemDV in dsDichVu)
+                            {
+                                <option value="@itemDV.MaDichVu">@itemDV.TenDichVu</option>
+                            }
+                        </select>
+                    </td>
+                    @* benh nhan *@
+                    <td><input class="form-control txt_BenhNhan" name="" type="text" value="" readonly/></td>
+                    @* bac si *@
+                    <td>
+                        <select class="form-control ddl_BacSi" name="">
+                            @foreach (var itemBS in dsBacSi)
+                            {
+                                <option value="@itemBS.MaNhanVien">@itemBS.TenNhanVien</option>
+                            }
+                        </select>
+                    </td>
+                    @* phong *@
+                    <td>
+                        <select class="form-control ddl_Phong" name="">
+                            @foreach (var itemP in dsPhong)
+                            {
+                                <option value="@itemP.MaPhong">@itemP.TenPhong</option>
+                            }
+                        </select>
+                    </td>
+                    @* don gia *@
+                    <td><input class="form-control txt_DonGia" name="" type="text" value="" readonly/></td>
+                    @* thoi gian thuc hien *@
+                    <td><input class="form-control txt_ThoiGianThucHien" name="" type="date" value="" /></td>
+                    @* ngay lap *@
+                    <td><input class="form-control txt_NgayLap" name="" type="text" value="" readonly/></td>
+                    @*<td>@Html.TextBox("PhieuKhamBenhID")</td>*@
+                </tr>
+                <tr class="first_row" data-id="-1">
+                    <th>Tên Dịch Vụ</th>
+                    <th>Bệnh Nhân</th>
+                    <th>Bác Sĩ Thực Hiện</th>
+                    <th>Phòng khám</th>
+                    <th>Đơn Giá</th>
+                    <th>Thời Gian Thực Hiện</th>
+                    <th>Ngày Lập</th>
                     <th></th>
                 </tr>
-                @*<tr>
-                    <td>@Html.DropDownList("DichVuID", String.Empty)</td>
-                    <td>@Html.TextBoxFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.DonGia)</td>
-                    <td>@Html.EditorFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.NgayLap)</td>
-                    <td>@Html.EditorFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.ThoiGianThucHien)</td>
-                </tr>*@
             </table>
-            <div id="dropDownListDv" hidden>@Html.DropDownList("DichVuID", String.Empty)</div>
-            <div id="dropDownListDv" hidden>@Html.TextBox("DichVuID", String.Empty)</div>
-            <div id="dropDownListDv" hidden>@Html.TextBox("")</div>
-            <div id="dropDownListDv" hidden><div>@Html.DropDownList("DichVuID", String.Empty)</div></div>
         </div>
         <div class="box-footer">
             <button type="reset" class="btn btn-default">Hủy</button>
@@ -117,13 +153,34 @@
 </div>
 <script>
     function clickAdd() {
-        //var dichvu = String.valueOf('Html.DropDownList("DichVuID", String.Empty)');
-        //alert(dichvu);
-        var dichvu = $("#dropDownListDv").html();
-
-        $('#tb_dsPhieuYeuCauDichVu > tbody:last-child').append('<tr>'+ '<td>' + dichvu + '</td>' + '</tr>');
-        
-        //alert("hello");
+        //var countRow = document.getElementById("countRow").textContent;
+        //document.getElementById("countRow").innerHTML = countRow;
+        var idLast = parseInt($("#tb_dsPhieuYeuCauDichVu").find("tr:last-child").attr("data-id")) + 1;
+        var trData = $("#tr_PhieuYCDV").html();
+        var trAdd = "<tr class=\"trAdded\" data-id=\"" + idLast + "\">" + trData + "</tr>";
+        $('#tb_dsPhieuYeuCauDichVu > tbody:last-child').append(trAdd);
+        updateData()
+    }
+    function updateData() {
+        var idFirst = parseInt($("#tb_dsPhieuYeuCauDichVu").find(".first_row").attr("data-id"));
+        $(".trAdded").each(function () {
+            idFirst++;
+            $(this).attr("data-id", idFirst);
+            var ddl_DichVu = "[" + idFirst + "].DichVuID";
+            var txt_BenhNhan = "[" + idFirst + "].BenhNhanID";
+            var ddl_BacSi = "[" + idFirst + "].BacSiID";
+            var ddl_Phong = "[" + idFirst + "].PhongID";
+            var txt_DonGia = "[" + idFirst + "].DonGia";
+            var txt_ThoiGianThucHien = "[" + idFirst + "].ThoiGianThucHien";
+            var txt_NgayLap = "[" + idFirst + "].NgayLap";
+            $(this).find(".ddl_DichVuID").attr("name", ddl_DichVu);
+            $(this).find(".txt_BenhNhan").attr("name", txt_BenhNhan);
+            $(this).find(".ddl_BacSi").attr("name", ddl_BacSi);
+            $(this).find(".ddl_Phong").attr("name", ddl_Phong);
+            $(this).find(".txt_DonGia").attr("name", txt_DonGia);
+            $(this).find(".txt_ThoiGianThucHien").attr("name", txt_ThoiGianThucHien);
+            $(this).find(".txt_NgayLap").attr("name", txt_NgayLap);
+        });
     }
 </script>
 @section Scripts {

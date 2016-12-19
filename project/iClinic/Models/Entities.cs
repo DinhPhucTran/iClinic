@@ -37,10 +37,9 @@ namespace iClinic.Models
             //    .HasOptional<NhanVien>(u => u.NhanVien)
             //    .WithOptionalPrincipal();
 
-            modelBuilder.Entity<Phong>()
-                .HasRequired(p => p.BoPhan)
-                .WithMany(b => b.Phongs)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<NhanVien>()
+            //    .HasOptional<BoPhan>(u => u.BoPhan)
+            //    .WithOptionalPrincipal();
 
             modelBuilder.Entity<GiayNhapVien>()
                 .HasRequired(a => a.BacSiDieuTri)
@@ -81,6 +80,11 @@ namespace iClinic.Models
                 .HasRequired(a => a.BacSi)
                 .WithMany()
                 .HasForeignKey(u => u.BacSiID).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PhieuYeuCauDichVu>()
+                .HasRequired(a => a.PhongKham)
+                .WithMany()
+                .HasForeignKey(u => u.PhongID).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<PhieuYeuCauDichVu>()
                 .HasRequired(a => a.DichVu)

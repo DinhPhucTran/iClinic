@@ -15,10 +15,15 @@ namespace iClinic.Models
        
         [Display(Name="Tên Phòng")]
         public String TenPhong { get; set; }
+
+        public int DichVuID { get; set; }
+
+        [ForeignKey("DichVuID")]
+        public virtual DichVu DichVu { get; set; }
+
+        //public int BoPhanID { get; set; }
         
-        public int BoPhanID { get; set; }
-        
-        [ForeignKey("BoPhanID")]
-        public virtual BoPhan BoPhan { get; set; }
+        //[ForeignKey("BoPhanID")]
+        //public virtual BoPhan BoPhan { get; set; }
     }
 }

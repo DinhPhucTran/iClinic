@@ -77,6 +77,14 @@
                 </div>
 
                 <div class="form-group">
+                    @Html.LabelFor(model => model.BoPhanID, "Bộ Phận", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.DropDownList("BoPhanID", null, String.Empty, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.BoPhanID)
+                </div>
+
+                <div class="form-group">
                     @Html.LabelFor(model => model.ChucVuID, "Chức Vụ", new { @class = "col-sm-2 control-label" })
                     <div class="col-sm-10">
                         @Html.DropDownList("ChucVuID", null, String.Empty, new { @class = "form-control" })
@@ -84,13 +92,13 @@
                     @Html.ValidationMessageFor(model => model.ChucVuID)
                 </div>
 
-                <div class="form-group">
+                @*<div class="form-group">
                     @Html.LabelFor(model => model.Phong, "Trực Thuộc Phòng", new { @class = "col-sm-2 control-label" })
                     <div class="col-sm-10">
                         @Html.DropDownList("PhongID", null, String.Empty, new { @class = "form-control" })
                     </div>
                     @Html.ValidationMessageFor(model => model.PhongID)
-                </div>
+                </div>*@
             </div>
         </div>
 

@@ -1,0 +1,100 @@
+﻿@model iClinic.Models.PhieuYeuCauDichVu
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>PhieuYeuCauDichVu</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ThoiGianThucHien)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ThoiGianThucHien)
+            @Html.ValidationMessageFor(model => model.ThoiGianThucHien)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NgayLap)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NgayLap)
+            @Html.ValidationMessageFor(model => model.NgayLap)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DonGia)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DonGia)
+            @Html.ValidationMessageFor(model => model.DonGia)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ChanDoan)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ChanDoan)
+            @Html.ValidationMessageFor(model => model.ChanDoan)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LoiDan)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LoiDan)
+            @Html.ValidationMessageFor(model => model.LoiDan)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BenhNhanID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BenhNhanID)
+            @Html.ValidationMessageFor(model => model.BenhNhanID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BacSiID, "BacSi")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("BacSiID", String.Empty)
+            @Html.ValidationMessageFor(model => model.BacSiID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DichVuID, "DichVu")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("DichVuID", String.Empty)
+            @Html.ValidationMessageFor(model => model.DichVuID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PhieuKhamBenhID, "PhieuKhamBenh")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("PhieuKhamBenhID", String.Empty)
+            @Html.ValidationMessageFor(model => model.PhieuKhamBenhID)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

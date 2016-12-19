@@ -48,10 +48,10 @@
                     @*@Html.DisplayNameFor(model => model.TenBoPhan)*@
                     @*@Html.ActionLink("Tên bộ phận", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })*@
                 </th>
-                <th>
+                @*<th>*@
                     @*@Html.DisplayNameFor(model => model.GioiTinh)*@
-                    Trưởng bộ phận
-                </th>
+                    @*Trưởng bộ phận*@
+                @*</th>*@
                 <th>
                     @*@Html.DisplayNameFor(model => model.NgaySinh)*@
                     Ghi chú
@@ -65,9 +65,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.TenBoPhan)
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.NhanVien.TenNhanVien)
-                    </td>
+                    </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.GhiChu)
                     </td>

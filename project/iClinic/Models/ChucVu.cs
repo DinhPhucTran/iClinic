@@ -14,6 +14,5 @@ namespace iClinic.Models
         public int MaChucVu { get; set; }
         [Display(Name = "Tên Chức Vụ")]
         public String TenChucVu { get; set; }
-        public virtual ICollection<NhanVien> NhanViens { get; set; }
     }
 }

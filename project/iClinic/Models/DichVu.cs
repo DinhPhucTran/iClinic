@@ -18,5 +18,17 @@ namespace iClinic.Models
 
         [Display(Name = "Đơn Giá")]
         public Double DonGia { get; set; }
+
+        //public int PhongID { get; set; }
+
+        ////[ForeignKey("PhongID")]
+        //[NotMapped]
+        //public virtual Phong PhongThucHien { get; set; }
+
+        //remove
+        //public Nullable<int> BoPhanID { get; set; }
+
+        //[ForeignKey("BoPhanID")]
+        //public virtual BoPhan BoPhanDamNhiem { get; set; }
     }
 }

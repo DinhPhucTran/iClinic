@@ -31,6 +31,9 @@ namespace iClinic.Models
 
         [Display(Name = "Lời Dặn")]
         public String LoiDan { get; set; }
+        
+        //add
+        public int PhongID { get; set; }
 
         public int BenhNhanID { get; set; }
 
@@ -39,6 +42,9 @@ namespace iClinic.Models
         public int DichVuID { get; set; }
 
         public int PhieuKhamBenhID {get; set;}
+
+        [ForeignKey("PhongID")]
+        public virtual Phong PhongKham { get; set; }
 
         [ForeignKey("BacSiID")]
         public virtual NhanVien BacSi { get; set; }

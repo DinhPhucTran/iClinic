@@ -146,6 +146,7 @@
     <Compile Include="Controllers\KhamBenhController.cs" />
     <Compile Include="Controllers\LoaiNhanVienController.cs" />
     <Compile Include="Controllers\NhanVienController.cs" />
+    <Compile Include="Controllers\PhieuYeuCauDichVuController.cs" />
     <Compile Include="Controllers\PhongController.cs" />
     <Compile Include="Controllers\ThuocController.cs" />
     <Compile Include="Global.asax.cs">
@@ -162,12 +163,13 @@
     <Compile Include="Migrations\201612151638192_Initial.Designer.cs">
       <DependentUpon>201612151638192_Initial.cs</DependentUpon>
     </Compile>-->
-    <Compile Include="Migrations\201612181659489_Initial.cs" />
-    <Compile Include="Migrations\201612181659489_Initial.Designer.cs">
-      <DependentUpon>201612181659489_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201612191720511_Update.cs" />
+    <Compile Include="Migrations\201612191720511_Update.Designer.cs">
+      <DependentUpon>201612191720511_Update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BenhNhan.cs" />
+    <Compile Include="Models\BenhNhanChoKham.cs" />
     <Compile Include="Models\BoPhan.cs" />
     <Compile Include="Models\ChiTietDieuTri.cs" />
     <Compile Include="Models\ChiTietDonThuoc.cs" />
@@ -184,7 +186,6 @@
     <Compile Include="Models\HoaDon.cs" />
     <Compile Include="Models\HoSoDieuTriNoiTru.cs" />
     <Compile Include="Models\LoaiNhanVien.cs" />
-    <Compile Include="Models\MultiModels\CreateThuoc.cs" />
     <Compile Include="Models\NhanVien.cs" />
     <Compile Include="Models\PhieuKhamBenh.cs" />
     <Compile Include="Models\PhieuYeuCauDichVu.cs" />
@@ -1243,6 +1244,12 @@
     <Content Include="Views\DichVu\Create.cshtml" />
     <Content Include="Views\DichVu\Edit.cshtml" />
     <Content Include="Views\DichVu\Delete.cshtml" />
+    <Content Include="Views\KhamBenh\PhieuYeuCauDichVu\_PhieuYeuCauDichVu.cshtml" />
+    <Content Include="Views\PhieuYeuCauDichVu\Index.cshtml" />
+    <Content Include="Views\PhieuYeuCauDichVu\Details.cshtml" />
+    <Content Include="Views\PhieuYeuCauDichVu\Create.cshtml" />
+    <Content Include="Views\PhieuYeuCauDichVu\Edit.cshtml" />
+    <Content Include="Views\PhieuYeuCauDichVu\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1251,16 +1258,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612181659489_Initial.resx">
-      <DependentUpon>201612181659489_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612191720511_Update.resx">
+      <DependentUpon>201612191720511_Update.cs</DependentUpon>
     </EmbeddedResource>
-
-    <!--<EmbeddedResource Include="Migrations\201612161455525_annotation.resx">
-      <DependentUpon>201612161455525_annotation.cs</DependentUpon>
-    </EmbeddedResource>-->
-    <!--<EmbeddedResource Include="Migrations\201612111718402_update.resx">
-      <DependentUpon>201612111718402_update.cs</DependentUpon>
-    </EmbeddedResource>-->
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -19,12 +19,12 @@ namespace iClinic.Models
         [Display(Name = "Ghi Chú")]
         public String GhiChu { get; set; }
 
-        [Display(Name = "Trưởng Bộ Phận")]
-        public Nullable<int> NhanVienID { get; set; }
+        //[Display(Name = "Trưởng Bộ Phận")]
+        //public Nullable<int> NhanVienID { get; set; }
 
-        [ForeignKey("NhanVienID")]
-        public virtual NhanVien NhanVien { get; set; }
+        //[ForeignKey("NhanVienID")]
+        //public virtual NhanVien NhanVien { get; set; }
 
-        public virtual ICollection<Phong> Phongs { get; set; }
+        //public virtual ICollection<Phong> Phongs { get; set; }
     }
 }

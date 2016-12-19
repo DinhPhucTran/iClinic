@@ -44,10 +44,12 @@ namespace iClinic.Controllers
             var dsNhanVien = db.DbSetNhanVien.ToList().Select(s => new
             {
                 IdNV = s.MaNhanVien,
-                InfoNV = s.TenNhanVien + " - " + "NV" + s.MaNhanVien + " - " + s.Phong.BoPhan.TenBoPhan + " - " + s.Phong.TenPhong
+                InfoNV = s.TenNhanVien + " - " + "NV" + s.MaNhanVien + " - " + s.BoPhan.TenBoPhan
             });
             ViewBag.BacSiID = new SelectList(dsNhanVien, "IdNV", "InfoNV");
-            ViewBag.DichVuID = new SelectList(db.DbSetDichVu, "MaDichVu", "TenDichVu");
+            ViewBag.DichVuID = db.DbSetDichVu;
+            ViewBag.DanhSachBacSi = db.DbSetNhanVien; //phải lọc: theo loại nhân viên, loại dịch vụ, 
+            ViewBag.DanhSachPhong = db.DbSetPhong;
             return View();
         }
 
@@ -56,7 +58,7 @@ namespace iClinic.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(PhieuKhamBenh phieukhambenh)
+        public ActionResult Create(PhieuKhamBenh phieukhambenh, List<PhieuYeuCauDichVu> dsPhieuYeuCauDichVu)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +68,15 @@ namespace iClinic.Controllers
             }
 
             ViewBag.BenhNhanID = new SelectList(db.DbSetBenhNhan, "MaBenhNhan", "TenBenhNhan", phieukhambenh.BenhNhanID);
-            ViewBag.BacSiID = new SelectList(db.DbSetNhanVien, "MaNhanVien", "TenNhanVien", phieukhambenh.BacSiID);
-            ViewBag.DichVuID = new SelectList(db.DbSetDichVu, "MaDichVu", "TenDichVu");
+            var dsNhanVien = db.DbSetNhanVien.ToList().Select(s => new
+            {
+                IdNV = s.MaNhanVien,
+                InfoNV = s.TenNhanVien + " - " + "NV" + s.MaNhanVien + " - " + s.BoPhan.TenBoPhan
+            });
+            ViewBag.DichVuID = db.DbSetDichVu;
+            ViewBag.BacSiID = new SelectList(dsNhanVien, "IdNV", "InfoNV"); //bác sĩ đang đăng nhập để tạo. (ko dc chọn)
+            ViewBag.DanhSachBacSi = db.DbSetNhanVien; //phải lọc: theo loại nhân viên, loại dịch vụ, 
+            ViewBag.DanhSachPhong = db.DbSetPhong;
             return View(phieukhambenh);
         }
 
