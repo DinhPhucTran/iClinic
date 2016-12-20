@@ -14,7 +14,6 @@ namespace iClinic.Models
         public int MaThuoc { get; set; }
         
         [Display(Name="Tên Thuốc")]
-        [Required]
         [Required(ErrorMessage="Vui lòng nhập tên thuốc")]
         public String TenThuoc { get; set; }
         

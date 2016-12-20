@@ -40,28 +40,24 @@ namespace iClinic.Controllers
         //
         // GET: /KhamBenh/Create
 
-        public ActionResult Create(int MaBenhNhan = 0)
+        public ActionResult Create()
         {
-            ViewBag.BenhNhanID = MaBenhNhan; //new SelectList(db.DbSetBenhNhan, "MaBenhNhan", "TenBenhNhan");
+            ViewBag.BenhNhanID = new SelectList(db.DbSetBenhNhan, "MaBenhNhan", "TenBenhNhan");
             var dsNhanVien = db.DbSetNhanVien.ToList().Select(s => new
             {
                 IdNV = s.MaNhanVien,
                 InfoNV = s.TenNhanVien + " - " + "NV" + s.MaNhanVien + " - " + s.BoPhan.TenBoPhan
             });
             ViewBag.BacSiID = new SelectList(dsNhanVien, "IdNV", "InfoNV");
-<<<<<<< Updated upstream
             ViewBag.DichVuID = db.DbSetDichVu;
             ViewBag.DanhSachBacSi = db.DbSetNhanVien; //phải lọc: theo loại nhân viên, loại dịch vụ, 
             ViewBag.DanhSachPhong = db.DbSetPhong;
             return View();
-=======
-            ViewBag.DichVuID = new SelectList(db.DbSetDichVu, "MaDichVu", "TenDichVu");
 
-            PhieuKhamBenh phieu = new PhieuKhamBenh();
-            phieu.BenhNhanID = MaBenhNhan;
-            phieu.BenhNhan = db.DbSetBenhNhan.Find(MaBenhNhan);
-            return View(phieu);
->>>>>>> Stashed changes
+            //PhieuKhamBenh phieu = new PhieuKhamBenh();
+            //phieu.BenhNhanID = MaBenhNhan;
+            //phieu.BenhNhan = db.DbSetBenhNhan.Find(MaBenhNhan);
+            //return View(phieu);
         }
 
         //
@@ -69,13 +65,8 @@ namespace iClinic.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-<<<<<<< Updated upstream
         public ActionResult Create(PhieuKhamBenh phieukhambenh, List<PhieuYeuCauDichVu> dsPhieuYeuCauDichVu)
-=======
-        public ActionResult Create(PhieuKhamBenh phieukhambenh, [Bind(Prefix="BenhNhan")]BenhNhan bn)
->>>>>>> Stashed changes
         {
-            phieukhambenh.BenhNhan = bn;
 
             if (ModelState.IsValid)
             {
@@ -161,12 +152,12 @@ namespace iClinic.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
-<<<<<<< Updated upstream
+
         public ActionResult GetPhongByIdDichVu(String dichVuID)
         {
             var objData = db.DbSetPhong.ToList().Find(n => n.DichVuID == int.Parse(dichVuID));
             return Json(new JavaScriptSerializer().Serialize(objData));
-=======
+        }
 
         public ActionResult _SideListBenhNhan(string currentFilter, string searchString, int? page)
         {
@@ -194,7 +185,6 @@ namespace iClinic.Controllers
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             return PartialView(patients.ToPagedList(pageNumber, pageSize));
->>>>>>> Stashed changes
         }
     }
 }
