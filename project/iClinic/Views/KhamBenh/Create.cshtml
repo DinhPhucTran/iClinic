@@ -5,6 +5,10 @@
     ViewBag.Title = "Create";
 }
 
+@section Title{
+    Khám bệnh
+}
+
 @section PageHeader
 {
     Khám Bệnh
@@ -15,6 +19,7 @@
     <li class="active">Khám Bệnh</li>
 }
 
+<<<<<<< Updated upstream
 @*<h2>Create</h2>*@
 
 @using (Html.BeginForm())
@@ -51,19 +56,116 @@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.ChanDoan, new { @class = "col-sm-2 control-label" })
+=======
+<div class="row">
+    <div class="col-md-4">
+        @Html.Action("_SideListBenhNhan", "KhamBenh")
+    </div>
 
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(model => model.ChanDoan, (String)"Chẩn đoán", new { @class = "form-control" })
-                    </div>
-                    @Html.ValidationMessageFor(model => model.ChanDoan)
+    <div class="col-md-8">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Phiếu Khám Bệnh</h3>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.LoiDan, new { @class = "col-sm-2 control-label" })
+                <div class="form-horizontal">
+                    <div class="box-body">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BenhNhanID, new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-10">
+                                @*@Html.DropDownList("BenhNhanID", null, String.Empty, new { @class = "form-control" })*@
+                                @if (@Model != null)
+                                {
+                                    <p style="margin-top: 8px;">@Model.BenhNhanID</p>
+                                    @Html.HiddenFor(model => model.BenhNhanID)
+                                }
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.BenhNhan.TenBenhNhan, new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-10">
+                                @if (@Model != null)
+                                {
+                                    if (@Model.BenhNhan != null)
+                                    {
+                                        <p style="margin-top: 8px;">@Model.BenhNhan.TenBenhNhan</p>
+                                        @Html.HiddenFor(model => model.BenhNhan.TenBenhNhan)
+                                    }
+                                }
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BacSiID, "Bác Sĩ Khám", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-10">
+                                @Html.DropDownList("BacSiID", null, new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.BacSiID)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BenhNhan.TienSuBenh, new { @class = "col-sm-2 control-label" })
 
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(model => model.LoiDan, (String)"Lời Dặn", new { @class = "form-control" })
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.BenhNhan.TienSuBenh, new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.BenhNhan.TienSuBenh)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NgayKham, new { @class = "col-sm-2 control-label" })
+
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.NgayKham, new { @class = "form-control datepicker", Value = DateTime.Today.ToShortDateString() })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ChanDoan, new { @class = "col-sm-2 control-label" })
+>>>>>>> Stashed changes
+
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.ChanDoan, (String)"Chẩn đoán", new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ChanDoan)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LoiDan, new { @class = "col-sm-2 control-label" })
+
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.LoiDan, (String)"Lời Dặn", new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.LoiDan)
+                        </div>
                     </div>
-                    @Html.ValidationMessageFor(model => model.LoiDan)
+                </div>
+                @*Chi Tiết Phiếu Khám*@
+                <div class="box-header with-border">
+                    <div>
+                        <h3 class="box-title">Chi Tiết Phiếu Khám Bệnh</h3>
+                        <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;">Add</button>
+                        @*<input type="button" value="Add"  />*@
+                    </div>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover" id="tb_ChiTietPhieuKham">
+                        <tr>
+                            <th>@Html.LabelFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.DichVuID, "Tên Dịch Vụ")</th>
+                            <th>@Html.LabelFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.DonGia, "Đơn Giá")</th>
+                            <th>@Html.LabelFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.NgayLap, "Ngày Lập")</th>
+                            <th>@Html.LabelFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.ThoiGianThucHien, "Thời Gian Thực Hiện")</th>
+                        </tr>
+                        @*<tr>
+                                <td>@Html.DropDownList("DichVuID", String.Empty)</td>
+                                <td>@Html.TextBoxFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.DonGia)</td>
+                                <td>@Html.EditorFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.NgayLap)</td>
+                                <td>@Html.EditorFor(model => model.ChiTietPhieuKhamBenhs.First().PhieuYeuCauDichVu.ThoiGianThucHien)</td>
+                            </tr>*@
+                    </table>
+                </div>
+                <div class="box-footer">
+                    <button type="reset" class="btn btn-default">Hủy</button>
+                    <button type="submit" class="btn btn-info pull-right">Lưu</button>
                 </div>
 
                 <div class="form-group">
@@ -84,6 +186,7 @@
                     document.getElementById("txt_NgayKhamPKB").value = today;
                 </script>
             </div>
+<<<<<<< Updated upstream
         </div>
         @*Chi Tiết Phiếu Khám*@
         <div class="box-header with-border">
@@ -141,8 +244,12 @@
             <button type="reset" class="btn btn-default">Hủy</button>
             <button type="submit" class="btn btn-info pull-right">Lưu</button>
         </div>
+=======
+        }
+
+>>>>>>> Stashed changes
     </div>
-}
+</div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -150,13 +257,20 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
+<<<<<<< Updated upstream
     <script src="@Url.Content("~/Content/plugins/datepicker/bootstrap-datepicker.js")"></script>
+=======
+    <script src="@Url.Content("~/Scripts/js/pnotify.custom.min.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/datepicker/bootstrap-datepicker.js")"></script>
+
+>>>>>>> Stashed changes
     <script>
         $('.datepicker').datepicker({
             autoclose: true,
             format: 'dd/mm/yyyy'
         });
     </script>
+<<<<<<< Updated upstream
     <script>
         function clickAdd() {
             //var countRow = document.getElementById("countRow").textContent;
@@ -232,4 +346,19 @@
             });
         }
     </script>
+=======
+
+    @*@if (ViewBag.Msg != null)
+    {
+        <script>
+            new PNotify({
+                title: '@ViewBag.Msg.Title',
+                text: '@ViewBag.Msg.Content',
+                type: '@ViewBag.Msg.Type',
+                styling: 'bootstrap3'
+            });
+        </script>
+    }*@
+   
+>>>>>>> Stashed changes
 }

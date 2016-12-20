@@ -1250,6 +1250,7 @@
     <Content Include="Views\PhieuYeuCauDichVu\Create.cshtml" />
     <Content Include="Views\PhieuYeuCauDichVu\Edit.cshtml" />
     <Content Include="Views\PhieuYeuCauDichVu\Delete.cshtml" />
+    <Content Include="Views\KhamBenh\_SideListBenhNhan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
