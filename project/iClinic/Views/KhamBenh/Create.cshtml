@@ -31,7 +31,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.BenhNhanID, "Bệnh Nhân", new { @class = "col-sm-2 control-label" })
                     <div class="col-sm-10">
-                        @Html.DropDownList("BenhNhanID", null, String.Empty, new { @class = "form-control" })
+                        @Html.DropDownList("BenhNhanID", null, String.Empty, new { @class = "form-control", @onchange = "changeBenhNhan(this);", @id = "benhNhanKham" })
                     </div>
                     @Html.ValidationMessageFor(model => model.BenhNhanID)
                 </div>
@@ -44,19 +44,10 @@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.BenhNhan.TienSuBenh, new { @class = "col-sm-2 control-label" })
-
                     <div class="col-sm-10">
                         @Html.TextBoxFor(model => model.BenhNhan.TienSuBenh, new { @class = "form-control" })
                     </div>
                     @Html.ValidationMessageFor(model => model.BenhNhan.TienSuBenh)
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NgayKham, new { @class = "col-sm-2 control-label" })
-
-                    <div class="col-sm-10">
-                        @Html.EditorFor(model => model.NgayKham, new { @class = "form-control" })
-                    </div>
-                    @Html.ValidationMessageFor(model => model.NgayKham)
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.ChanDoan, new { @class = "col-sm-2 control-label" })
@@ -74,6 +65,24 @@
                     </div>
                     @Html.ValidationMessageFor(model => model.LoiDan)
                 </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NgayKham, new { @class = "col-sm-2 control-label" })
+
+                    <div class="col-sm-10">
+                        <input class="form-control" id="txt_NgayKhamPKB" type="text" value="" readonly />
+                        @*@Html.TextBoxFor(model => model.NgayKham, new { @class = "form-control datepicker" })*@
+                    </div>
+                    @Html.ValidationMessageFor(model => model.NgayKham)
+                </div>
+                <script>
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1;
+                    var yyyy = today.getFullYear();
+                    if (dd < 10) { dd = '0' + dd } if (mm < 10) { mm = '0' + mm } today = dd + '/' + mm + '/' + yyyy;
+                    document.getElementById("txt_NgayKhamPKB").value = today;
+                </script>
             </div>
         </div>
         @*Chi Tiết Phiếu Khám*@
@@ -87,55 +96,42 @@
         <div class="box-body table-responsive no-padding">
             <table class="table table-hover" id="tb_dsPhieuYeuCauDichVu">
                 @{
-                    IEnumerable<DichVu> dsDichVu = ViewBag.DichVuID as IEnumerable<DichVu>;
-                    IEnumerable<Phong> dsPhong = ViewBag.DanhSachPhong as IEnumerable<Phong>;
-                    IEnumerable<NhanVien> dsBacSi = ViewBag.DanhSachBacSi as IEnumerable<NhanVien>;
+    IEnumerable<DichVu> dsDichVu = ViewBag.DichVuID as IEnumerable<DichVu>;
+    IEnumerable<Phong> dsPhong = ViewBag.DanhSachPhong as IEnumerable<Phong>;
+    IEnumerable<NhanVien> dsBacSi = ViewBag.DanhSachBacSi as IEnumerable<NhanVien>;
                 }
 
                 <tr class="tr_structure" id="tr_PhieuYCDV" hidden>
                     <td>
-                        <select class="form-control ddl_DichVuID" name="">
+                        <select class="form-control ddl_DichVuID" name="" onchange="changeDichVu(this)">
+                            <option value=""></option>
                             @foreach (var itemDV in dsDichVu)
                             {
                                 <option value="@itemDV.MaDichVu">@itemDV.TenDichVu</option>
                             }
                         </select>
                     </td>
-                    @* benh nhan *@
-                    <td><input class="form-control txt_BenhNhan" name="" type="text" value="" readonly/></td>
-                    @* bac si *@
-                    <td>
-                        <select class="form-control ddl_BacSi" name="">
-                            @foreach (var itemBS in dsBacSi)
-                            {
-                                <option value="@itemBS.MaNhanVien">@itemBS.TenNhanVien</option>
-                            }
-                        </select>
+                    <td hidden>
+                        <input class="txt_BenhNhan" name="" type="text" value="" hidden />
+                        <input class="txt_BenhNhanShow" name="" type="text" value="" readonly hidden />
                     </td>
-                    @* phong *@
                     <td>
-                        <select class="form-control ddl_Phong" name="">
-                            @foreach (var itemP in dsPhong)
-                            {
-                                <option value="@itemP.MaPhong">@itemP.TenPhong</option>
-                            }
-                        </select>
+                        <input class="ddl_Phong" name="" type="text" value="" hidden />
+                        <input class="form-control ddl_PhongShow" type="text" value="" readonly />
                     </td>
-                    @* don gia *@
-                    <td><input class="form-control txt_DonGia" name="" type="text" value="" readonly/></td>
-                    @* thoi gian thuc hien *@
-                    <td><input class="form-control txt_ThoiGianThucHien" name="" type="date" value="" /></td>
-                    @* ngay lap *@
-                    <td><input class="form-control txt_NgayLap" name="" type="text" value="" readonly/></td>
-                    @*<td>@Html.TextBox("PhieuKhamBenhID")</td>*@
+                    <td><input class="form-control txt_DonGia" name="" type="text" value="" readonly /></td>
+                    <td><input class="form-control txt_NgayLap datepicker" name="" type="text" value="" readonly /></td>
+                    <td>
+                        @Html.ActionLink("Xóa", "Delete", new {  })
+                    </td>
                 </tr>
                 <tr class="first_row" data-id="-1">
                     <th>Tên Dịch Vụ</th>
-                    <th>Bệnh Nhân</th>
-                    <th>Bác Sĩ Thực Hiện</th>
+                    <th hidden>Bệnh Nhân</th>
+                    @*<th>Bác Sĩ Thực Hiện</th>*@
                     <th>Phòng khám</th>
                     <th>Đơn Giá</th>
-                    <th>Thời Gian Thực Hiện</th>
+                    @*<th>Thời Gian Thực Hiện</th>*@
                     <th>Ngày Lập</th>
                     <th></th>
                 </tr>
@@ -151,38 +147,89 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-<script>
-    function clickAdd() {
-        //var countRow = document.getElementById("countRow").textContent;
-        //document.getElementById("countRow").innerHTML = countRow;
-        var idLast = parseInt($("#tb_dsPhieuYeuCauDichVu").find("tr:last-child").attr("data-id")) + 1;
-        var trData = $("#tr_PhieuYCDV").html();
-        var trAdd = "<tr class=\"trAdded\" data-id=\"" + idLast + "\">" + trData + "</tr>";
-        $('#tb_dsPhieuYeuCauDichVu > tbody:last-child').append(trAdd);
-        updateData()
-    }
-    function updateData() {
-        var idFirst = parseInt($("#tb_dsPhieuYeuCauDichVu").find(".first_row").attr("data-id"));
-        $(".trAdded").each(function () {
-            idFirst++;
-            $(this).attr("data-id", idFirst);
-            var ddl_DichVu = "[" + idFirst + "].DichVuID";
-            var txt_BenhNhan = "[" + idFirst + "].BenhNhanID";
-            var ddl_BacSi = "[" + idFirst + "].BacSiID";
-            var ddl_Phong = "[" + idFirst + "].PhongID";
-            var txt_DonGia = "[" + idFirst + "].DonGia";
-            var txt_ThoiGianThucHien = "[" + idFirst + "].ThoiGianThucHien";
-            var txt_NgayLap = "[" + idFirst + "].NgayLap";
-            $(this).find(".ddl_DichVuID").attr("name", ddl_DichVu);
-            $(this).find(".txt_BenhNhan").attr("name", txt_BenhNhan);
-            $(this).find(".ddl_BacSi").attr("name", ddl_BacSi);
-            $(this).find(".ddl_Phong").attr("name", ddl_Phong);
-            $(this).find(".txt_DonGia").attr("name", txt_DonGia);
-            $(this).find(".txt_ThoiGianThucHien").attr("name", txt_ThoiGianThucHien);
-            $(this).find(".txt_NgayLap").attr("name", txt_NgayLap);
-        });
-    }
-</script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="@Url.Content("~/Content/plugins/datepicker/bootstrap-datepicker.js")"></script>
+    <script>
+        $('.datepicker').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+    </script>
+    <script>
+        function clickAdd() {
+            //var countRow = document.getElementById("countRow").textContent;
+            //document.getElementById("countRow").innerHTML = countRow;
+            var idLast = parseInt($("#tb_dsPhieuYeuCauDichVu").find("tr:last-child").attr("data-id")) + 1;
+            var trData = $("#tr_PhieuYCDV").html();
+            var trAdd = "<tr class=\"trAdded\" data-id=\"" + idLast + "\">" + trData + "</tr>";
+            $('#tb_dsPhieuYeuCauDichVu > tbody:last-child').append(trAdd);
+            updateData();
+            var eleBenhNhan = document.getElementById("benhNhanKham");
+            changeBenhNhan(eleBenhNhan);
+        }
+        function updateData() {
+            var idFirst = parseInt($("#tb_dsPhieuYeuCauDichVu").find(".first_row").attr("data-id"));
+            $(".trAdded").each(function () {
+                idFirst++;
+                $(this).attr("data-id", idFirst);
+                var ddl_DichVu = "[" + idFirst + "].DichVuID";
+                var txt_BenhNhan = "[" + idFirst + "].BenhNhanID";
+                var ddl_BacSi = "[" + idFirst + "].BacSiID";
+                var ddl_Phong = "[" + idFirst + "].PhongID";
+                var txt_DonGia = "[" + idFirst + "].DonGia";
+                var txt_ThoiGianThucHien = "[" + idFirst + "].ThoiGianThucHien";
+                var txt_NgayLap = "[" + idFirst + "].NgayLap";
+                $(this).find(".ddl_DichVuID").attr("name", ddl_DichVu);
+                $(this).find(".txt_BenhNhan").attr("name", txt_BenhNhan);
+                $(this).find(".ddl_BacSi").attr("name", ddl_BacSi);
+                $(this).find(".ddl_Phong").attr("name", ddl_Phong);
+                $(this).find(".txt_DonGia").attr("name", txt_DonGia);
+
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1;
+                var yyyy = today.getFullYear();
+                if (dd < 10) { dd = '0' + dd } if (mm < 10) { mm = '0' + mm } today = dd + '/' + mm + '/' + yyyy;
+
+                //$(this).find(".txt_ThoiGianThucHien").attr("name", txt_ThoiGianThucHien);
+                //$(this).find(".txt_ThoiGianThucHien").attr("value", today);
+                $(this).find(".txt_NgayLap").attr("name", txt_NgayLap);
+                $(this).find(".txt_NgayLap").attr("value", today);
+            });
+        }
+        function changeDichVu(eleCurrent) {
+            var idDichVu = eleCurrent.options[eleCurrent.selectedIndex].value;
+            if (idDichVu != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "GetPhongByIdDichVu",
+                    data: JSON.stringify({ dichVuID: idDichVu }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccess,
+                });
+                function OnSuccess(response) {
+                    var parentTr = eleCurrent.parentElement.parentElement;
+                    var json = JSON.parse(response);
+                    var MaPhong = json['MaPhong'];
+                    var TenPhong = json['TenPhong'];
+                    var DichVuData = json['DichVu'];
+                    var DonGia = DichVuData['DonGia'];
+                    $(parentTr).find(".ddl_Phong").attr("value", MaPhong);
+                    $(parentTr).find(".ddl_PhongShow").attr("value", TenPhong);
+                    $(parentTr).find(".txt_DonGia").attr("value", DonGia);
+                }
+            }
+        }
+        function changeBenhNhan(elementCurrent) {
+            var valueEleCurrent = elementCurrent.options[elementCurrent.selectedIndex].value;
+            var textEleCurrent = elementCurrent.options[elementCurrent.selectedIndex].text;
+            $(".trAdded").each(function () {
+                $(this).find(".txt_BenhNhan").attr("value", valueEleCurrent);
+                $(this).find(".txt_BenhNhanShow").attr("value", textEleCurrent);
+            });
+        }
+    </script>
 }

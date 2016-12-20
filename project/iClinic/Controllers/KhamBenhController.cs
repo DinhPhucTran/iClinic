@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using iClinic.Models;
+using System.Web.Script.Serialization;
 
 namespace iClinic.Controllers
 {
@@ -75,8 +76,8 @@ namespace iClinic.Controllers
             });
             ViewBag.DichVuID = db.DbSetDichVu;
             ViewBag.BacSiID = new SelectList(dsNhanVien, "IdNV", "InfoNV"); //bác sĩ đang đăng nhập để tạo. (ko dc chọn)
-            ViewBag.DanhSachBacSi = db.DbSetNhanVien; //phải lọc: theo loại nhân viên, loại dịch vụ, 
-            ViewBag.DanhSachPhong = db.DbSetPhong;
+            ViewBag.DanhSachBacSi = db.DbSetNhanVien; 
+            ViewBag.DanhSachPhong = db.DbSetPhong.Where(n => n.DichVuID == 1);
             return View(phieukhambenh);
         }
 
@@ -143,6 +144,11 @@ namespace iClinic.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+        public ActionResult GetPhongByIdDichVu(String dichVuID)
+        {
+            var objData = db.DbSetPhong.ToList().Find(n => n.DichVuID == int.Parse(dichVuID));
+            return Json(new JavaScriptSerializer().Serialize(objData));
         }
     }
 }
