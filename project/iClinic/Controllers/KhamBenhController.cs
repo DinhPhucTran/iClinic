@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using iClinic.Models;
 using System.Web.Script.Serialization;
+using PagedList;
 
 namespace iClinic.Controllers
 {
@@ -52,6 +53,11 @@ namespace iClinic.Controllers
             ViewBag.DanhSachBacSi = db.DbSetNhanVien; //phải lọc: theo loại nhân viên, loại dịch vụ, 
             ViewBag.DanhSachPhong = db.DbSetPhong;
             return View();
+
+            //PhieuKhamBenh phieu = new PhieuKhamBenh();
+            //phieu.BenhNhanID = MaBenhNhan;
+            //phieu.BenhNhan = db.DbSetBenhNhan.Find(MaBenhNhan);
+            //return View(phieu);
         }
 
         //
@@ -61,6 +67,7 @@ namespace iClinic.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(PhieuKhamBenh phieukhambenh, List<PhieuYeuCauDichVu> dsPhieuYeuCauDichVu)
         {
+
             if (ModelState.IsValid)
             {
                 phieukhambenh.NgayKham = DateTime.Now;
@@ -151,10 +158,39 @@ namespace iClinic.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
+
         public ActionResult GetPhongByIdDichVu(String dichVuID)
         {
             var objData = db.DbSetPhong.ToList().Find(n => n.DichVuID == int.Parse(dichVuID));
             return Json(new JavaScriptSerializer().Serialize(objData));
+        }
+
+        public ActionResult _SideListBenhNhan(string currentFilter, string searchString, int? page)
+        {
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var patients = from p in db.DbSetBenhNhan
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patients = patients.Where(p => p.TenBenhNhan.Contains(searchString));
+            }
+
+            patients = patients.OrderBy(p => p.TenBenhNhan);
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return PartialView(patients.ToPagedList(pageNumber, pageSize));
         }
     }
 }

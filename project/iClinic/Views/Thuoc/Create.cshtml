@@ -30,8 +30,9 @@
 
                     <div class="col-sm-10">
                         @Html.TextBoxFor(model => model.TenThuoc, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TenThuoc, String.Empty, new { @style = "color: #dd4b39;" })
                     </div>
-                    @Html.ValidationMessageFor(model => model.TenThuoc)
+                    
                 </div>
 
                 <div class="form-group">
@@ -39,8 +40,9 @@
 
                     <div class="col-sm-10">
                         @Html.TextBoxFor(model => model.DonGia, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DonGia, String.Empty, new { @style = "color: #dd4b39;" })
                     </div>
-                    @Html.ValidationMessageFor(model => model.DonGia)
+                    
                 </div>
 
                 <div class="form-group">
@@ -48,16 +50,18 @@
 
                     <div class="col-sm-10">
                         @Html.TextBoxFor(model => model.SoLuong, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SoLuong, String.Empty, new { @style = "color: #dd4b39;" })
                     </div>
-                    @Html.ValidationMessageFor(model => model.SoLuong)
+                    
                 </div>
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.DonViTinhID, "Đơn Vị Tính", new { @class = "col-sm-2 control-label" })
                     <div class="col-sm-10">
                         @Html.DropDownList("DonViTinhID", null, String.Empty, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DonViTinhID, String.Empty, new { @style = "color: #dd4b39;" })
                     </div>
-                    @Html.ValidationMessageFor(model => model.DonViTinhID)
+                    
                 </div>
                 <div class="box-footer">
                     <button type="reset" class="btn btn-default">Hủy</button>

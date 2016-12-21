@@ -14,7 +14,7 @@ namespace iClinic.Models
         public int MaPhieuKhamBenh { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name="Ngày Khám")]
         public DateTime NgayKham { get; set;}
 
@@ -27,6 +27,7 @@ namespace iClinic.Models
         [Display(Name="Lời Dặn")]
         public String LoiDan { get; set; }
         
+        [Display(Name="Mã Bệnh Nhân")]
         public int BenhNhanID { get; set; }
         
         public int BacSiID { get; set; }

@@ -5,6 +5,10 @@
     ViewBag.Title = "Create";
 }
 
+@section Title{
+    Khám bệnh
+}
+
 @section PageHeader
 {
     Khám Bệnh
@@ -118,7 +122,7 @@
                         @*<input class="form-control txt_NgayLapShow" name="" type="text" value="" readonly />*@
                     </td>
                     <td>
-                        @Html.ActionLink("Xóa", "Delete", new {  })
+                        @Html.ActionLink("Xóa", "Delete", new { })
                     </td>
                 </tr>
                 <tr class="first_row" data-id="-1">
