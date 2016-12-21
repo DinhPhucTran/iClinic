@@ -45,7 +45,7 @@
                     @Html.LabelFor(model => model.NgaySinh, "Ngày Sinh", new { @class = "col-sm-2 control-label" })
 
                     <div class="col-sm-10">
-                        @Html.EditorFor(model => model.NgaySinh, new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.NgaySinh, new { @class = "form-control datepicker" })
                     </div>
                     @Html.ValidationMessageFor(model => model.NgaySinh)
                 </div>
@@ -115,4 +115,11 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Content/plugins/datepicker/bootstrap-datepicker.js")"></script>
+    <script>
+        $('.datepicker').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+</script>
 }

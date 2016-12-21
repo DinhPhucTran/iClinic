@@ -43,19 +43,19 @@
                     @Html.ValidationMessageFor(model => model.BacSiID)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.BenhNhan.TienSuBenh, new { @class = "col-sm-2 control-label" })
+                    @Html.LabelFor(model => model.TienSuBenh, new { @class = "col-sm-2 control-label" })
                     <div class="col-sm-10">
-                        @Html.TextBoxFor(model => model.BenhNhan.TienSuBenh, new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.TienSuBenh, new { @class = "form-control" })
                     </div>
-                    @Html.ValidationMessageFor(model => model.BenhNhan.TienSuBenh)
+                    @*@Html.ValidationMessageFor(model => model.BenhNhan.TienSuBenh)*@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.ChanDoan, new { @class = "col-sm-2 control-label" })
 
                     <div class="col-sm-10">
-                        @Html.TextBoxFor(model => model.ChanDoan, (String)"Chẩn đoán", new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.ChanDoan, (String)"Chuẩn đoán", new { @class = "form-control" })
                     </div>
-                    @Html.ValidationMessageFor(model => model.ChanDoan)
+                    @*@Html.ValidationMessageFor(model => model.ChanDoan)*@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.LoiDan, new { @class = "col-sm-2 control-label" })
@@ -63,26 +63,18 @@
                     <div class="col-sm-10">
                         @Html.TextBoxFor(model => model.LoiDan, (String)"Lời Dặn", new { @class = "form-control" })
                     </div>
-                    @Html.ValidationMessageFor(model => model.LoiDan)
+                    @*@Html.ValidationMessageFor(model => model.LoiDan)*@
                 </div>
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.NgayKham, new { @class = "col-sm-2 control-label" })
 
                     <div class="col-sm-10">
-                        <input class="form-control" id="txt_NgayKhamPKB" type="text" value="" readonly />
-                        @*@Html.TextBoxFor(model => model.NgayKham, new { @class = "form-control datepicker" })*@
+                        <h4>@DateTime.Now.ToString("dd/MM/yyyy")</h4>
+                        @*@Html.LabelFor(model => model.NgayKham, DateTime.Now.ToString(), new { @class = "form-control" })*@
                     </div>
-                    @Html.ValidationMessageFor(model => model.NgayKham)
+                    @*@Html.ValidationMessageFor(model => model.NgayKham)*@
                 </div>
-                <script>
-                    var today = new Date();
-                    var dd = today.getDate();
-                    var mm = today.getMonth() + 1;
-                    var yyyy = today.getFullYear();
-                    if (dd < 10) { dd = '0' + dd } if (mm < 10) { mm = '0' + mm } today = dd + '/' + mm + '/' + yyyy;
-                    document.getElementById("txt_NgayKhamPKB").value = today;
-                </script>
             </div>
         </div>
         @*Chi Tiết Phiếu Khám*@
@@ -97,8 +89,8 @@
             <table class="table table-hover" id="tb_dsPhieuYeuCauDichVu">
                 @{
     IEnumerable<DichVu> dsDichVu = ViewBag.DichVuID as IEnumerable<DichVu>;
-    IEnumerable<Phong> dsPhong = ViewBag.DanhSachPhong as IEnumerable<Phong>;
-    IEnumerable<NhanVien> dsBacSi = ViewBag.DanhSachBacSi as IEnumerable<NhanVien>;
+    //IEnumerable<Phong> dsPhong = ViewBag.DanhSachPhong as IEnumerable<Phong>;
+    //IEnumerable<NhanVien> dsBacSi = ViewBag.DanhSachBacSi as IEnumerable<NhanVien>;
                 }
 
                 <tr class="tr_structure" id="tr_PhieuYCDV" hidden>
@@ -120,7 +112,11 @@
                         <input class="form-control ddl_PhongShow" type="text" value="" readonly />
                     </td>
                     <td><input class="form-control txt_DonGia" name="" type="text" value="" readonly /></td>
-                    <td><input class="form-control txt_NgayLap datepicker" name="" type="text" value="" readonly /></td>
+                    <td>
+                        <h4>@DateTime.Now.ToString("dd/MM/yyyy")</h4>
+                        @*<input class="txt_NgayLap" name="" type="text" value="" hidden />*@
+                        @*<input class="form-control txt_NgayLapShow" name="" type="text" value="" readonly />*@
+                    </td>
                     <td>
                         @Html.ActionLink("Xóa", "Delete", new {  })
                     </td>
@@ -180,23 +176,31 @@
                 var ddl_Phong = "[" + idFirst + "].PhongID";
                 var txt_DonGia = "[" + idFirst + "].DonGia";
                 var txt_ThoiGianThucHien = "[" + idFirst + "].ThoiGianThucHien";
-                var txt_NgayLap = "[" + idFirst + "].NgayLap";
+                //var txt_NgayLap = "[" + idFirst + "].NgayLap";
                 $(this).find(".ddl_DichVuID").attr("name", ddl_DichVu);
                 $(this).find(".txt_BenhNhan").attr("name", txt_BenhNhan);
                 $(this).find(".ddl_BacSi").attr("name", ddl_BacSi);
                 $(this).find(".ddl_Phong").attr("name", ddl_Phong);
                 $(this).find(".txt_DonGia").attr("name", txt_DonGia);
 
-                var today = new Date();
-                var dd = today.getDate();
-                var mm = today.getMonth() + 1;
-                var yyyy = today.getFullYear();
-                if (dd < 10) { dd = '0' + dd } if (mm < 10) { mm = '0' + mm } today = dd + '/' + mm + '/' + yyyy;
+                //var today = new Date();
+                //var dd = today.getDate();
+                //var mm = today.getMonth() + 1;
+                //var yyyy = today.getFullYear();
+                //if (dd < 10) {
+                //    dd = '0' + dd;
+                //}
+                //if (mm < 10) {
+                //    mm = '0' + mm;
+                //}
+                //mmddyyyy = mm + '/' + dd + '/' + yyyy;
+                //today = dd + '/' + mm + '/' + yyyy;
 
                 //$(this).find(".txt_ThoiGianThucHien").attr("name", txt_ThoiGianThucHien);
                 //$(this).find(".txt_ThoiGianThucHien").attr("value", today);
-                $(this).find(".txt_NgayLap").attr("name", txt_NgayLap);
-                $(this).find(".txt_NgayLap").attr("value", today);
+                //$(this).find(".txt_NgayLap").attr("name", txt_NgayLap);
+                //$(this).find(".txt_NgayLap").attr("value", mmddyyyy);
+                //$(this).find(".txt_NgayLapShow").attr("value", today);
             });
         }
         function changeDichVu(eleCurrent) {
@@ -221,6 +225,11 @@
                     $(parentTr).find(".ddl_PhongShow").attr("value", TenPhong);
                     $(parentTr).find(".txt_DonGia").attr("value", DonGia);
                 }
+            } else {
+                var parentTr = eleCurrent.parentElement.parentElement;
+                $(parentTr).find(".ddl_Phong").attr("value", "");
+                $(parentTr).find(".ddl_PhongShow").attr("value", "");
+                $(parentTr).find(".txt_DonGia").attr("value", "");
             }
         }
         function changeBenhNhan(elementCurrent) {

@@ -63,11 +63,17 @@ namespace iClinic.Controllers
         {
             if (ModelState.IsValid)
             {
+                phieukhambenh.NgayKham = DateTime.Now;
                 db.DbSetPhieuKhamBenh.Add(phieukhambenh);
                 db.SaveChanges();
+                foreach (var item in dsPhieuYeuCauDichVu) {
+                    item.PhieuKhamBenhID = phieukhambenh.MaPhieuKhamBenh;
+                    item.NgayLap = DateTime.Now;
+                    item.ThoiGianThucHien = DateTime.Now;
+                }
                 return RedirectToAction("Index");
             }
-
+            var errors = ModelState.Values.SelectMany(m => m.Errors);
             ViewBag.BenhNhanID = new SelectList(db.DbSetBenhNhan, "MaBenhNhan", "TenBenhNhan", phieukhambenh.BenhNhanID);
             var dsNhanVien = db.DbSetNhanVien.ToList().Select(s => new
             {

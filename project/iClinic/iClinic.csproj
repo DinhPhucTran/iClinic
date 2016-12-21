@@ -146,7 +146,6 @@
     <Compile Include="Controllers\KhamBenhController.cs" />
     <Compile Include="Controllers\LoaiNhanVienController.cs" />
     <Compile Include="Controllers\NhanVienController.cs" />
-    <Compile Include="Controllers\PhieuYeuCauDichVuController.cs" />
     <Compile Include="Controllers\PhongController.cs" />
     <Compile Include="Controllers\ThuocController.cs" />
     <Compile Include="Global.asax.cs">
@@ -163,9 +162,9 @@
     <Compile Include="Migrations\201612151638192_Initial.Designer.cs">
       <DependentUpon>201612151638192_Initial.cs</DependentUpon>
     </Compile>-->
-    <Compile Include="Migrations\201612191720511_Update.cs" />
-    <Compile Include="Migrations\201612191720511_Update.Designer.cs">
-      <DependentUpon>201612191720511_Update.cs</DependentUpon>
+    <Compile Include="Migrations\201612201611449_Initial.cs" />
+    <Compile Include="Migrations\201612201611449_Initial.Designer.cs">
+      <DependentUpon>201612201611449_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BenhNhan.cs" />
@@ -1244,12 +1243,6 @@
     <Content Include="Views\DichVu\Create.cshtml" />
     <Content Include="Views\DichVu\Edit.cshtml" />
     <Content Include="Views\DichVu\Delete.cshtml" />
-    <Content Include="Views\KhamBenh\PhieuYeuCauDichVu\_PhieuYeuCauDichVu.cshtml" />
-    <Content Include="Views\PhieuYeuCauDichVu\Index.cshtml" />
-    <Content Include="Views\PhieuYeuCauDichVu\Details.cshtml" />
-    <Content Include="Views\PhieuYeuCauDichVu\Create.cshtml" />
-    <Content Include="Views\PhieuYeuCauDichVu\Edit.cshtml" />
-    <Content Include="Views\PhieuYeuCauDichVu\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1258,8 +1251,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612191720511_Update.resx">
-      <DependentUpon>201612191720511_Update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612201611449_Initial.resx">
+      <DependentUpon>201612201611449_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

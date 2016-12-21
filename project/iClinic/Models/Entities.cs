@@ -71,6 +71,11 @@ namespace iClinic.Models
                 .WithMany()
                 .HasForeignKey(u => u.PhieuKhamBenhID).WillCascadeOnDelete(false);
 
+            //modelBuilder.Entity<PhieuKhamBenh>()
+            //    .Property(f => f.NgayKham)
+            //    .HasColumnType("datetime2")
+            //    .HasPrecision(0);
+
             modelBuilder.Entity<ChiTietHoaDon>()
                 .HasRequired(a => a.PhieuYeuCauDichVu)
                 .WithMany()
@@ -96,7 +101,7 @@ namespace iClinic.Models
                 .WithMany()
                 .HasForeignKey(u => u.DonViTinhID).WillCascadeOnDelete(false);
 
-            
+
             modelBuilder.Entity<DonThuoc>()
                 .HasRequired(a => a.PhieuKhamBenh)
                 .WithMany()

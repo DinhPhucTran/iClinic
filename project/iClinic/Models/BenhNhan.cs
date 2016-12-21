@@ -14,7 +14,7 @@ namespace iClinic.Models
         public int MaBenhNhan { get; set; }
 
         [Display(Name = "Tên bệnh nhân")]
-        [Required(ErrorMessage = "Vui lòng nhập tên bệnh nhân")]
+        //[Required(ErrorMessage = "Vui lòng nhập tên bệnh nhân")]
         public String TenBenhNhan { get; set; }
 
         [Display(Name = "Giới tính")]

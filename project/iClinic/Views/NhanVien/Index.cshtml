@@ -12,21 +12,6 @@
 <table>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.LoaiNhanVien.TenLoaiNhanVien)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.BoPhan.TenBoPhan)
-        </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.BoPhanID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChucVu.TenChucVu)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Phong.TenPhong)
-        </th>*@
-        <th>
             @Html.DisplayNameFor(model => model.TenNhanVien)
         </th>
         <th>
@@ -41,23 +26,26 @@
         <th>
             @Html.DisplayNameFor(model => model.DiaChi)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoaiNhanVien.TenLoaiNhanVien)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.BoPhan.TenBoPhan)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.BoPhan.TenBoPhan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChucVu.TenChucVu)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Phong.TenPhong)
+        </th>*@
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.LoaiNhanVien.TenLoaiNhanVien)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phong.BoPhan.TenBoPhan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChucVu.TenChucVu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phong.TenPhong)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.TenNhanVien)
         </td>
@@ -72,6 +60,15 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DiaChi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoaiNhanVien.TenLoaiNhanVien)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BoPhan.TenBoPhan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChucVu.TenChucVu)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.MaNhanVien }) |

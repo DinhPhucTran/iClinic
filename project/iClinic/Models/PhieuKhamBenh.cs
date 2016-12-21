@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,7 +17,10 @@ namespace iClinic.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name="Ngày Khám")]
         public DateTime NgayKham { get; set;}
-        
+
+        [Display(Name="Tiền Sử Bệnh")]
+        public String TienSuBenh { get; set; }
+
         [Display(Name="Chẩn Đoán")]
         public String ChanDoan { get; set; }
         
@@ -35,6 +37,6 @@ namespace iClinic.Models
         [ForeignKey("BacSiID")]
         public virtual NhanVien BacSi { get; set; }
         
-        public virtual ICollection<PhieuYeuCauDichVu> PhieuYeuCauDichVus { get; set; }
+        //public virtual ICollection<PhieuYeuCauDichVu> PhieuYeuCauDichVus { get; set; }
     }
 }
