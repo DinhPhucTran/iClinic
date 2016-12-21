@@ -10,6 +10,7 @@ namespace iClinic.Models
     {
         public Entities() { }
         public DbSet<BenhNhan> DbSetBenhNhan { get; set; }
+        public DbSet<BenhNhanChoKham> DbSetBenhNhanChoKham { get; set; }
         public DbSet<BoPhan> DbSetBoPhan { get; set; }
         public DbSet<ChiTietDieuTri> DbSetChiTietDieuTri { get; set; }
         public DbSet<ChiTietDonThuoc> DbSetChiTietDonThuoc { get; set; }
@@ -83,14 +84,11 @@ namespace iClinic.Models
 
             modelBuilder.Entity<PhieuYeuCauDichVu>()
                 .HasOptional<NhanVien>(u => u.BacSi).WithMany().Map(m => m.MapKey("BacSiID"));
-                //.WithMany()
-                //.HasForeignKey(u => u.BacSiID).WillCascadeOnDelete(false);
-                //.WithOptionalPrincipal();
 
-            //modelBuilder.Entity<PhieuYeuCauDichVu>()
-            //    .HasRequired(a => a.BacSi)
-            //    .WithMany()
-            //    .HasForeignKey(u => u.BacSiID).WillCascadeOnDelete(false);
+            modelBuilder.Entity<BenhNhanChoKham>()
+                .HasRequired(a => a.BenhNhan)
+                .WithMany()
+                .HasForeignKey(u => u.BenhNhanID).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<PhieuYeuCauDichVu>()
                 .HasRequired(a => a.PhongKham)

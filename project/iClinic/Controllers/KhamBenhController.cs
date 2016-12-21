@@ -67,16 +67,20 @@ namespace iClinic.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(PhieuKhamBenh phieukhambenh, List<PhieuYeuCauDichVu> dsPhieuYeuCauDichVu)
         {
-
             if (ModelState.IsValid)
             {
                 phieukhambenh.NgayKham = DateTime.Now;
                 db.DbSetPhieuKhamBenh.Add(phieukhambenh);
                 db.SaveChanges();
-                foreach (var item in dsPhieuYeuCauDichVu) {
-                    item.PhieuKhamBenhID = phieukhambenh.MaPhieuKhamBenh;
-                    item.NgayLap = DateTime.Now;
-                    item.ThoiGianThucHien = DateTime.Now;
+                if (dsPhieuYeuCauDichVu != null) {
+                    foreach (var item in dsPhieuYeuCauDichVu)
+                    {
+                        item.PhieuKhamBenhID = phieukhambenh.MaPhieuKhamBenh;
+                        item.NgayLap = DateTime.Now;
+                        item.ThoiGianThucHien = DateTime.Now;
+                        db.DbSetPhieuYeuCauDichVu.Add(item);
+                    }
+                    db.SaveChanges();
                 }
                 return RedirectToAction("Index");
             }

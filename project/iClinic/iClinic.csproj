@@ -162,9 +162,9 @@
     <Compile Include="Migrations\201612151638192_Initial.Designer.cs">
       <DependentUpon>201612151638192_Initial.cs</DependentUpon>
     </Compile>-->
-    <Compile Include="Migrations\201612210511186_Initial.cs" />
-    <Compile Include="Migrations\201612210511186_Initial.Designer.cs">
-      <DependentUpon>201612210511186_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201612210555068_Initial.cs" />
+    <Compile Include="Migrations\201612210555068_Initial.Designer.cs">
+      <DependentUpon>201612210555068_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BenhNhan.cs" />
@@ -1252,8 +1252,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612210511186_Initial.resx">
-      <DependentUpon>201612210511186_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612210555068_Initial.resx">
+      <DependentUpon>201612210555068_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
