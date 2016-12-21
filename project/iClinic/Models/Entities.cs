@@ -82,9 +82,15 @@ namespace iClinic.Models
                 .HasForeignKey(u => u.PhieuYeuCauDichVuID).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<PhieuYeuCauDichVu>()
-                .HasRequired(a => a.BacSi)
-                .WithMany()
-                .HasForeignKey(u => u.BacSiID).WillCascadeOnDelete(false);
+                .HasOptional<NhanVien>(u => u.BacSi).WithMany().Map(m => m.MapKey("BacSiID"));
+                //.WithMany()
+                //.HasForeignKey(u => u.BacSiID).WillCascadeOnDelete(false);
+                //.WithOptionalPrincipal();
+
+            //modelBuilder.Entity<PhieuYeuCauDichVu>()
+            //    .HasRequired(a => a.BacSi)
+            //    .WithMany()
+            //    .HasForeignKey(u => u.BacSiID).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<PhieuYeuCauDichVu>()
                 .HasRequired(a => a.PhongKham)

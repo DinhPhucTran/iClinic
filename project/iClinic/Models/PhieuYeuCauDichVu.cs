@@ -37,7 +37,7 @@ namespace iClinic.Models
 
         public int BenhNhanID { get; set; }
 
-        public int BacSiID { get; set; }
+        public Nullable<int> BacSiID { get; set; }
 
         public int DichVuID { get; set; }
 
