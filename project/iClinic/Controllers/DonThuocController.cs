@@ -6,13 +6,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using iClinic.Models;
+using PagedList;
 
 namespace iClinic.Controllers
 {
     public class DonThuocController : Controller
     {
         private Entities db = new Entities();
-
+        private int idPhieuKham = 0;
         //
         // GET: /DonThuoc/
 
@@ -37,7 +38,7 @@ namespace iClinic.Controllers
 
         //
         // GET: /DonThuoc/Create
-
+        [HttpGet]
         public ActionResult Create()
         {
             ViewBag.BacSiID = new SelectList(db.DbSetNhanVien, "MaNhanVien", "TenNhanVien");
@@ -127,6 +128,66 @@ namespace iClinic.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+        public ActionResult _SideDanhSachPhieuKhamBenh(string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var dsPhieuKhamDangCho = from x in db.DbSetPhieuKhamBenhDangCho select x.PhieuKhamBenhID;
+            var dsPhieuKham = from p in db.DbSetPhieuKhamBenh
+                              where dsPhieuKhamDangCho.Contains(p.MaPhieuKhamBenh)
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                dsPhieuKham = dsPhieuKham.Where(p => p.BenhNhan.TenBenhNhan.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    dsPhieuKham = dsPhieuKham.OrderByDescending(p => p.BenhNhan.TenBenhNhan);
+                    break;
+                case "Date":
+                    dsPhieuKham = dsPhieuKham.OrderBy(p => p.BenhNhan.NgaySinh);
+                    break;
+                case "date_desc":
+                    dsPhieuKham = dsPhieuKham.OrderByDescending(p => p.BenhNhan.NgaySinh);
+                    break;
+                default:
+                    dsPhieuKham = dsPhieuKham.OrderBy(p => p.BenhNhan.TenBenhNhan);
+                    break;
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return PartialView("_SideDanhSachPhieuKhamBenh", dsPhieuKham.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult _SideDanhSachPhieuDichVu()
+        {
+            var dsPhieuDichVu = from p in db.DbSetPhieuYeuCauDichVu where p.PhieuKhamBenhID == idPhieuKham select p;
+            return PartialView("_SideDanhSachDichVu", dsPhieuDichVu.ToList());
+        }
+
+        public ActionResult ShowResult(int id)
+        {
+            idPhieuKham = id;
+            return RedirectToAction("_SideDanhSachPhieuDichVu");
         }
     }
 }

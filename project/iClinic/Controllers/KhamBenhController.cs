@@ -14,6 +14,7 @@ namespace iClinic.Controllers
     public class KhamBenhController : Controller
     {
         private Entities db = new Entities();
+        private Message msg;
 
         //
         // GET: /KhamBenh/
@@ -79,6 +80,9 @@ namespace iClinic.Controllers
 
         public ActionResult Create()
         {
+            Message msgThongBao = (Message)TempData["msg"];
+            ViewBag.Msg = msgThongBao;
+
             ViewBag.BenhNhanSelect = 0;
             ViewBag.BenhNhanID = new SelectList(db.DbSetBenhNhan, "MaBenhNhan", "TenBenhNhan");
             var dsNhanVien = db.DbSetNhanVien.ToList().Select(s => new
@@ -131,7 +135,12 @@ namespace iClinic.Controllers
                     }
                     db.SaveChanges();
                 }
-                return RedirectToAction("Index");
+                msg = new Message();
+                msg.Type = "success";
+                msg.Title = "Thành công";
+                msg.Content = "Đã lưu thông tin bệnh nhân";
+                TempData["msg"] = msg;
+                return RedirectToAction("Create");
             }
             var errors = ModelState.Values.SelectMany(m => m.Errors);
             ViewBag.BenhNhanID = new SelectList(db.DbSetBenhNhan, "MaBenhNhan", "TenBenhNhan", phieukhambenh.BenhNhanID);
@@ -198,7 +207,7 @@ namespace iClinic.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)//bug
+        public ActionResult DeleteConfirmed(int id)
         {
             PhieuKhamBenh phieukhambenh = db.DbSetPhieuKhamBenh.Find(id);
             if (phieukhambenh.PhieuYeuCauDichVus != null)
@@ -214,7 +223,7 @@ namespace iClinic.Controllers
             {
                 for (int i = 0; i < dsPhieuCho.Count; i++)
                 {
-                    db.DbSetPhieuYeuCauDichVu.Remove(db.DbSetPhieuYeuCauDichVu.Find(dsPhieuCho[i].MaPhieuKhamBenhDangCho));
+                    db.DbSetPhieuKhamBenhDangCho.Remove(db.DbSetPhieuKhamBenhDangCho.Find(dsPhieuCho[i].MaPhieuKhamBenhDangCho));
                 }
             }
             db.SaveChanges();

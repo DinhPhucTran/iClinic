@@ -1,0 +1,40 @@
+﻿@model IEnumerable<iClinic.Models.PhieuYeuCauDichVu>
+
+<div class="box box-success">
+    <div class="box-header">
+        <h4 class="box-title">Danh sách phiếu khám</h4>
+    </div>
+
+    <div class="box-body">
+
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>Bác Sĩ Thực Hiện</th>
+                <th>Tên Dịch Vụ</th>
+                <th>Chẩn Đoán</th>
+                <th>Lời Dặn</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                @*<tr onclick="location.href = '@Url.Action("Create", "KhamBenh", new { MaBenhNhan = item.MaBenhNhan })'" style="cursor: pointer;">*@
+                <tr style="cursor: pointer;">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BacSi.TenNhanVien)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DichVu.TenDichVu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChanDoan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LoiDan)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+

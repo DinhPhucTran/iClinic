@@ -1251,6 +1251,8 @@
     <Content Include="Views\DonThuoc\Create.cshtml" />
     <Content Include="Views\DonThuoc\Edit.cshtml" />
     <Content Include="Views\DonThuoc\Delete.cshtml" />
+    <Content Include="Views\DonThuoc\_SideDanhSachPhieuKhamBenh.cshtml" />
+    <Content Include="Views\DonThuoc\_SideDanhSachDichVu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

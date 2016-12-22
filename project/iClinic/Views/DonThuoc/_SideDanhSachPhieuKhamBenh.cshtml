@@ -1,0 +1,57 @@
+﻿@model PagedList.IPagedList<iClinic.Models.PhieuKhamBenh>
+@using PagedList.Mvc
+
+<div class="box box-success">
+    <div class="box-header">
+            <h4 class="box-title">Danh sách phiếu khám</h4>
+    </div>
+
+    <div class="box-body">
+        <div style="float: right;">
+            @using (Html.BeginForm("Create", "DonThuoc", FormMethod.Get))
+            {
+                <p>
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </p>
+            }
+        </div>
+
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>Mã Phiếu Khám</th>
+                <th>Tên bệnh nhân</th>
+                <th>Ngày Sinh</th>
+                <th>Tuổi</th>
+                <th>Giới tính</th>
+            </tr>
+
+                        @foreach (var item in Model)
+            {
+                            <tr onclick="location.href = '@Url.Action("ShowResult", "DonThuoc", new { MaPhieuKhamBenh = item.MaPhieuKhamBenh })'" style="cursor: pointer;">
+                            @*<tr onclick="selectPhieuKhamBenh()" style="cursor: pointer;">*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaPhieuKhamBenh)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BenhNhan.TenBenhNhan)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BenhNhan.NgaySinh)
+                                </td>
+                                <td>@item.BenhNhan.GetAge.ToString()</td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BenhNhan.GioiTinh)
+                                </td>
+                            </tr>
+            }
+
+        </table>
+
+        <br />
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Create", new { page, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>
+

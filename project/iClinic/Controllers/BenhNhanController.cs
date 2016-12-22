@@ -53,6 +53,18 @@ namespace iClinic.Controllers
             {
                 db.DbSetBenhNhan.Add(benhnhan);
                 db.SaveChanges();
+                db.DbSetBenhNhanChoKham.Add(new BenhNhanChoKham
+                {
+                    BenhNhanID = benhnhan.MaBenhNhan,
+                    DiaChi = benhnhan.DiaChi,
+                    GioiTinh = benhnhan.GioiTinh,
+                    NgaySinh = benhnhan.NgaySinh,
+                    NgayTiepNhan = benhnhan.NgayTiepNhan,
+                    NgheNghiep = benhnhan.NgheNghiep,
+                    SoDT = benhnhan.SoDT,
+                    TenBenhNhan = benhnhan.TenBenhNhan,
+                    TienSuBenh = benhnhan.TienSuBenh
+                });
                 return RedirectToAction("Index");
             }
 
@@ -109,6 +121,12 @@ namespace iClinic.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
+            var dsBenhNhanChoKham = db.DbSetBenhNhanChoKham.Where(m => m.BenhNhanID == benhnhan.MaBenhNhan).ToList();
+            for (int i = 0; i < dsBenhNhanChoKham.Count; i++)
+            {
+                db.DbSetBenhNhanChoKham.Remove(db.DbSetBenhNhanChoKham.Find(dsBenhNhanChoKham[i].MaBenhNhan));
+            }
+            db.SaveChanges();
             db.DbSetBenhNhan.Remove(benhnhan);
             db.SaveChanges();
             return RedirectToAction("Index");

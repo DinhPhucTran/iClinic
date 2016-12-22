@@ -4,50 +4,117 @@
     ViewBag.Title = "Create";
 }
 
+@section PageHeader
+{
+    Đơn Thuốc
+}
+
+@section Breadcrumb
+{
+    <li class="active">Đơn Thuốc</li>
+}
+
 <h2>Create</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>DonThuoc</legend>
+    <div class="row">
+        <div class="col-md-6">
+            @*@using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)*@
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.NgayKeDon)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.NgayKeDon)
-            @Html.ValidationMessageFor(model => model.NgayKeDon)
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Thông Tin Phiếu Khám</h3>
+                </div>
+                <div class="form-horizontal">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Tên Bệnh Nhân</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="BenhNhanName" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NgayKeDon, "Ngày Kê Đơn", new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                <h4>@DateTime.Now.ToString("dd/MM/yyyy")</h4>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TongTien, new { @class = "col-sm-4 control-label" })
+
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.TongTien, (String)"Tổng Tiền", new { @class = "form-control" })
+                            </div>
+                            @*@Html.ValidationMessageFor(model => model.LoiDan)*@
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="reset" class="btn btn-default">Hủy</button>
+                        <button type="submit" class="btn btn-info pull-right">Lưu</button>
+                    </div>
+                </div>
+            </div>
+            }
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.TongTien)
+        <div class="col-md-6">
+            @Html.Action("_SideDanhSachPhieuKhamBenh", "DonThuoc")
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.TongTien)
-            @Html.ValidationMessageFor(model => model.TongTien)
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            @*@using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)*@
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Kê Thuốc</h3>
+                </div>
+                <div class="form-horizontal">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Tên Bệnh Nhân</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="BenhNhanName" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NgayKeDon, "Ngày Kê Đơn", new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                <h4>@DateTime.Now.ToString("dd/MM/yyyy")</h4>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TongTien, new { @class = "col-sm-4 control-label" })
+
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.TongTien, (String)"Tổng Tiền", new { @class = "form-control" })
+                            </div>
+                            @*@Html.ValidationMessageFor(model => model.LoiDan)*@
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="reset" class="btn btn-default">Hủy</button>
+                        <button type="submit" class="btn btn-info pull-right">Lưu</button>
+                    </div>
+                </div>
+            </div>
+            @*}*@
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PhieuKhamBenhID, "PhieuKhamBenh")
+        <div class="col-md-6">
+            @Html.Action("_SideDanhSachPhieuDichVu", "DonThuoc")
         </div>
-        <div class="editor-field">
-            @Html.DropDownList("PhieuKhamBenhID", String.Empty)
-            @Html.ValidationMessageFor(model => model.PhieuKhamBenhID)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.BacSiID, "BacSiKeDon")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("BacSiID", String.Empty)
-            @Html.ValidationMessageFor(model => model.BacSiID)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
+    </div>
 }
 
 <div>

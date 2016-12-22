@@ -42,5 +42,8 @@ namespace iClinic.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày tiếp nhận")]
         public DateTime NgayTiepNhan { get; set; }
+
+        [NotMapped]
+        public int GetAge { get { return DateTime.Now.Year - NgaySinh.Year; } }
     }
 }
