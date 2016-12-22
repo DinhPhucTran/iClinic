@@ -57,15 +57,22 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="@Url.Content("~/Content/img/doctor-strange-160x160.jpg")" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Stephen Strange</span>
+                                <span class="hidden-xs">
+                                    @if (Request.IsAuthenticated)
+                                    {
+                                        @User.Identity.Name;
+                                    }
+                                </span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
                                     <img src="@Url.Content("~/Content/img/doctor-strange-160x160.jpg")" class="img-circle" alt="User Image">
                                     <p>
-                                        Stephen Strange
-                                        <small>Bác sĩ</small>
+                                        @if (Request.IsAuthenticated)
+                                        {
+                                            @User.Identity.Name;
+                                        }                                        
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -86,7 +93,14 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="text-center">
-                                        <a href="#" class="btn btn-default btn-flat">Đăng xuất</a>
+                                        @if (Request.IsAuthenticated)
+                                        {
+                                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Đăng xuất</a>
+                                            }
+                                        }
                                     </div>
                                 </li>
                             </ul>
@@ -105,8 +119,12 @@
                         <img src="@Url.Content("~/Content/img/doctor-strange-160x160.jpg")" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Stephen Strange</p>
-                        <a href="#">Bác sĩ</a>
+                        <p>
+                            @if (Request.IsAuthenticated)
+                            {
+                                @User.Identity.Name;
+                            }
+                        </p>
                     </div>
                 </div>
                 <!-- search form -->
