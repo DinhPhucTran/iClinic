@@ -21,131 +21,146 @@
 
 @*<h2>Create</h2>*@
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+<div class="row">
+    <div class="col-md-8">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
 
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">Phiếu Khám Bệnh</h3>
-        </div>
-        <div class="form-horizontal">
-            <div class="box-body">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.BenhNhanID, "Bệnh Nhân", new { @class = "col-sm-2 control-label" })
-                    <div class="col-sm-10">
-                        @Html.DropDownList("BenhNhanID", null, String.Empty, new { @class = "form-control", @onchange = "changeBenhNhan(this);", @id = "benhNhanKham" })
-                    </div>
-                    @Html.ValidationMessageFor(model => model.BenhNhanID)
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Phiếu Khám Bệnh</h3>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.BacSiID, "Bác Sĩ Khám", new { @class = "col-sm-2 control-label" })
-                    <div class="col-sm-10">
-                        @Html.DropDownList("BacSiID", null, String.Empty, new { @class = "form-control" })
-                    </div>
-                    @Html.ValidationMessageFor(model => model.BacSiID)
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TienSuBenh, new { @class = "col-sm-2 control-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(model => model.TienSuBenh, new { @class = "form-control" })
-                    </div>
-                    @*@Html.ValidationMessageFor(model => model.BenhNhan.TienSuBenh)*@
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ChanDoan, new { @class = "col-sm-2 control-label" })
+                <div class="form-horizontal">
+                    <div class="box-body">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BenhNhanID, "Bệnh Nhân")
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.BenhNhanID, new { id = "BenhNhanID" })
+                                @*<input type="number" name="BenhNhanID" id="BenhNhanID" value="" />*@
+                            </div>
+                            @*@Html.ValidationMessageFor(model => model.BenhNhanID)*@
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tên Bệnh Nhân</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" id="BenhNhanName" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BacSiID, "Bác Sĩ Khám", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-10">
+                                @Html.DropDownList("BacSiID", null, String.Empty, new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.BacSiID)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TienSuBenh, new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.TienSuBenh, new { @class = "form-control" })
+                            </div>
+                            @*@Html.ValidationMessageFor(model => model.BenhNhan.TienSuBenh)*@
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ChanDoan, new { @class = "col-sm-2 control-label" })
 
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(model => model.ChanDoan, (String)"Chuẩn đoán", new { @class = "form-control" })
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.ChanDoan, (String)"Chẩn đoán", new { @class = "form-control" })
+                            </div>
+                            @*@Html.ValidationMessageFor(model => model.ChanDoan)*@
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LoiDan, new { @class = "col-sm-2 control-label" })
+
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.LoiDan, (String)"Lời Dặn", new { @class = "form-control" })
+                            </div>
+                            @*@Html.ValidationMessageFor(model => model.LoiDan)*@
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NgayKham, new { @class = "col-sm-2 control-label" })
+
+                            <div class="col-sm-10">
+                                <h4>@DateTime.Now.ToString("dd/MM/yyyy")</h4>
+                                @*@Html.LabelFor(model => model.NgayKham, DateTime.Now.ToString(), new { @class = "form-control" })*@
+                            </div>
+                            @*@Html.ValidationMessageFor(model => model.NgayKham)*@
+                        </div>
                     </div>
-                    @*@Html.ValidationMessageFor(model => model.ChanDoan)*@
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.LoiDan, new { @class = "col-sm-2 control-label" })
-
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(model => model.LoiDan, (String)"Lời Dặn", new { @class = "form-control" })
+                @*Chi Tiết Phiếu Khám*@
+                <div class="box-header with-border">
+                    <div>
+                        <h3 class="box-title">Chi Tiết Phiếu Khám Bệnh</h3>
+                        <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;" onclick="clickAdd()">Add</button>
+                        @*<input type="button" value="Add"  />*@
                     </div>
-                    @*@Html.ValidationMessageFor(model => model.LoiDan)*@
                 </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover" id="tb_dsPhieuYeuCauDichVu">
+                        @{
+            IEnumerable<DichVu> dsDichVu = ViewBag.DichVuID as IEnumerable<DichVu>;
+            //IEnumerable<Phong> dsPhong = ViewBag.DanhSachPhong as IEnumerable<Phong>;
+            //IEnumerable<NhanVien> dsBacSi = ViewBag.DanhSachBacSi as IEnumerable<NhanVien>;
+                        }
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NgayKham, new { @class = "col-sm-2 control-label" })
-
-                    <div class="col-sm-10">
-                        <h4>@DateTime.Now.ToString("dd/MM/yyyy")</h4>
-                        @*@Html.LabelFor(model => model.NgayKham, DateTime.Now.ToString(), new { @class = "form-control" })*@
-                    </div>
-                    @*@Html.ValidationMessageFor(model => model.NgayKham)*@
+                        <tr class="tr_structure" id="tr_PhieuYCDV" hidden>
+                            <td>
+                                <select class="form-control ddl_DichVuID" name="" onchange="changeDichVu(this)">
+                                    <option value=""></option>
+                                    @foreach (var itemDV in dsDichVu)
+                                    {
+                                        <option value="@itemDV.MaDichVu">@itemDV.TenDichVu</option>
+                                    }
+                                </select>
+                            </td>
+                            <td hidden>
+                                <input class="txt_BenhNhan" name="" type="text" value="" hidden />
+                                <input class="txt_BenhNhanShow" name="" type="text" value="" readonly hidden />
+                            </td>
+                            <td>
+                                <input class="ddl_Phong" name="" type="text" value="" hidden />
+                                <input class="form-control ddl_PhongShow" type="text" value="" readonly />
+                            </td>
+                            <td><input class="form-control txt_DonGia" name="" type="text" value="" readonly /></td>
+                            <td>
+                                <h4>@DateTime.Now.ToString("dd/MM/yyyy")</h4>
+                                @*<input class="txt_NgayLap" name="" type="text" value="" hidden />*@
+                                @*<input class="form-control txt_NgayLapShow" name="" type="text" value="" readonly />*@
+                            </td>
+                            <td>
+                                @Html.ActionLink("Xóa", "Delete", new { })
+                            </td>
+                        </tr>
+                        <tr class="first_row" data-id="-1">
+                            <th>Tên Dịch Vụ</th>
+                            <th hidden>Bệnh Nhân</th>
+                            @*<th>Bác Sĩ Thực Hiện</th>*@
+                            <th>Phòng khám</th>
+                            <th>Đơn Giá</th>
+                            @*<th>Thời Gian Thực Hiện</th>*@
+                            <th>Ngày Lập</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="box-footer">
+                    <button type="reset" class="btn btn-default">Hủy</button>
+                    <button type="submit" class="btn btn-info pull-right">Lưu</button>
                 </div>
             </div>
-        </div>
-        @*Chi Tiết Phiếu Khám*@
-        <div class="box-header with-border">
-            <div>
-                <h3 class="box-title">Chi Tiết Phiếu Khám Bệnh</h3>
-                <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;" onclick="clickAdd()">Add</button>
-                @*<input type="button" value="Add"  />*@
-            </div>
-        </div>
-        <div class="box-body table-responsive no-padding">
-            <table class="table table-hover" id="tb_dsPhieuYeuCauDichVu">
-                @{
-    IEnumerable<DichVu> dsDichVu = ViewBag.DichVuID as IEnumerable<DichVu>;
-    //IEnumerable<Phong> dsPhong = ViewBag.DanhSachPhong as IEnumerable<Phong>;
-    //IEnumerable<NhanVien> dsBacSi = ViewBag.DanhSachBacSi as IEnumerable<NhanVien>;
-                }
+        }
 
-                <tr class="tr_structure" id="tr_PhieuYCDV" hidden>
-                    <td>
-                        <select class="form-control ddl_DichVuID" name="" onchange="changeDichVu(this)">
-                            <option value=""></option>
-                            @foreach (var itemDV in dsDichVu)
-                            {
-                                <option value="@itemDV.MaDichVu">@itemDV.TenDichVu</option>
-                            }
-                        </select>
-                    </td>
-                    <td hidden>
-                        <input class="txt_BenhNhan" name="" type="text" value="" hidden />
-                        <input class="txt_BenhNhanShow" name="" type="text" value="" readonly hidden />
-                    </td>
-                    <td>
-                        <input class="ddl_Phong" name="" type="text" value="" hidden />
-                        <input class="form-control ddl_PhongShow" type="text" value="" readonly />
-                    </td>
-                    <td><input class="form-control txt_DonGia" name="" type="text" value="" readonly /></td>
-                    <td>
-                        <h4>@DateTime.Now.ToString("dd/MM/yyyy")</h4>
-                        @*<input class="txt_NgayLap" name="" type="text" value="" hidden />*@
-                        @*<input class="form-control txt_NgayLapShow" name="" type="text" value="" readonly />*@
-                    </td>
-                    <td>
-                        @Html.ActionLink("Xóa", "Delete", new { })
-                    </td>
-                </tr>
-                <tr class="first_row" data-id="-1">
-                    <th>Tên Dịch Vụ</th>
-                    <th hidden>Bệnh Nhân</th>
-                    @*<th>Bác Sĩ Thực Hiện</th>*@
-                    <th>Phòng khám</th>
-                    <th>Đơn Giá</th>
-                    @*<th>Thời Gian Thực Hiện</th>*@
-                    <th>Ngày Lập</th>
-                    <th></th>
-                </tr>
-            </table>
-        </div>
-        <div class="box-footer">
-            <button type="reset" class="btn btn-default">Hủy</button>
-            <button type="submit" class="btn btn-info pull-right">Lưu</button>
+        <div>
+            @Html.ActionLink("Back to List", "Index")
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <div class="col-md-4">
+        @Html.Action("_SideListBenhNhan", "KhamBenh")
+    </div>
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -166,7 +181,7 @@
             var trAdd = "<tr class=\"trAdded\" data-id=\"" + idLast + "\">" + trData + "</tr>";
             $('#tb_dsPhieuYeuCauDichVu > tbody:last-child').append(trAdd);
             updateData();
-            var eleBenhNhan = document.getElementById("benhNhanKham");
+            var eleBenhNhan = document.getElementById("BenhNhanID");
             changeBenhNhan(eleBenhNhan);
         }
         function updateData() {
@@ -180,31 +195,11 @@
                 var ddl_Phong = "[" + idFirst + "].PhongID";
                 var txt_DonGia = "[" + idFirst + "].DonGia";
                 var txt_ThoiGianThucHien = "[" + idFirst + "].ThoiGianThucHien";
-                //var txt_NgayLap = "[" + idFirst + "].NgayLap";
                 $(this).find(".ddl_DichVuID").attr("name", ddl_DichVu);
                 $(this).find(".txt_BenhNhan").attr("name", txt_BenhNhan);
                 $(this).find(".ddl_BacSi").attr("name", ddl_BacSi);
                 $(this).find(".ddl_Phong").attr("name", ddl_Phong);
                 $(this).find(".txt_DonGia").attr("name", txt_DonGia);
-
-                //var today = new Date();
-                //var dd = today.getDate();
-                //var mm = today.getMonth() + 1;
-                //var yyyy = today.getFullYear();
-                //if (dd < 10) {
-                //    dd = '0' + dd;
-                //}
-                //if (mm < 10) {
-                //    mm = '0' + mm;
-                //}
-                //mmddyyyy = mm + '/' + dd + '/' + yyyy;
-                //today = dd + '/' + mm + '/' + yyyy;
-
-                //$(this).find(".txt_ThoiGianThucHien").attr("name", txt_ThoiGianThucHien);
-                //$(this).find(".txt_ThoiGianThucHien").attr("value", today);
-                //$(this).find(".txt_NgayLap").attr("name", txt_NgayLap);
-                //$(this).find(".txt_NgayLap").attr("value", mmddyyyy);
-                //$(this).find(".txt_NgayLapShow").attr("value", today);
             });
         }
         function changeDichVu(eleCurrent) {
@@ -237,12 +232,22 @@
             }
         }
         function changeBenhNhan(elementCurrent) {
-            var valueEleCurrent = elementCurrent.options[elementCurrent.selectedIndex].value;
-            var textEleCurrent = elementCurrent.options[elementCurrent.selectedIndex].text;
+            var valueEleBenhNhan = document.getElementById("BenhNhanID").value;
+            //var valueEleCurrent = elementCurrent.options[elementCurrent.selectedIndex].value;
+            //var textEleCurrent = elementCurrent.options[elementCurrent.selectedIndex].text;
             $(".trAdded").each(function () {
-                $(this).find(".txt_BenhNhan").attr("value", valueEleCurrent);
-                $(this).find(".txt_BenhNhanShow").attr("value", textEleCurrent);
+                $(this).find(".txt_BenhNhan").attr("value", valueEleBenhNhan);
+                //$(this).find(".txt_BenhNhan").attr("value", valueEleCurrent);
+                //$(this).find(".txt_BenhNhanShow").attr("value", textEleCurrent);
             });
+        }
+        function selectBenhNhan(id, name) {
+            var tbIdBenhNhan = document.getElementById("BenhNhanID"); 
+            var tbNameBenhNhan = document.getElementById("BenhNhanName");
+            tbIdBenhNhan.value = id;
+            tbNameBenhNhan.value = name;
+            var eleBenhNhan = document.getElementById("BenhNhanID");
+            changeBenhNhan(elementCurrent);
         }
     </script>
 }

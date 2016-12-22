@@ -1,0 +1,62 @@
+﻿@model iClinic.Models.DonThuoc
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>DonThuoc</legend>
+
+        @Html.HiddenFor(model => model.MaDonThuoc)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NgayKeDon)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NgayKeDon)
+            @Html.ValidationMessageFor(model => model.NgayKeDon)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TongTien)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TongTien)
+            @Html.ValidationMessageFor(model => model.TongTien)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PhieuKhamBenhID, "PhieuKhamBenh")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("PhieuKhamBenhID", String.Empty)
+            @Html.ValidationMessageFor(model => model.PhieuKhamBenhID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BacSiID, "BacSiKeDon")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("BacSiID", String.Empty)
+            @Html.ValidationMessageFor(model => model.BacSiID)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

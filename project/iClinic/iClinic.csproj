@@ -140,6 +140,7 @@
     <Compile Include="Controllers\BoPhanController.cs" />
     <Compile Include="Controllers\ChucVuController.cs" />
     <Compile Include="Controllers\DichVuController.cs" />
+    <Compile Include="Controllers\DonThuocController.cs" />
     <Compile Include="Controllers\DonTiepController.cs" />
     <Compile Include="Controllers\DonViTinhController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -162,9 +163,9 @@
     <Compile Include="Migrations\201612151638192_Initial.Designer.cs">
       <DependentUpon>201612151638192_Initial.cs</DependentUpon>
     </Compile>-->
-    <Compile Include="Migrations\201612210555068_Initial.cs" />
-    <Compile Include="Migrations\201612210555068_Initial.Designer.cs">
-      <DependentUpon>201612210555068_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201612220609176_Initial.cs" />
+    <Compile Include="Migrations\201612220609176_Initial.Designer.cs">
+      <DependentUpon>201612220609176_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BenhNhan.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Models\LoaiNhanVien.cs" />
     <Compile Include="Models\NhanVien.cs" />
     <Compile Include="Models\PhieuKhamBenh.cs" />
+    <Compile Include="Models\PhieuKhamBenhDangCho.cs" />
     <Compile Include="Models\PhieuYeuCauDichVu.cs" />
     <Compile Include="Models\Phong.cs" />
     <Compile Include="Models\Thuoc.cs" />
@@ -1244,6 +1246,11 @@
     <Content Include="Views\DichVu\Edit.cshtml" />
     <Content Include="Views\DichVu\Delete.cshtml" />
     <Content Include="Views\KhamBenh\_SideListBenhNhan.cshtml" />
+    <Content Include="Views\DonThuoc\Index.cshtml" />
+    <Content Include="Views\DonThuoc\Details.cshtml" />
+    <Content Include="Views\DonThuoc\Create.cshtml" />
+    <Content Include="Views\DonThuoc\Edit.cshtml" />
+    <Content Include="Views\DonThuoc\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1252,8 +1259,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612210555068_Initial.resx">
-      <DependentUpon>201612210555068_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612220609176_Initial.resx">
+      <DependentUpon>201612220609176_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

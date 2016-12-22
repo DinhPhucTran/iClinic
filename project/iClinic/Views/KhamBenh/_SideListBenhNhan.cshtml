@@ -25,22 +25,23 @@
                 <th>Ngày sinh</th>
             </tr>
 
-            @foreach (var item in Model)
+                        @foreach (var item in Model)
             {
-                <tr onclick="location.href = '@Url.Action("Create", "KhamBenh", new { MaBenhNhan = item.MaBenhNhan })'" style="cursor: pointer;">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MaBenhNhan)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TenBenhNhan)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GioiTinh)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NgayTiepNhan)
-                    </td>
-                </tr>
+                            @*<tr onclick="location.href = '@Url.Action("Create", "KhamBenh", new { MaBenhNhan = item.MaBenhNhan })'" style="cursor: pointer;">*@
+                            <tr onclick="selectBenhNhan(@item.MaBenhNhan, '@item.TenBenhNhan')" style="cursor: pointer;">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaBenhNhan)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TenBenhNhan)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.GioiTinh)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NgayTiepNhan)
+                                </td>
+                            </tr>
             }
 
         </table>

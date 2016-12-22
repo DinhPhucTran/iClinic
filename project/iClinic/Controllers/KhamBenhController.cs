@@ -18,10 +18,47 @@ namespace iClinic.Controllers
         //
         // GET: /KhamBenh/
 
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    var dbsetphieukhambenh = db.DbSetPhieuKhamBenh.Include(p => p.BenhNhan).Include(p => p.BacSi);
+        //    return View(dbsetphieukhambenh.ToList());
+        //}
+        public ActionResult Index(String sortOrder, String currentFilter, String searchString, int? page)
         {
-            var dbsetphieukhambenh = db.DbSetPhieuKhamBenh.Include(p => p.BenhNhan).Include(p => p.BacSi);
-            return View(dbsetphieukhambenh.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParam = sortOrder == "Date" ? "date_desc" : "Date";
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+            var phieuKB = from s in db.DbSetPhieuKhamBenh select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                phieuKB = phieuKB.Where(s => s.BenhNhan.TenBenhNhan.Contains(searchString));
+            }
+            switch (sortOrder) { 
+                case "name_desc":
+                    phieuKB = phieuKB.OrderByDescending(s => s.BenhNhan.TenBenhNhan);
+                    break;
+                case "Date":
+                    phieuKB = phieuKB.OrderBy(s => s.NgayKham);
+                    break;
+                case "date_desc":
+                    phieuKB = phieuKB.OrderByDescending(s => s.NgayKham);
+                    break;
+                default:
+                    phieuKB = phieuKB.OrderBy(s => s.BenhNhan.TenBenhNhan);
+                    break;
+            }
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(phieuKB.ToPagedList(pageNumber, pageSize));
         }
 
         //
@@ -42,6 +79,7 @@ namespace iClinic.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.BenhNhanSelect = 0;
             ViewBag.BenhNhanID = new SelectList(db.DbSetBenhNhan, "MaBenhNhan", "TenBenhNhan");
             var dsNhanVien = db.DbSetNhanVien.ToList().Select(s => new
             {
@@ -71,6 +109,17 @@ namespace iClinic.Controllers
             {
                 phieukhambenh.NgayKham = DateTime.Now;
                 db.DbSetPhieuKhamBenh.Add(phieukhambenh);
+                db.SaveChanges();
+                db.DbSetPhieuKhamBenhDangCho.Add(new PhieuKhamBenhDangCho
+                {
+                    PhieuKhamBenhID = phieukhambenh.MaPhieuKhamBenh,
+                    BacSiID = phieukhambenh.BacSiID,
+                    BenhNhanID = phieukhambenh.BenhNhanID,
+                    ChanDoan = phieukhambenh.ChanDoan,
+                    LoiDan = phieukhambenh.LoiDan,
+                    NgayKham = phieukhambenh.NgayKham,
+                    TienSuBenh = phieukhambenh.TienSuBenh
+                });
                 db.SaveChanges();
                 if (dsPhieuYeuCauDichVu != null) {
                     foreach (var item in dsPhieuYeuCauDichVu)
@@ -149,9 +198,26 @@ namespace iClinic.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id)//bug
         {
             PhieuKhamBenh phieukhambenh = db.DbSetPhieuKhamBenh.Find(id);
+            if (phieukhambenh.PhieuYeuCauDichVus != null)
+            {
+                for (int i = 0; i < phieukhambenh.PhieuYeuCauDichVus.ToList().Count; i++)
+                {
+                    int index = phieukhambenh.PhieuYeuCauDichVus.ToList()[i].MaPhieuYeuCauDichVu;
+                    db.DbSetPhieuYeuCauDichVu.Remove(db.DbSetPhieuYeuCauDichVu.Find(index));
+                }
+            }
+            var dsPhieuCho = db.DbSetPhieuKhamBenhDangCho.Where(m => m.PhieuKhamBenhID == phieukhambenh.MaPhieuKhamBenh).ToList();
+            if (dsPhieuCho != null)
+            {
+                for (int i = 0; i < dsPhieuCho.Count; i++)
+                {
+                    db.DbSetPhieuYeuCauDichVu.Remove(db.DbSetPhieuYeuCauDichVu.Find(dsPhieuCho[i].MaPhieuKhamBenhDangCho));
+                }
+            }
+            db.SaveChanges();
             db.DbSetPhieuKhamBenh.Remove(phieukhambenh);
             db.SaveChanges();
             return RedirectToAction("Index");

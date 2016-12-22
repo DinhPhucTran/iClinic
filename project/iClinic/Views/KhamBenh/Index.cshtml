@@ -1,57 +1,88 @@
-﻿@model IEnumerable<iClinic.Models.PhieuKhamBenh>
+﻿@model PagedList.IPagedList<iClinic.Models.PhieuKhamBenh>
+@using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Phiếu Khám Bệnh";
 }
 
 <h2>Index</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayKham)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChanDoan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LoiDan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BenhNhan.TenBenhNhan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BacSi.TenNhanVien)
-        </th>
-        <th></th>
-    </tr>
+</p>*@
+<div class="box box-info">
+    <div class="row">
+        <div class="col-sm-6">
+            <p>
+                @Html.ActionLink("Thêm mới", "Create")
+            </p>
+        </div>
+        <div class="col-sm-6">
+            <div class="pull-right">
+                @using (Html.BeginForm("Index", "KhamBenh", FormMethod.Get))
+                {
+                    <p>
+                        Tìm tên bệnh nhân: @Html.TextBox("SearchString", ViewBag.CurrentFilter as String)
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgayKham)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChanDoan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LoiDan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BenhNhan.TenBenhNhan)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BacSi.TenNhanVien)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaPhieuKhamBenh }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaPhieuKhamBenh }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaPhieuKhamBenh })
-        </td>
-    </tr>
-}
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>
+                @Html.ActionLink("Tên Bệnh Nhân", "Index", new { sortOrder = ViewBag.NameSortParam, currentFilter = ViewBag.CurrentFilter })
+                @*@Html.DisplayNameFor(model => model.BenhNhan.TenBenhNhan)*@
+            </th>
+            <th>
+                @Html.ActionLink("Ngày Khám", "Index", new { sortOrder = ViewBag.DateSortParam, currentFilter = ViewBag.CurrentFilter })
+                @*@Html.DisplayNameFor(model => model.NgayKham)*@
+            </th>
+            <th>
+                Chẩn Đoán
+                @*@Html.DisplayNameFor(model => model.ChanDoan)*@
+            </th>
+            <th>
+                Lời Dặn
+                @*@Html.DisplayNameFor(model => model.LoiDan)*@
+            </th>
+            @*<th>
+                Tên Nhân Viên
+                @Html.DisplayNameFor(model => model.BacSi.TenNhanVien)
+            </th>*@
+            <th></th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BenhNhan.TenBenhNhan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayKham)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChanDoan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoiDan)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.BacSi.TenNhanVien)
+                </td>*@
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.MaPhieuKhamBenh }) |
+                    @Html.ActionLink("Chi Tiết", "Details", new { id = item.MaPhieuKhamBenh })
+                    @*@Html.ActionLink("Xóa", "Delete", new { id = item.MaPhieuKhamBenh })*@
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
