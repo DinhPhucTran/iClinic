@@ -10,6 +10,7 @@ using PagedList;
 
 namespace iClinic.Controllers
 {
+    [Authorize]
     public class DonTiepController : Controller
     {
         private Entities db = new Entities();
