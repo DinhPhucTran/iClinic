@@ -9,7 +9,7 @@ using iClinic.CustomFilters;
 
 namespace iClinic.Controllers
 {
-    [AuthLog(Roles = "Admin")]
+    //[AuthLog(Roles = "Admin")]
     public class RoleController : Controller
     {
         ApplicationDbContext context;

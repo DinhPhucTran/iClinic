@@ -22,25 +22,28 @@
 @*<h2>Create</h2>*@
 
 <div class="row">
-    <div class="col-md-8">
-        @using (Html.BeginForm())
+    <div class="col-md-6">
+        @using (Html.BeginForm("Create", "KhamBenh"))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
-
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Phiếu Khám Bệnh</h3>
+                    <h3 class="box-title">Khám Bệnh</h3>
                 </div>
                 <div class="form-horizontal">
                     <div class="box-body">
                         <div hidden>
+                            @Html.LabelFor(model => model.MaPhieuKhamBenh, "Mã Phiếu Khám")
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.MaPhieuKhamBenh, new { id = "MaPhieuKham" })
+                            </div>
+                        </div>
+                        <div hidden>
                             @Html.LabelFor(model => model.BenhNhanID, "Bệnh Nhân")
                             <div class="col-sm-10">
                                 @Html.TextBoxFor(model => model.BenhNhanID, new { id = "BenhNhanID" })
-                                @*<input type="number" name="BenhNhanID" id="BenhNhanID" value="" />*@
                             </div>
-                            @*@Html.ValidationMessageFor(model => model.BenhNhanID)*@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Tên Bệnh Nhân</label>
@@ -48,17 +51,16 @@
                                 <input class="form-control" id="BenhNhanName" value="" />
                             </div>
                         </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.BacSiID, "Bác Sĩ Khám", new { @class = "col-sm-2 control-label" })
+                        <div hidden>
+                            @Html.LabelFor(model => model.BacSiID, "Bác Sĩ Khám")
                             <div class="col-sm-10">
-                                @Html.DropDownList("BacSiID", null, String.Empty, new { @class = "form-control" })
+                                @Html.TextBoxFor(model => model.BacSiID, new { @value = @User.Identity.Name})
                             </div>
-                            @Html.ValidationMessageFor(model => model.BacSiID)
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.TienSuBenh, new { @class = "col-sm-2 control-label" })
+                            @Html.LabelFor(model => model.LyDoKham, "Lý Do Khám", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
-                                @Html.TextBoxFor(model => model.TienSuBenh, new { @class = "form-control" })
+                                @Html.TextAreaFor(model => model.LyDoKham, new { @class = "form-control" })
                             </div>
                             @*@Html.ValidationMessageFor(model => model.BenhNhan.TienSuBenh)*@
                         </div>
@@ -84,84 +86,147 @@
 
                             <div class="col-sm-10">
                                 <h4>@DateTime.Now.ToString("dd/MM/yyyy")</h4>
-                                @*@Html.LabelFor(model => model.NgayKham, DateTime.Now.ToString(), new { @class = "form-control" })*@
                             </div>
-                            @*@Html.ValidationMessageFor(model => model.NgayKham)*@
                         </div>
                     </div>
                 </div>
-                @*Chi Tiết Phiếu Khám*@
-                <div class="box-header with-border">
-                    <div>
-                        <h3 class="box-title">Chi Tiết Phiếu Khám Bệnh</h3>
-                        <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;" onclick="clickAdd()">Add</button>
-                        @*<input type="button" value="Add"  />*@
-                    </div>
-                </div>
-                <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover" id="tb_dsPhieuYeuCauDichVu">
-                        @{
-            IEnumerable<DichVu> dsDichVu = ViewBag.DichVuID as IEnumerable<DichVu>;
-            //IEnumerable<Phong> dsPhong = ViewBag.DanhSachPhong as IEnumerable<Phong>;
-            //IEnumerable<NhanVien> dsBacSi = ViewBag.DanhSachBacSi as IEnumerable<NhanVien>;
-                        }
-
-                        <tr class="tr_structure" id="tr_PhieuYCDV" hidden>
-                            <td>
-                                <select class="form-control ddl_DichVuID" name="" onchange="changeDichVu(this)">
-                                    <option value=""></option>
-                                    @foreach (var itemDV in dsDichVu)
-                                    {
-                                        <option value="@itemDV.MaDichVu">@itemDV.TenDichVu</option>
-                                    }
-                                </select>
-                            </td>
-                            <td hidden>
-                                <input class="txt_BenhNhan" name="" type="text" value="" hidden />
-                                <input class="txt_BenhNhanShow" name="" type="text" value="" readonly hidden />
-                            </td>
-                            <td>
-                                <input class="ddl_Phong" name="" type="text" value="" hidden />
-                                <input class="form-control ddl_PhongShow" type="text" value="" readonly />
-                            </td>
-                            <td><input class="form-control txt_DonGia" name="" type="text" value="" readonly /></td>
-                            <td>
-                                <h4>@DateTime.Now.ToString("dd/MM/yyyy")</h4>
-                                @*<input class="txt_NgayLap" name="" type="text" value="" hidden />*@
-                                @*<input class="form-control txt_NgayLapShow" name="" type="text" value="" readonly />*@
-                            </td>
-                            <td>
-                                @Html.ActionLink("Xóa", "Delete", new { })
-                            </td>
-                        </tr>
-                        <tr class="first_row" data-id="-1">
-                            <th>Tên Dịch Vụ</th>
-                            <th hidden>Bệnh Nhân</th>
-                            @*<th>Bác Sĩ Thực Hiện</th>*@
-                            <th>Phòng khám</th>
-                            <th>Đơn Giá</th>
-                            @*<th>Thời Gian Thực Hiện</th>*@
-                            <th>Ngày Lập</th>
-                            <th></th>
-                        </tr>
-                    </table>
-                </div>
                 <div class="box-footer">
                     <button type="reset" class="btn btn-default">Hủy</button>
-                    <button type="submit" class="btn btn-info pull-right">Lưu</button>
+                    <button type="submit" class="btn btn-info pull-right">Cập nhật</button>
                 </div>
             </div>
         }
-
-        <div>
-            @Html.ActionLink("Back to List", "Index")
+        @* Danh sách dịch vụ đã khám *@
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <div>
+                    <h3 class="box-title">Dịch vụ đã thực hiện</h3>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-bordered table-hover" id="tb_DichVuDaThucHien">
+                        <thead>
+                            <tr>
+                                <th>Bác Sĩ Thực Hiện</th>
+                                <th>Tên Dịch Vụ</th>
+                                <th>Chỉ Số</th>
+                                <th>Kết Quả</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="col-md-4">
-        @Html.Action("_SideListBenhNhan", "KhamBenh")
+    <div class="col-md-6">
+        @Html.Action("_SideListPhieuKham", "KhamBenh")
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("Create", "KhamBenh"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <div>
+                        <h3 class="box-title">Thêm Dịch Vụ</h3>
+                        <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;" onclick="clickAdd()">Add</button>
+                    </div>
+                </div>
+                <div class="form-horizontal">
+                    <div class="box-body table-responsive no-padding">
+                        <div hidden>
+                            @Html.LabelFor(model => model.MaPhieuKhamBenh, "Mã Phiếu Khám")
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.MaPhieuKhamBenh, new { id = "MaPhieuKham2" })
+                            </div>
+                        </div>
+                        <table class="table table-hover" id="tb_dsPhieuYeuCauDichVu">
+                            @{
+            IEnumerable<DichVu> dsDichVu = ViewBag.DichVuID as IEnumerable<DichVu>;
+                            }
+                            <tr class="tr_structure" id="tr_PhieuYCDV" hidden>
+                                <td>
+                                    <select class="form-control ddl_DichVuID" name="" onchange="changeDichVu(this)">
+                                        <option value=""></option>
+                                        @foreach (var itemDV in dsDichVu)
+                                        {
+                                            <option value="@itemDV.MaDichVu">@itemDV.TenDichVu</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td hidden>
+                                    <input class="txt_BenhNhan" name="" type="text" value="" hidden />
+                                    <input class="txt_BenhNhanShow" name="" type="text" value="" readonly hidden />
+                                </td>
+                                <td>
+                                    <input class="ddl_Phong" name="" type="text" value="" hidden />
+                                    <input class="form-control ddl_PhongShow" type="text" value="" readonly />
+                                </td>
+                                <td><input class="form-control txt_DonGia" name="" type="text" value="" readonly /></td>
+                                <td>@Html.ActionLink("Xóa", "/")</td>
+                            </tr>
+                            <tr class="first_row" data-id="-1">
+                                <th>Tên Dịch Vụ</th>
+                                <th hidden>Bệnh Nhân</th>
+                                <th>Phòng khám</th>
+                                <th>Đơn Giá</th>
+                                <th>Ngày Lập</th>
+                                <th></th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="reset" class="btn btn-default">Hủy</button>
+                    <button type="submit" class="btn btn-info pull-right">Lưu và in phiếu khám</button>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-6">
+        @using (Html.BeginForm("Index", "KhamBenh"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <div>
+                        <h3 class="box-title">Kê Đơn Thuốc</h3>
+                        <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;" onclick="clickAdd()">Add</button>
+                    </div>
+                </div>
+                <div class="form-horizontal">
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tr>
+                                <th>Tên Dịch Vụ</th>
+                                <th hidden>Bệnh Nhân</th>
+                                <th>Phòng khám</th>
+                                <th>Đơn Giá</th>
+                                <th>Ngày Lập</th>
+                                <th>Xóa</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="reset" class="btn btn-default">Hủy</button>
+                    <button type="submit" class="btn btn-info pull-right">Lưu và in hóa đơn</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="@Url.Content("~/Scripts/js/pnotify.custom.min.js")"></script>
@@ -183,6 +248,7 @@
             });
         </script>
     }
+
     <script>
         function clickAdd() {
             //var countRow = document.getElementById("countRow").textContent;
@@ -242,14 +308,10 @@
                 $(parentTr).find(".txt_DonGia").attr("value", "");
             }
         }
-        function changeBenhNhan(elementCurrent) {
+        function changeBenhNhan() {
             var valueEleBenhNhan = document.getElementById("BenhNhanID").value;
-            //var valueEleCurrent = elementCurrent.options[elementCurrent.selectedIndex].value;
-            //var textEleCurrent = elementCurrent.options[elementCurrent.selectedIndex].text;
             $(".trAdded").each(function () {
                 $(this).find(".txt_BenhNhan").attr("value", valueEleBenhNhan);
-                //$(this).find(".txt_BenhNhan").attr("value", valueEleCurrent);
-                //$(this).find(".txt_BenhNhanShow").attr("value", textEleCurrent);
             });
         }
         function selectBenhNhan(id, name) {
@@ -257,8 +319,51 @@
             var tbNameBenhNhan = document.getElementById("BenhNhanName");
             tbIdBenhNhan.value = id;
             tbNameBenhNhan.value = name;
-            var eleBenhNhan = document.getElementById("BenhNhanID");
-            changeBenhNhan(elementCurrent);
+            changeBenhNhan();
+        }
+        function selectPhieuKhamBenh(MaPhieuKhamBenh, MaBenhNhan, TenBenhNhan) {
+            var maPhieuKham = document.getElementById("MaPhieuKham");
+            var maPhieuKham2 = document.getElementById("MaPhieuKham2");
+            maPhieuKham.value = MaPhieuKhamBenh;
+            maPhieuKham2.value = MaPhieuKhamBenh;
+            selectBenhNhan(MaBenhNhan, TenBenhNhan);
+            //tb_DichVuDaThucHienif (idDichVu != "") {
+            $.ajax({
+                type: "POST",
+                url: "GetDanhSachDichVu",
+                data: JSON.stringify({ MaPhieuKham: MaPhieuKhamBenh }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: OnSuccess,
+            });
+            function OnSuccess(response) {
+                var json = JSON.parse(response);
+                $("#tb_DichVuDaThucHien > tbody").empty();
+                for (var i = 0; i < json.length; i++) {
+                    var tenBS = json[i]['BacSi'];
+                    if (tenBS) {
+                        tenBS = json[i]['BacSi']['TenBacSi'];
+                    } else {
+                        tenBS = '';
+                    }
+                    var tenDV = json[i]['DichVu'];
+                    if (tenDV) {
+                        tenDV = json[i]['DichVu']['TenDichVu'];
+                    } else {
+                        tenDV = '';
+                    }
+                    var chiSo = json[i]['ChiSo'];
+                    if (!chiSo) {
+                        chiSo = '';
+                    }
+                    var ketQua = json[i]['KetQua'];
+                    if (!ketQua) {
+                        ketQua = '';
+                    }
+                    var tbRow = "<tr><td>" + tenBS + "</td><td>" + tenDV + "</td><td>" + chiSo + "</td><td>" + ketQua + "</td></tr>";
+                    $('#tb_DichVuDaThucHien > tbody:last-child').append(tbRow);
+                }
+            }
         }
     </script>
 }

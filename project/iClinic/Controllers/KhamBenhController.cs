@@ -90,16 +90,10 @@ namespace iClinic.Controllers
                 IdNV = s.MaNhanVien,
                 InfoNV = s.TenNhanVien + " - " + "NV" + s.MaNhanVien + " - " + s.BoPhan.TenBoPhan
             });
-            ViewBag.BacSiID = new SelectList(dsNhanVien, "IdNV", "InfoNV");
             ViewBag.DichVuID = db.DbSetDichVu;
+            ViewBag.BacSiID = new SelectList(dsNhanVien, "IdNV", "InfoNV");
             ViewBag.DanhSachBacSi = db.DbSetNhanVien; //phải lọc: theo loại nhân viên, loại dịch vụ, 
-            ViewBag.DanhSachPhong = db.DbSetPhong;
             return View();
-
-            //PhieuKhamBenh phieu = new PhieuKhamBenh();
-            //phieu.BenhNhanID = MaBenhNhan;
-            //phieu.BenhNhan = db.DbSetBenhNhan.Find(MaBenhNhan);
-            //return View(phieu);
         }
 
         //
@@ -111,36 +105,26 @@ namespace iClinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                phieukhambenh.NgayKham = DateTime.Now;
-                db.DbSetPhieuKhamBenh.Add(phieukhambenh);
-                db.SaveChanges();
-                db.DbSetPhieuKhamBenhDangCho.Add(new PhieuKhamBenhDangCho
+                if (phieukhambenh.MaPhieuKhamBenh > 0 && dsPhieuYeuCauDichVu.Count > 0)
                 {
-                    PhieuKhamBenhID = phieukhambenh.MaPhieuKhamBenh,
-                    BacSiID = phieukhambenh.BacSiID,
-                    BenhNhanID = phieukhambenh.BenhNhanID,
-                    ChanDoan = phieukhambenh.ChanDoan,
-                    LoiDan = phieukhambenh.LoiDan,
-                    NgayKham = phieukhambenh.NgayKham,
-                    TienSuBenh = phieukhambenh.TienSuBenh
-                });
-                db.SaveChanges();
-                if (dsPhieuYeuCauDichVu != null) {
-                    foreach (var item in dsPhieuYeuCauDichVu)
+                    if (dsPhieuYeuCauDichVu != null)
                     {
-                        item.PhieuKhamBenhID = phieukhambenh.MaPhieuKhamBenh;
-                        item.NgayLap = DateTime.Now;
-                        item.ThoiGianThucHien = DateTime.Now;
-                        db.DbSetPhieuYeuCauDichVu.Add(item);
+                        foreach (var item in dsPhieuYeuCauDichVu)
+                        {
+                            item.PhieuKhamBenhID = phieukhambenh.MaPhieuKhamBenh;
+                            item.NgayLap = DateTime.Now;
+                            item.ThoiGianThucHien = DateTime.Now;
+                            db.DbSetPhieuYeuCauDichVu.Add(item);
+                        }
+                        db.SaveChanges();
                     }
-                    db.SaveChanges();
+                    msg = new Message();
+                    msg.Type = "success";
+                    msg.Title = "Thành công";
+                    msg.Content = "Đã lưu dịch vụ khám";
+                    TempData["msg"] = msg;
+                    return RedirectToAction("Create");
                 }
-                msg = new Message();
-                msg.Type = "success";
-                msg.Title = "Thành công";
-                msg.Content = "Đã lưu thông tin bệnh nhân";
-                TempData["msg"] = msg;
-                return RedirectToAction("Create");
             }
             var errors = ModelState.Values.SelectMany(m => m.Errors);
             ViewBag.BenhNhanID = new SelectList(db.DbSetBenhNhan, "MaBenhNhan", "TenBenhNhan", phieukhambenh.BenhNhanID);
@@ -152,7 +136,6 @@ namespace iClinic.Controllers
             ViewBag.DichVuID = db.DbSetDichVu;
             ViewBag.BacSiID = new SelectList(dsNhanVien, "IdNV", "InfoNV"); //bác sĩ đang đăng nhập để tạo. (ko dc chọn)
             ViewBag.DanhSachBacSi = db.DbSetNhanVien; 
-            ViewBag.DanhSachPhong = db.DbSetPhong.Where(n => n.DichVuID == 1);
             return View(phieukhambenh);
         }
 
@@ -244,8 +227,12 @@ namespace iClinic.Controllers
             return Json(new JavaScriptSerializer().Serialize(objData));
         }
 
-        public ActionResult _SideListBenhNhan(string currentFilter, string searchString, int? page)
+        public ActionResult _SideListPhieuKham(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
             if (searchString != null)
             {
                 page = 1;
@@ -257,19 +244,46 @@ namespace iClinic.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var patients = from p in db.DbSetBenhNhan
-                           select p;
+            var dsPhieuKhamDangCho = from x in db.DbSetPhieuKhamBenhDangCho select x.PhieuKhamBenhID;
+            var dsPhieuKham = from p in db.DbSetPhieuKhamBenh
+                              where dsPhieuKhamDangCho.Contains(p.MaPhieuKhamBenh)
+                              select p;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                patients = patients.Where(p => p.TenBenhNhan.Contains(searchString));
+                dsPhieuKham = dsPhieuKham.Where(p => p.BenhNhan.TenBenhNhan.Contains(searchString));
             }
 
-            patients = patients.OrderBy(p => p.TenBenhNhan);
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    dsPhieuKham = dsPhieuKham.OrderByDescending(p => p.BenhNhan.TenBenhNhan);
+                    break;
+                case "Date":
+                    dsPhieuKham = dsPhieuKham.OrderBy(p => p.BenhNhan.NgaySinh);
+                    break;
+                case "date_desc":
+                    dsPhieuKham = dsPhieuKham.OrderByDescending(p => p.BenhNhan.NgaySinh);
+                    break;
+                default:
+                    dsPhieuKham = dsPhieuKham.OrderBy(p => p.BenhNhan.TenBenhNhan);
+                    break;
+            }
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-            return PartialView(patients.ToPagedList(pageNumber, pageSize));
+            return PartialView("_SideListPhieuKham", dsPhieuKham.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult GetDanhSachDichVu(String MaPhieuKham)
+        {
+            var objData = db.DbSetPhieuYeuCauDichVu.ToList().FindAll(n => n.PhieuKhamBenhID == int.Parse(MaPhieuKham));
+            var objDataCustom = new List<dynamic>();
+            foreach (var item in objData)
+            {
+                objDataCustom.Add(new { MaPhieuDichVu = item.MaPhieuYeuCauDichVu, BacSi = item.BacSi, DichVu = item.DichVu, KetQua = item.KetQua, ChiSo = item.ChiSo });
+            }
+            return Json(new JavaScriptSerializer().Serialize(objDataCustom));
         }
     }
 }

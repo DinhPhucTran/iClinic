@@ -26,11 +26,11 @@ namespace iClinic.Models
         [Display(Name = "Đơn Giá")]
         public Double DonGia { get; set; }//add
 
-        [Display(Name = "Chẩn Đoán")]
-        public String ChanDoan { get; set; }
+        [Display(Name = "Chỉ Số")]
+        public String ChiSo { get; set; }
 
-        [Display(Name = "Lời Dặn")]
-        public String LoiDan { get; set; }
+        [Display(Name = "Kết Quả")]
+        public String KetQua { get; set; }
         
         //add
         public int PhongID { get; set; }

@@ -209,9 +209,9 @@
     <Compile Include="Migrations\201612151638192_Initial.Designer.cs">
       <DependentUpon>201612151638192_Initial.cs</DependentUpon>
     </Compile>-->
-    <Compile Include="Migrations\201612221520268_1.cs" />
-    <Compile Include="Migrations\201612221520268_1.Designer.cs">
-      <DependentUpon>201612221520268_1.cs</DependentUpon>
+    <Compile Include="Migrations\201612231346254_Initial.cs" />
+    <Compile Include="Migrations\201612231346254_Initial.Designer.cs">
+      <DependentUpon>201612231346254_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1295,7 +1295,7 @@
     <Content Include="Views\DichVu\Create.cshtml" />
     <Content Include="Views\DichVu\Edit.cshtml" />
     <Content Include="Views\DichVu\Delete.cshtml" />
-    <Content Include="Views\KhamBenh\_SideListBenhNhan.cshtml" />
+    <Content Include="Views\KhamBenh\_SideListPhieuKham.cshtml" />
     <Content Include="Views\DonThuoc\Index.cshtml" />
     <Content Include="Views\DonThuoc\Details.cshtml" />
     <Content Include="Views\DonThuoc\Create.cshtml" />
@@ -1308,6 +1308,7 @@
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\Create.cshtml" />
     <Content Include="Views\Shared\AuthorizeFailed.cshtml" />
+    <Content Include="Views\KhamBenh\_SideKeDonThuoc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1316,8 +1317,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612221520268_1.resx">
-      <DependentUpon>201612221520268_1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612231346254_Initial.resx">
+      <DependentUpon>201612231346254_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

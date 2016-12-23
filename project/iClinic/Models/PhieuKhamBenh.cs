@@ -18,8 +18,8 @@ namespace iClinic.Models
         [Display(Name="Ngày Khám")]
         public DateTime NgayKham { get; set;}
 
-        [Display(Name="Tiền Sử Bệnh")]
-        public String TienSuBenh { get; set; }
+        [Display(Name="Lý Do Khám")]
+        public String LyDoKham { get; set; }
 
         [Display(Name="Chẩn Đoán")]
         public String ChanDoan { get; set; }
