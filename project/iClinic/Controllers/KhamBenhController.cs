@@ -309,5 +309,26 @@ namespace iClinic.Controllers
             }
             return Json(new JavaScriptSerializer().Serialize(objDataCustom));
         }
+
+        public ActionResult UpdatePhieuKham(String MaPhieuKhamBenh, String lyDokham, String chanDoan, String loiDan)
+        {
+            int maPhieu = int.Parse(MaPhieuKhamBenh);
+            var queryPKB = from x in db.DbSetPhieuKhamBenh where x.MaPhieuKhamBenh == maPhieu select x;
+            var queryPKBDC = from y in db.DbSetPhieuKhamBenhDangCho where y.PhieuKhamBenhID == maPhieu select y;
+            foreach (var item in queryPKB)
+            {
+                item.LyDoKham = lyDokham;
+                item.ChanDoan = chanDoan;
+                item.LoiDan = loiDan;
+            }
+            foreach (var item in queryPKBDC)
+            {
+                item.LyDoKham = lyDokham;
+                item.ChanDoan = chanDoan;
+                item.LoiDan = loiDan;
+            }
+            db.SaveChanges();
+            return Json(new JavaScriptSerializer().Serialize("Cập nhật thành công"));
+        }
     }
 }

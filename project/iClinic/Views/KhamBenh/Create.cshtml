@@ -23,7 +23,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        @using (Html.BeginForm("Create", "KhamBenh"))
+        @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
@@ -60,7 +60,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.LyDoKham, "Lý Do Khám", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
-                                @Html.TextAreaFor(model => model.LyDoKham, new { @class = "form-control" })
+                                @Html.TextAreaFor(model => model.LyDoKham, new { @class = "form-control", id = "LyDoKham" })
                             </div>
                             @*@Html.ValidationMessageFor(model => model.BenhNhan.TienSuBenh)*@
                         </div>
@@ -68,7 +68,7 @@
                             @Html.LabelFor(model => model.ChanDoan, new { @class = "col-sm-2 control-label" })
 
                             <div class="col-sm-10">
-                                @Html.TextBoxFor(model => model.ChanDoan, (String)"Chẩn đoán", new { @class = "form-control" })
+                                @Html.TextBoxFor(model => model.ChanDoan, (String)"Chẩn đoán", new { @class = "form-control", id = "ChanDoan" })
                             </div>
                             @*@Html.ValidationMessageFor(model => model.ChanDoan)*@
                         </div>
@@ -76,7 +76,7 @@
                             @Html.LabelFor(model => model.LoiDan, new { @class = "col-sm-2 control-label" })
 
                             <div class="col-sm-10">
-                                @Html.TextBoxFor(model => model.LoiDan, (String)"Lời Dặn", new { @class = "form-control" })
+                                @Html.TextBoxFor(model => model.LoiDan, (String)"Lời Dặn", new { @class = "form-control", id = "LoiDan" })
                             </div>
                             @*@Html.ValidationMessageFor(model => model.LoiDan)*@
                         </div>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="box-footer">
                     <button type="reset" class="btn btn-default">Hủy</button>
-                    <button type="submit" class="btn btn-info pull-right">Cập nhật</button>
+                    <button type="button" onclick="updatePhieuKham()" class="btn btn-info pull-right">Cập nhật</button>
                 </div>
             </div>
         }
@@ -344,6 +344,17 @@
             tbNameBenhNhan.value = name;
             changeBenhNhan();
         }
+        function clearAll() 
+        {
+            //xóa data của id LyDoKham, ChanDoan, LoiDan
+            document.getElementById("LyDoKham").value = "";
+            document.getElementById("ChanDoan").value = "";
+            document.getElementById("LoiDan").value = "";
+            //xóa các class trAdded, trThuocAdded
+            $('table tr.trAdded').remove();
+            $('table tr.trThuocAdded').remove();
+            updateData()
+        }
         function selectPhieuKhamBenh(MaPhieuKhamBenh, MaBenhNhan, TenBenhNhan) {
             var maPhieuKham = document.getElementById("MaPhieuKham");
             var maPhieuKham2 = document.getElementById("MaPhieuKham2");
@@ -352,6 +363,7 @@
             maPhieuKham2.value = MaPhieuKhamBenh;
             MaPhieuKham3.value = MaPhieuKhamBenh;
             selectBenhNhan(MaBenhNhan, TenBenhNhan);
+            clearAll();
             //tb_DichVuDaThucHienif (idDichVu != "") {
             $.ajax({
                 type: "POST",
@@ -424,6 +436,45 @@
                 $(this).find(".tb_ChieuThuoc").attr("name", tb_ChieuThuoc);
                 $(this).find(".tb_ToiThuoc").attr("name", tb_ToiThuoc);
             });
+        }
+    </script>
+    <script>
+        function updatePhieuKham()
+        {
+            //lay ma + thong tin can update.
+            var maPhieuKham = (document.getElementById("MaPhieuKham").value).toString();
+            var lyDoKham = document.getElementById("LyDoKham").value;
+            var chanDoan = document.getElementById("ChanDoan").value;
+            var loiDan = document.getElementById("LoiDan").value;
+            var dataSend = JSON.stringify({MaPhieuKhamBenh: maPhieuKham, LyDoKham: lyDoKham, ChanDoan: chanDoan, LoiDan: loiDan });
+            //update
+            if (maPhieuKham != "" && (lyDoKham != "" || chanDoan != "" || loiDan != "")) {
+                $.ajax({
+                    type: 'POST',
+                    url: "UpdatePhieuKham",
+                    data: dataSend,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: onSuccess,
+                });
+                function onSuccess(response) {
+                    new PNotify({
+                        title: 'Thành công',
+                        text: response,
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });
+                }
+            }
+            else
+            {
+                new PNotify({
+                    title: 'Cảnh báo',
+                    text: "Chọn bệnh nhân và điền thông tin cần update.",
+                    type: 'error',
+                    styling: 'bootstrap3'
+                });
+            }
         }
     </script>
 }
