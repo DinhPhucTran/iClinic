@@ -45,7 +45,7 @@ namespace iClinic.CustomFilters
                 vr.ViewName = View;
 
                 ViewDataDictionary dict = new ViewDataDictionary();
-                dict.Add("Message", "Sorry you are not Authorized to Perform this Action");
+                dict.Add("Message", "Bạn không có quyển truy cập trang này.");
 
                 vr.ViewData = dict;
 

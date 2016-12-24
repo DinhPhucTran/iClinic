@@ -9,15 +9,16 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using iClinic.Models;
+using PagedList;
 
 namespace iClinic.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         ApplicationDbContext context;
+        private Entities db = new Entities();
 
         public AccountController()
         {
@@ -139,13 +140,21 @@ namespace iClinic.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(int maNV = 0)
         {
             var model = new RegisterViewModel();
-            var roles = context.Roles.ToList();
-            foreach (var r in roles)
+            //var roles = context.Roles.ToList();
+            //foreach (var r in roles)
+            //{
+            //    model.RoleList.Add(new SelectListItem() { Text = r.Name, Value = r.Name });
+            //}
+
+            NhanVien nv = db.DbSetNhanVien.Find(maNV);
+            if (nv != null)
             {
-                model.RoleList.Add(new SelectListItem() { Text = r.Name, Value = r.Name });
+                model.UserName = nv.MaNhanVien.ToString();
+                model.FullName = nv.TenNhanVien;
+                model.Role = nv.LoaiNhanVien.TenLoaiNhanVien;
             }
 
             return View(model);
@@ -160,7 +169,7 @@ namespace iClinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.UserName + "@gmail.com", FullName = model.FullName };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.UserName + "@iclinic.com", FullName = model.FullName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -179,12 +188,58 @@ namespace iClinic.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            var roles = context.Roles.ToList();
-            foreach (var r in roles)
-            {
-                model.RoleList.Add(new SelectListItem() { Text = r.Name, Value = r.Name });
-            }
+            //var roles = context.Roles.ToList();
+            //foreach (var r in roles)
+            //{
+            //    model.RoleList.Add(new SelectListItem() { Text = r.Name, Value = r.Name });
+            //}
             return View(model);
+        }
+
+        public ActionResult _SideListNV(string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "id" ? "id_desc" : "id";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var nvs = from nv in db.DbSetNhanVien
+                           select nv;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                nvs = nvs.Where(p => p.TenNhanVien.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    nvs = nvs.OrderByDescending(p => p.TenNhanVien);
+                    break;
+                case "id":
+                    nvs = nvs.OrderBy(p => p.MaNhanVien);
+                    break;
+                case "id_desc":
+                    nvs = nvs.OrderByDescending(p => p.MaNhanVien);
+                    break;
+                default:
+                    nvs = nvs.OrderBy(p => p.TenNhanVien);
+                    break;
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return PartialView(nvs.ToPagedList(pageNumber, pageSize));
         }
 
         //

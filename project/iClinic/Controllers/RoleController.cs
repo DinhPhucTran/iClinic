@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using iClinic.Models;
 using iClinic.CustomFilters;
+using System.Data.Entity;
 
 namespace iClinic.Controllers
 {
@@ -39,5 +40,23 @@ namespace iClinic.Controllers
             context.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public ActionResult Edit(string id)
+        {
+            var role = context.Roles.Find(id);
+            return View(role);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(IdentityUserRole role)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Entry(role).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            return View(role);
+        }
+
     }
 }

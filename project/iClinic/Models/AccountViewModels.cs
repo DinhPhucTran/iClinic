@@ -77,22 +77,22 @@ namespace iClinic.Models
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "UserName")]
+        [Display(Name = "Mã nhân viên")]
         public string UserName { get; set; }
 
         [DataType(DataType.Text)]
-        [Display(Name = "Full name")]
+        [Display(Name = "Họ tên nhân viên")]
         public string FullName { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Mật khẩu phải có tối thiểu 6 kí tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Mật khẩu")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Xác nhận mật khẩu")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Mật khẩu không trùng khớp")]
         public string ConfirmPassword { get; set; }
 
         public RegisterViewModel()

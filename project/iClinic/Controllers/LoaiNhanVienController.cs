@@ -6,12 +6,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using iClinic.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace iClinic.Controllers
 {
     public class LoaiNhanVienController : Controller
     {
         private Entities db = new Entities();
+        ApplicationDbContext context = new ApplicationDbContext();
 
         //
         // GET: /LoaiNhanVien/
@@ -51,8 +53,21 @@ namespace iClinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.DbSetLoaiNhanVien.Add(loainhanvien);
-                db.SaveChanges();
+                try
+                {
+                    db.DbSetLoaiNhanVien.Add(loainhanvien);
+                    db.SaveChanges();
+
+                    var role = new IdentityRole();
+                    role.Name = loainhanvien.TenLoaiNhanVien;
+                    context.Roles.Add(role);
+                    context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -81,8 +96,20 @@ namespace iClinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(loainhanvien).State = EntityState.Modified;
-                db.SaveChanges();
+                try
+                {
+                    db.Entry(loainhanvien).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    var role = context.Roles.First(r => r.Name == loainhanvien.TenLoaiNhanVien);
+                    context.Entry(role).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+
+                }
+
                 return RedirectToAction("Index");
             }
             return View(loainhanvien);
