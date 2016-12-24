@@ -60,7 +60,7 @@
                                 <span class="hidden-xs">
                                     @if (Request.IsAuthenticated)
                                     {
-                                        @User.Identity.Name;
+                                        @User.Identity.Name;                                        
                                     }
                                 </span>
                             </a>
@@ -72,6 +72,11 @@
                                         @if (Request.IsAuthenticated)
                                         {
                                             @User.Identity.Name;
+                                            foreach(var role in Roles.GetRolesForUser())
+                                            {
+                                                <small>role</small>
+                                            }
+                                            
                                         }                                        
                                     </p>
                                 </li>

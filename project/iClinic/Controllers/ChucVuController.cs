@@ -6,12 +6,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using iClinic.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace iClinic.Controllers
 {
     public class ChucVuController : Controller
     {
         private Entities db = new Entities();
+        ApplicationDbContext context = new ApplicationDbContext();
 
         //
         // GET: /ChucVu/
@@ -53,6 +55,10 @@ namespace iClinic.Controllers
             {
                 db.DbSetChucVu.Add(chucvu);
                 db.SaveChanges();
+                var role = new IdentityRole();
+                role.Name = chucvu.TenChucVu;
+                context.Roles.Add(role);
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
 

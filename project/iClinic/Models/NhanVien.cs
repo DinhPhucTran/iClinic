@@ -12,8 +12,11 @@ namespace iClinic.Models
     {
         [Key]
         public int MaNhanVien { get; set; }
+
         public int LoaiNhanVienID { get; set; }
+
         public Nullable<int> BoPhanID { get; set; }
+
         public Nullable<int> ChucVuID { get; set; }
         //public int PhongID { get; set; }
 
@@ -35,13 +38,16 @@ namespace iClinic.Models
         public String DiaChi { get; set; }
 
         [ForeignKey("LoaiNhanVienID")]
+        [Display(Name = "Loại Nhân Viên")]
         public virtual LoaiNhanVien LoaiNhanVien { get; set; }
 
         [ForeignKey("BoPhanID")]
+        [Display(Name = "Bộ Phận")]
         //[NotMapped]
         public virtual BoPhan BoPhan { get; set; }
 
         [ForeignKey("ChucVuID")]
+        [Display(Name = "Chức Vụ")]
         public virtual ChucVu ChucVu { get; set; }
 
         //[ForeignKey("PhongID")]
