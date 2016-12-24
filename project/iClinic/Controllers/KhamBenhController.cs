@@ -84,15 +84,8 @@ namespace iClinic.Controllers
             ViewBag.Msg = msgThongBao;
 
             ViewBag.BenhNhanSelect = 0;
-            ViewBag.BenhNhanID = new SelectList(db.DbSetBenhNhan, "MaBenhNhan", "TenBenhNhan");
-            var dsNhanVien = db.DbSetNhanVien.ToList().Select(s => new
-            {
-                IdNV = s.MaNhanVien,
-                InfoNV = s.TenNhanVien + " - " + "NV" + s.MaNhanVien + " - " + s.BoPhan.TenBoPhan
-            });
             ViewBag.DichVuID = db.DbSetDichVu;
-            ViewBag.BacSiID = new SelectList(dsNhanVien, "IdNV", "InfoNV");
-            ViewBag.DanhSachBacSi = db.DbSetNhanVien; //phải lọc: theo loại nhân viên, loại dịch vụ, 
+            ViewBag.DanhSachThuoc = db.DbSetThuoc;
             return View();
         }
 
@@ -127,16 +120,47 @@ namespace iClinic.Controllers
                 }
             }
             var errors = ModelState.Values.SelectMany(m => m.Errors);
-            ViewBag.BenhNhanID = new SelectList(db.DbSetBenhNhan, "MaBenhNhan", "TenBenhNhan", phieukhambenh.BenhNhanID);
-            var dsNhanVien = db.DbSetNhanVien.ToList().Select(s => new
-            {
-                IdNV = s.MaNhanVien,
-                InfoNV = s.TenNhanVien + " - " + "NV" + s.MaNhanVien + " - " + s.BoPhan.TenBoPhan
-            });
             ViewBag.DichVuID = db.DbSetDichVu;
-            ViewBag.BacSiID = new SelectList(dsNhanVien, "IdNV", "InfoNV"); //bác sĩ đang đăng nhập để tạo. (ko dc chọn)
-            ViewBag.DanhSachBacSi = db.DbSetNhanVien; 
+            ViewBag.DanhSachThuoc = db.DbSetThuoc;
             return View(phieukhambenh);
+        }
+
+        public ActionResult CreateDonThuoc(PhieuKhamBenh phieuKham, List<ChiTietDonThuoc> dsChiTietDonThuoc) 
+        {
+            if (ModelState.IsValid)
+            {
+                if (phieuKham.MaPhieuKhamBenh > 0 && dsChiTietDonThuoc.Count > 0)
+                {
+                    DonThuoc donThuoc = new DonThuoc {
+                        BacSiID = phieuKham.BacSiID,
+                        NgayKeDon = DateTime.Now,
+                        PhieuKhamBenhID = phieuKham.MaPhieuKhamBenh,
+                        TongTien = dsChiTietDonThuoc.Sum(i => i.DonGia * i.SoLuong)
+                    };
+                    db.DbSetDonThuoc.Add(donThuoc);
+                    db.SaveChanges();
+                    if (dsChiTietDonThuoc != null)
+                    {
+                        foreach (var item in dsChiTietDonThuoc)
+                        {
+                            item.DonThuocID = donThuoc.MaDonThuoc;
+                            item.NgayDung = item.Sang + item.Trua + item.Chieu + item.Toi;
+                            db.DbSetChiTietDonThuoc.Add(item);
+                        }
+                        db.SaveChanges();
+                    }
+                    msg = new Message();
+                    msg.Type = "success";
+                    msg.Title = "Thành công";
+                    msg.Content = "Đã lưu dịch vụ khám";
+                    TempData["msg"] = msg;
+                    return RedirectToAction("Create");
+                }
+            }
+            var errors = ModelState.Values.SelectMany(m => m.Errors);
+            ViewBag.DichVuID = db.DbSetDichVu;
+            ViewBag.DanhSachThuoc = db.DbSetThuoc;
+            return RedirectToAction("Create");
         }
 
         //

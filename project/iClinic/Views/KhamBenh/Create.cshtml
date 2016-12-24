@@ -54,7 +54,7 @@
                         <div hidden>
                             @Html.LabelFor(model => model.BacSiID, "Bác Sĩ Khám")
                             <div class="col-sm-10">
-                                @Html.TextBoxFor(model => model.BacSiID, new { @value = @User.Identity.Name})
+                                @Html.TextBoxFor(model => model.BacSiID, new { @value = 1 })
                             </div>
                         </div>
                         <div class="form-group">
@@ -148,9 +148,7 @@
                             </div>
                         </div>
                         <table class="table table-hover" id="tb_dsPhieuYeuCauDichVu">
-                            @{
-            IEnumerable<DichVu> dsDichVu = ViewBag.DichVuID as IEnumerable<DichVu>;
-                            }
+                            @{IEnumerable<DichVu> dsDichVu = ViewBag.DichVuID as IEnumerable<DichVu>;}
                             <tr class="tr_structure" id="tr_PhieuYCDV" hidden>
                                 <td>
                                     <select class="form-control ddl_DichVuID" name="" onchange="changeDichVu(this)">
@@ -191,7 +189,7 @@
         }
     </div>
     <div class="col-md-6">
-        @using (Html.BeginForm("Index", "KhamBenh"))
+        @using (Html.BeginForm("CreateDonThuoc", "KhamBenh"))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
@@ -199,19 +197,44 @@
                 <div class="box-header with-border">
                     <div>
                         <h3 class="box-title">Kê Đơn Thuốc</h3>
-                        <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;" onclick="clickAdd()">Add</button>
+                        <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;" onclick="clickAddThuoc()">Add</button>
                     </div>
                 </div>
                 <div class="form-horizontal">
                     <div class="box-body table-responsive no-padding">
-                        <table class="table table-hover">
-                            <tr>
-                                <th>Tên Dịch Vụ</th>
-                                <th hidden>Bệnh Nhân</th>
-                                <th>Phòng khám</th>
-                                <th>Đơn Giá</th>
-                                <th>Ngày Lập</th>
-                                <th>Xóa</th>
+                        <div hidden>
+                            @Html.LabelFor(model => model.MaPhieuKhamBenh, "Mã Phiếu Khám")
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.MaPhieuKhamBenh, new { id = "MaPhieuKham3" })
+                            </div>
+                        </div>
+                        <table class="table table-hover" id="tb_DanhSachThuoc">
+                            @{IEnumerable<Thuoc> dsThuoc = ViewBag.DanhSachThuoc as IEnumerable<Thuoc>;}
+                            <tr class="tr_structure" id="tr_Thuoc" hidden>
+                                <td>
+                                    <select class="form-control tb_MaThuoc" name="" onchange="changeDichVu(this)">
+                                        <option value=""></option>
+                                        @foreach (var itemDV in dsThuoc)
+                                        {
+                                            <option value="@itemDV.MaThuoc">@itemDV.TenThuoc</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td><input class="form-control tb_SoLuongThuoc" type="number" name="" value="0" /></td>
+                                <td><input class="form-control tb_SangThuoc" type="number" name="" value="0" /></td>
+                                <td><input class="form-control tb_TruaThuoc" type="number" name="" value="0" /></td>
+                                <td><input class="form-control tb_ChieuThuoc" type="number" name="" value="0" /></td>
+                                <td><input class="form-control tb_ToiThuoc" type="number" name="" value="0" /></td>
+                                <td>@Html.ActionLink("Xóa", "/")</td>
+                            </tr>
+                            <tr class="first_row" data-id="-1">
+                                <th>Tên Thuốc</th>
+                                <th>Số Lượng</th>
+                                <th>Sáng</th>
+                                <th>Trưa</th>
+                                <th>Chiều</th>
+                                <th>Tối</th>
+                                <th></th>
                             </tr>
                         </table>
                     </div>
@@ -324,8 +347,10 @@
         function selectPhieuKhamBenh(MaPhieuKhamBenh, MaBenhNhan, TenBenhNhan) {
             var maPhieuKham = document.getElementById("MaPhieuKham");
             var maPhieuKham2 = document.getElementById("MaPhieuKham2");
+            var maPhieuKham3 = document.getElementById("MaPhieuKham3");
             maPhieuKham.value = MaPhieuKhamBenh;
             maPhieuKham2.value = MaPhieuKhamBenh;
+            MaPhieuKham3.value = MaPhieuKhamBenh;
             selectBenhNhan(MaBenhNhan, TenBenhNhan);
             //tb_DichVuDaThucHienif (idDichVu != "") {
             $.ajax({
@@ -364,6 +389,41 @@
                     $('#tb_DichVuDaThucHien > tbody:last-child').append(tbRow);
                 }
             }
+        }
+    </script>
+    <script>
+        function clickAddThuoc()
+        {
+            //lay id cuoi cung tang len 1 
+            var idRowLast = parseInt($('#tb_DanhSachThuoc').find("tr:last-child").attr("data-id")) + 1;
+            //lay cau truc tr_Thuoc ra
+            var structureRowThuoc = $("#tr_Thuoc").html();
+            //tao string row co class la trThuocAdded, dataid = tren, va noi dung la tr_Thuoc
+            var rowThuoc = "<tr class=\"trThuocAdded\" data-id=\"" + idRowLast + "\">" + structureRowThuoc + "</tr>";
+            //lay table ra lay child cuoi cung add tr nay vao.
+            $('#tb_DanhSachThuoc > tbody:last-child').append(rowThuoc);
+            //update name cua moi row
+            updateAllRowThuoc();
+        }
+        function updateAllRowThuoc()
+        {
+            var idFirst = parseInt($("#tb_DanhSachThuoc").find(".first_row").attr("data-id"));
+            $(".trThuocAdded").each(function () {
+                idFirst++;
+                $(this).attr("data-id", idFirst);
+                var tb_MaThuoc = "[" + idFirst + "].ThuocID";
+                var tb_SoLuongThuoc = "[" + idFirst + "].SoLuong";
+                var tb_SangThuoc = "[" + idFirst + "].Sang";
+                var tb_TruaThuoc = "[" + idFirst + "].Trua";
+                var tb_ChieuThuoc = "[" + idFirst + "].Chieu";
+                var tb_ToiThuoc = "[" + idFirst + "].Toi";
+                $(this).find(".tb_MaThuoc").attr("name", tb_MaThuoc);
+                $(this).find(".tb_SoLuongThuoc").attr("name", tb_SoLuongThuoc);
+                $(this).find(".tb_SangThuoc").attr("name", tb_SangThuoc);
+                $(this).find(".tb_TruaThuoc").attr("name", tb_TruaThuoc);
+                $(this).find(".tb_ChieuThuoc").attr("name", tb_ChieuThuoc);
+                $(this).find(".tb_ToiThuoc").attr("name", tb_ToiThuoc);
+            });
         }
     </script>
 }
