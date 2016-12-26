@@ -25,7 +25,5 @@ namespace iClinic.Models
         
         [ForeignKey("PhieuKhamBenhID")]
         public virtual PhieuKhamBenh PhieuKhamBenh { get; set; }
-
-        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
     }
 }

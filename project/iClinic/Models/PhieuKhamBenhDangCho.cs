@@ -34,6 +34,8 @@ namespace iClinic.Models
 
         public int PhieuKhamBenhID { get; set; }
 
+        public int TinhTrangThanhToan { get; set; }
+
         [ForeignKey("BenhNhanID")]
         public virtual BenhNhan BenhNhan { get; set; }
 
@@ -43,5 +45,14 @@ namespace iClinic.Models
         [ForeignKey("PhieuKhamBenhID")]
         public virtual PhieuKhamBenh PhieuKhamBenh { get; set; }
         //public virtual ICollection<PhieuYeuCauDichVu> PhieuYeuCauDichVus { get; set; }
+
+        [NotMapped]
+        public bool TinhTrangTT
+        {
+            get
+            {
+                return TinhTrangThanhToan == 1 ? true : false;
+            }
+        }
     }
 }

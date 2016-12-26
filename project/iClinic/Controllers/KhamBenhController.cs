@@ -96,6 +96,7 @@ namespace iClinic.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(PhieuKhamBenh phieukhambenh, List<PhieuYeuCauDichVu> dsPhieuYeuCauDichVu)
         {
+            TempData["msg"] = msg;
             if (ModelState.IsValid)
             {
                 if (phieukhambenh.MaPhieuKhamBenh > 0 && dsPhieuYeuCauDichVu.Count > 0)
@@ -127,6 +128,7 @@ namespace iClinic.Controllers
 
         public ActionResult CreateDonThuoc(PhieuKhamBenh phieuKham, List<ChiTietDonThuoc> dsChiTietDonThuoc) 
         {
+            TempData["msg"] = msg;
             if (ModelState.IsValid)
             {
                 if (phieuKham.MaPhieuKhamBenh > 0 && dsChiTietDonThuoc.Count > 0)
@@ -152,7 +154,7 @@ namespace iClinic.Controllers
                     msg = new Message();
                     msg.Type = "success";
                     msg.Title = "Thành công";
-                    msg.Content = "Đã lưu dịch vụ khám";
+                    msg.Content = "Đã lưu đơn thuốc";
                     TempData["msg"] = msg;
                     return RedirectToAction("Create");
                 }
@@ -160,7 +162,8 @@ namespace iClinic.Controllers
             var errors = ModelState.Values.SelectMany(m => m.Errors);
             ViewBag.DichVuID = db.DbSetDichVu;
             ViewBag.DanhSachThuoc = db.DbSetThuoc;
-            return RedirectToAction("Create");
+            //return RedirectToAction("Create");
+            return View(phieuKham);
         }
 
         //

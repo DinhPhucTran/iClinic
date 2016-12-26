@@ -168,14 +168,13 @@
                                     <input class="form-control ddl_PhongShow" type="text" value="" readonly />
                                 </td>
                                 <td><input class="form-control txt_DonGia" name="" type="text" value="" readonly /></td>
-                                <td>@Html.ActionLink("Xóa", "/")</td>
+                                <td><input type="button" value="Xóa" onclick="deleteDichVu(this)" /></td>
                             </tr>
                             <tr class="first_row" data-id="-1">
                                 <th>Tên Dịch Vụ</th>
                                 <th hidden>Bệnh Nhân</th>
                                 <th>Phòng khám</th>
                                 <th>Đơn Giá</th>
-                                <th>Ngày Lập</th>
                                 <th></th>
                             </tr>
                         </table>
@@ -225,7 +224,7 @@
                                 <td><input class="form-control tb_TruaThuoc" type="number" name="" value="0" /></td>
                                 <td><input class="form-control tb_ChieuThuoc" type="number" name="" value="0" /></td>
                                 <td><input class="form-control tb_ToiThuoc" type="number" name="" value="0" /></td>
-                                <td>@Html.ActionLink("Xóa", "/")</td>
+                                <td><input type="button" value="Xóa" onclick="deleteThuoc(this)"/></td>
                             </tr>
                             <tr class="first_row" data-id="-1">
                                 <th>Tên Thuốc</th>
@@ -273,6 +272,11 @@
     }
 
     <script>
+        function deleteDichVu(elementCurrent) {
+            var eleParent = elementCurrent.parentElement.parentElement;
+            $(eleParent).remove();
+            updateData();
+        }
         function clickAdd() {
             //var countRow = document.getElementById("countRow").textContent;
             //document.getElementById("countRow").innerHTML = countRow;
@@ -404,6 +408,12 @@
         }
     </script>
     <script>
+        function deleteThuoc(elementCurrent)
+        {
+            var eleParent = elementCurrent.parentElement.parentElement;
+            $(eleParent).remove();
+            updateAllRowThuoc();
+        }
         function clickAddThuoc()
         {
             //lay id cuoi cung tang len 1 

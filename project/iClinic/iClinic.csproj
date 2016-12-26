@@ -187,6 +187,7 @@
     <Compile Include="Controllers\DonThuocController.cs" />
     <Compile Include="Controllers\DonTiepController.cs" />
     <Compile Include="Controllers\DonViTinhController.cs" />
+    <Compile Include="Controllers\HoaDonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhamBenhController.cs" />
     <Compile Include="Controllers\LoaiNhanVienController.cs" />
@@ -210,13 +211,17 @@
     <Compile Include="Migrations\201612151638192_Initial.Designer.cs">
       <DependentUpon>201612151638192_Initial.cs</DependentUpon>
     </Compile>-->
+    <Compile Include="Migrations\201612260816509_Initial.cs" />
+    <Compile Include="Migrations\201612260816509_Initial.Designer.cs">
+      <DependentUpon>201612260816509_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BenhNhan.cs" />
     <Compile Include="Models\BenhNhanChoKham.cs" />
     <Compile Include="Models\BoPhan.cs" />
     <Compile Include="Models\ChiTietDieuTri.cs" />
     <Compile Include="Models\ChiTietDonThuoc.cs" />
-    <Compile Include="Models\ChiTietHoaDon.cs" />
     <Compile Include="Models\ChucVu.cs" />
     <Compile Include="Models\DichVu.cs" />
     <Compile Include="Models\DonThuoc.cs" />
@@ -1306,12 +1311,19 @@
     <Content Include="Views\Shared\AuthorizeFailed.cshtml" />
     <Content Include="Views\KhamBenh\_SideKeDonThuoc.cshtml" />
     <Content Include="Views\Account\_SideListNV.cshtml" />
+    <Content Include="Views\HoaDon\Create.cshtml" />
+    <Content Include="Views\HoaDon\_SidePhieuKhamBenh.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612260816509_Initial.resx">
+      <DependentUpon>201612260816509_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
