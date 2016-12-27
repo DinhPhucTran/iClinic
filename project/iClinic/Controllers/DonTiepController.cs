@@ -10,7 +10,7 @@ using PagedList;
 
 namespace iClinic.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class DonTiepController : Controller
     {
         private Entities db = new Entities();
@@ -152,6 +152,35 @@ namespace iClinic.Controllers
             if (ModelState.IsValid)
             {
                 db.DbSetBenhNhan.Add(benhnhan);
+                db.SaveChanges();
+                var pk = new PhieuKhamBenh
+                {
+                    BenhNhanID = benhnhan.MaBenhNhan,
+                    NgayKham = DateTime.Now,
+                    TinhTrangThanhToan = 0
+                };
+                db.DbSetPhieuKhamBenh.Add(pk);
+                db.SaveChanges();
+                //them dich vu kham 
+                DichVu dv = db.DbSetDichVu.Where(m => m.TenDichVu == "Dịch vụ khám").First();
+                Phong phongDV = db.DbSetPhong.Where(m => m.DichVuID == dv.MaDichVu).First();
+                var pkdv = new PhieuYeuCauDichVu { 
+                    BenhNhanID = benhnhan.MaBenhNhan,
+                    DichVuID = dv.MaDichVu,
+                    DonGia = dv.DonGia,
+                    NgayLap = DateTime.Now,
+                    PhieuKhamBenhID = pk.MaPhieuKhamBenh,
+                    PhongID = phongDV.MaPhong,
+                    ThoiGianThucHien = DateTime.Now
+                };
+                db.DbSetPhieuYeuCauDichVu.Add(pkdv);
+                db.DbSetPhieuKhamBenhDangCho.Add(new PhieuKhamBenhDangCho
+                {
+                    BenhNhanID = benhnhan.MaBenhNhan,
+                    NgayKham = DateTime.Now,
+                    TinhTrangThanhToan = 0,
+                    PhieuKhamBenhID = pk.MaPhieuKhamBenh
+                });
                 db.SaveChanges();
                 msg = new Message();
                 msg.Type = "success";

@@ -240,7 +240,7 @@
                 </div>
                 <div class="box-footer">
                     <button type="reset" class="btn btn-default">Hủy</button>
-                    <button type="submit" class="btn btn-info pull-right">Lưu và in hóa đơn</button>
+                    <button type="submit" class="btn btn-info pull-right">Lưu và in đơn thuốc</button>
                 </div>
             </div>
         }
@@ -379,6 +379,11 @@
             });
             function OnSuccess(response) {
                 var json = JSON.parse(response);
+                if (json.length > 0) {
+                    document.getElementById("LyDoKham").value = json[0]['LyDoKham'];
+                    document.getElementById("ChanDoan").value = json[0]['ChanDoan'];
+                    document.getElementById("LoiDan").value = json[0]['LoiDan'];
+                }
                 $("#tb_DichVuDaThucHien > tbody").empty();
                 for (var i = 0; i < json.length; i++) {
                     var tenBS = json[i]['BacSi'];

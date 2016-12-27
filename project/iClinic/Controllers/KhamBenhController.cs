@@ -96,7 +96,6 @@ namespace iClinic.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(PhieuKhamBenh phieukhambenh, List<PhieuYeuCauDichVu> dsPhieuYeuCauDichVu)
         {
-            TempData["msg"] = msg;
             if (ModelState.IsValid)
             {
                 if (phieukhambenh.MaPhieuKhamBenh > 0 && dsPhieuYeuCauDichVu.Count > 0)
@@ -134,7 +133,7 @@ namespace iClinic.Controllers
                 if (phieuKham.MaPhieuKhamBenh > 0 && dsChiTietDonThuoc.Count > 0)
                 {
                     DonThuoc donThuoc = new DonThuoc {
-                        BacSiID = phieuKham.BacSiID,
+                        BacSiID = 1,//todo
                         NgayKeDon = DateTime.Now,
                         PhieuKhamBenhID = phieuKham.MaPhieuKhamBenh,
                         TongTien = dsChiTietDonThuoc.Sum(i => i.DonGia * i.SoLuong)
@@ -151,6 +150,24 @@ namespace iClinic.Controllers
                         }
                         db.SaveChanges();
                     }
+                    var dsPhieuCho = db.DbSetPhieuKhamBenhDangCho.Where(m => m.PhieuKhamBenhID == phieuKham.MaPhieuKhamBenh).ToList();
+                    if (dsPhieuCho != null)
+                    {
+                        for (int i = 0; i < dsPhieuCho.Count; i++)
+                        {
+                            db.DbSetPhieuKhamBenhDangCho.Remove(db.DbSetPhieuKhamBenhDangCho.Find(dsPhieuCho[i].MaPhieuKhamBenhDangCho));
+                        }
+                    }
+                    db.SaveChanges();
+                    var dsBNCho = db.DbSetBenhNhanChoKham.Where(m => m.BenhNhanID == phieuKham.BenhNhanID).ToList();
+                    if (dsBNCho != null)
+                    {
+                        for (int i = 0; i < dsBNCho.Count; i++)
+                        {
+                            db.DbSetBenhNhanChoKham.Remove(db.DbSetBenhNhanChoKham.Find(dsBNCho[i].MaBenhNhan));
+                        }
+                    }
+                    db.SaveChanges();
                     msg = new Message();
                     msg.Type = "success";
                     msg.Title = "Thành công";
@@ -304,11 +321,13 @@ namespace iClinic.Controllers
 
         public ActionResult GetDanhSachDichVu(String MaPhieuKham)
         {
-            var objData = db.DbSetPhieuYeuCauDichVu.ToList().FindAll(n => n.PhieuKhamBenhID == int.Parse(MaPhieuKham));
+            var maPhieu = int.Parse(MaPhieuKham);
+            var phieuKham = db.DbSetPhieuKhamBenhDangCho.Where(m => m.PhieuKhamBenhID == maPhieu).First();
+            var objData = db.DbSetPhieuYeuCauDichVu.ToList().FindAll(n => n.PhieuKhamBenhID == maPhieu);
             var objDataCustom = new List<dynamic>();
             foreach (var item in objData)
             {
-                objDataCustom.Add(new { MaPhieuDichVu = item.MaPhieuYeuCauDichVu, BacSi = item.BacSi, DichVu = item.DichVu, KetQua = item.KetQua, ChiSo = item.ChiSo });
+                objDataCustom.Add(new { MaPhieuDichVu = item.MaPhieuYeuCauDichVu, BacSi = item.BacSi, DichVu = item.DichVu, KetQua = item.KetQua, ChiSo = item.ChiSo, LyDoKham = phieuKham.LyDoKham, ChanDoan = phieuKham.ChanDoan, LoiDan = phieuKham.LoiDan});
             }
             return Json(new JavaScriptSerializer().Serialize(objDataCustom));
         }

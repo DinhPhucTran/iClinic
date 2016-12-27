@@ -12,6 +12,7 @@ namespace iClinic.Controllers
     public class HoaDonController : Controller
     {
         Entities db = new Entities();
+        private Message msg;
 
         //
         // GET: /HoaDon/
@@ -23,7 +24,8 @@ namespace iClinic.Controllers
 
         public ActionResult Create()
         {
-
+            Message msg = (Message)TempData["msg"];
+            ViewBag.Msg = msg;
             return View();
         }
 
@@ -48,6 +50,11 @@ namespace iClinic.Controllers
                     item.TinhTrangThanhToan = 1;
                 }
                 db.SaveChanges();
+                msg = new Message();
+                msg.Type = "success";
+                msg.Title = "Thành công";
+                msg.Content = "Đã lưu hóa đơn.";
+                TempData["msg"] = msg;
                 return RedirectToAction("Create");
             }
             return View(hd);

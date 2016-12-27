@@ -30,7 +30,7 @@ namespace iClinic.Models
         [Display(Name="Mã Bệnh Nhân")]
         public int BenhNhanID { get; set; }
         
-        public int BacSiID { get; set; }
+        public Nullable<int> BacSiID { get; set; }
 
         public int TinhTrangThanhToan { get; set; }
 
