@@ -31,6 +31,8 @@ namespace iClinic.Models
 
         [Display(Name = "Kết Quả")]
         public String KetQua { get; set; }
+
+        public int TinhTrangKham { get; set; }
         
         //add
         public int PhongID { get; set; }
@@ -54,5 +56,14 @@ namespace iClinic.Models
 
         [ForeignKey("PhieuKhamBenhID")]
         public virtual PhieuKhamBenh PhieuKhamBenh { get; set; }
+
+        [NotMapped]
+        public bool DaThucHienDichVu 
+        {
+            get 
+            {
+                return TinhTrangKham == 1 ? true : false;
+            }
+        }
     }
 }
