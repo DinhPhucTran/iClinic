@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using System.IO;
+using iClinic.Models;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace iClinic.Controllers
 {
@@ -19,5 +23,6 @@ namespace iClinic.Controllers
         {
             return DateTime.Now.ToString("T");
         }
+ 
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using iClinic.Models;
 using PagedList;
+using System.IO;
 
 namespace iClinic.Controllers
 {
@@ -165,11 +166,26 @@ namespace iClinic.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register([Bind(Exclude = "UserPhoto")]RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
+                byte[] imageData = null;
+                if (Request.Files.Count > 0)
+                {
+                    HttpPostedFileBase poImgFile = Request.Files["UserPhoto"];
+
+                    using (var binary = new BinaryReader(poImgFile.InputStream))
+                    {
+                        imageData = binary.ReadBytes(poImgFile.ContentLength);
+                    }
+                    
+                } 
+
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.UserName + "@iclinic.com", FullName = model.FullName };
+
+                user.UserPhoto = imageData; 
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -240,6 +256,91 @@ namespace iClinic.Controllers
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             return PartialView(nvs.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult GetFullName()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                String userId = User.Identity.GetUserId();
+                if (userId == null)
+                {
+                    return Content("User");
+                }
+
+                var bdUsers = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+                var user = bdUsers.Users.Where(x => x.Id == userId).FirstOrDefault();
+
+                if (user.FullName == null)
+                {
+                    return Content("User");
+                }
+
+                return Content(user.FullName);
+            }
+            return Content("User");
+        }
+
+        public FileContentResult UserPhotos()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                String userId = User.Identity.GetUserId();
+
+                if (userId == null)
+                {
+                    string fileName = HttpContext.Server.MapPath(@"~/Content/img/user.png");
+
+                    byte[] imageData = null;
+                    FileInfo fileInfo = new FileInfo(fileName);
+                    long imageFileLength = fileInfo.Length;
+                    FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                    BinaryReader br = new BinaryReader(fs);
+                    imageData = br.ReadBytes((int)imageFileLength);
+
+                    return File(imageData, "image/png");
+
+                }
+                // to get the user details to load user Image 
+                var bdUsers = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+                var userImage = bdUsers.Users.Where(x => x.Id == userId).FirstOrDefault();
+
+                if (userImage.UserPhoto == null)
+                {
+                    string fileName = HttpContext.Server.MapPath(@"~/Content/img/user.png");
+
+                    byte[] imageData = null;
+                    FileInfo fileInfo = new FileInfo(fileName);
+                    long imageFileLength = fileInfo.Length;
+                    FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                    BinaryReader br = new BinaryReader(fs);
+                    imageData = br.ReadBytes((int)imageFileLength);
+
+                    return File(imageData, "image/png");
+                }
+
+                return new FileContentResult(userImage.UserPhoto, "image/jpeg");
+            }
+            else
+            {
+                string fileName = HttpContext.Server.MapPath(@"~/Content/img/user.png");
+
+                byte[] imageData = null;
+                FileInfo fileInfo = new FileInfo(fileName);
+                long imageFileLength = fileInfo.Length;
+                FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                BinaryReader br = new BinaryReader(fs);
+                imageData = br.ReadBytes((int)imageFileLength);
+                return File(imageData, "image/png");
+
+            }
+        }
+
+        public string GetRole()
+        {
+            string name = User.Identity.Name;
+            var roleNames = System.Web.Security.Roles.GetRolesForUser(User.Identity.Name);
+            return string.Join("", roleNames);
         }
 
         //
