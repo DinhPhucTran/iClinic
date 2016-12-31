@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace iClinic.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         //

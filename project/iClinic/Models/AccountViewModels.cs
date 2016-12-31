@@ -95,7 +95,7 @@ namespace iClinic.Models
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Mật khẩu không trùng khớp")]
         public string ConfirmPassword { get; set; }
 
-        [Display(Name = "User Photo")]
+        [Display(Name = "Ảnh")]
         public byte[] UserPhoto { get; set; }
 
         public RegisterViewModel()

@@ -90,7 +90,7 @@ namespace iClinic.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Không thể đăng nhập.");
                     return View(model);
             }
         }
@@ -338,9 +338,17 @@ namespace iClinic.Controllers
 
         public string GetRole()
         {
-            string name = User.Identity.Name;
-            var roleNames = System.Web.Security.Roles.GetRolesForUser(User.Identity.Name);
-            return string.Join("", roleNames);
+            if (User.Identity.IsAuthenticated)
+            {
+                String userName = User.Identity.Name;
+                int maNv = Int16.Parse(userName);
+                using(var context = new Entities())
+                {
+                    NhanVien nv = context.DbSetNhanVien.Where(n => n.MaNhanVien == maNv).First();
+                    return nv.LoaiNhanVien.TenLoaiNhanVien;
+                }
+            }
+            return "Nhân viên";
         }
 
         //
