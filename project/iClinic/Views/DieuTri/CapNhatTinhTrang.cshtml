@@ -1,0 +1,119 @@
+﻿@model iClinic.Models.ChiTietDieuTri
+@using iClinic.Models
+
+@{
+    ViewBag.Title = "CapNhatTinhTrang";
+}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label col-sm-5">Mã hồ sơ: </label>
+            @Html.DisplayFor(model => model.HoSoDieuTriNoiTruID)
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-5">Mã bệnh nhân: </label>
+            @Html.DisplayFor(model => model.HoSoDieuTriNoiTru.BenhNhanID)
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-5">Tên bệnh nhân: </label>
+            @Html.DisplayFor(model => model.HoSoDieuTriNoiTru.BenhNhan.TenBenhNhan)
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-5">Chẩn đoán: </label>
+            @Html.DisplayFor(model => model.HoSoDieuTriNoiTru.ChanDoan)
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-5">Bác sĩ điều trị </label>
+            @Html.DisplayFor(model => model.HoSoDieuTriNoiTru.BacSiDieuTri.TenNhanVien)
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-5">Ngày bắt đầu điều trị: </label>
+            @Html.DisplayFor(model => model.HoSoDieuTriNoiTru.NgayBatDauDieuTri)
+        </div>
+
+    </div>
+</div>
+
+<div>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Ngày</th>
+            <th>Tình trạng</th>
+            <th>Ghi chú</th>
+        </tr>
+        @if (ViewBag.dsChiTiet != null)
+        {
+            foreach (ChiTietDieuTri ct in ViewBag.dsChiTiet)
+            {
+                <tr>
+                    <td>
+                        @ct.NgayDieuTri
+                    </td>
+                    <td>
+                        @ct.TinhTrang
+                    </td>
+                    <td>
+                        @ct.GhiChu
+                    </td>
+                </tr>
+            }
+        }
+        
+        <tr>
+
+        
+    </table>
+
+    <div class="col-md-6">
+        <h3>Ngày @DateTime.Today.ToShortDateString()</h3>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        <div class="col-sm-4">
+            @Html.LabelFor(model => model.TinhTrang)
+        </div>
+        <div>
+            @Html.TextBoxFor(model => model.TinhTrang)
+        </div>
+    </div>
+
+
+            <div class="form-group">
+        <div class="col-sm-4">
+            @Html.LabelFor(model => model.GhiChu)
+        </div>
+        <div>
+            @Html.TextBoxFor(model => model.GhiChu)
+        </div>
+    </div>
+
+            <button type="submit">Lưu</button>
+
+
+        }
+    </div>
+
+    
+
+    
+</div>
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -9,6 +9,7 @@ using System.Web.Script.Serialization;
 
 namespace iClinic.Controllers
 {
+    [Authorize]
     public class HoaDonController : Controller
     {
         Entities db = new Entities();
@@ -22,6 +23,7 @@ namespace iClinic.Controllers
             return View();
         }
 
+        [Authorize(Roles = "6")]
         public ActionResult Create()
         {
             Message msg = (Message)TempData["msg"];
@@ -30,6 +32,7 @@ namespace iClinic.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "6")]
         public ActionResult Create (HoaDon hd)
         {
             if (ModelState.IsValid)

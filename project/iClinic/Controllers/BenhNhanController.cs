@@ -9,6 +9,7 @@ using iClinic.Models;
 
 namespace iClinic.Controllers
 {
+    [Authorize]
     public class BenhNhanController : Controller
     {
         private Entities db = new Entities();

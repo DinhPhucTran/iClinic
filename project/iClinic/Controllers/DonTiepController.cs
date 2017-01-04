@@ -10,18 +10,16 @@ using PagedList;
 
 namespace iClinic.Controllers
 {
-    //[Authorize]
     public class DonTiepController : Controller
     {
         private Entities db = new Entities();
-        private string msgType = "";
-        private string msgContent = "";
-        private string msgTitle = "";
+        //private string msgType = "";
+        //private string msgContent = "";
+        //private string msgTitle = "";
         private Message msg;
 
         //
         // GET: /DonTiep/
-
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;

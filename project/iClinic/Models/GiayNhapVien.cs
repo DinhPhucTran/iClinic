@@ -13,12 +13,15 @@ namespace iClinic.Models
         [Key]
         public int MaGiayNhapVien { get; set; }
         
+        [Display(Name = "Mã Bệnh Nhân")]
         public int BenhNhanID { get; set; }
-        
+
+        [Display(Name = "Mã Bác Sĩ")]
         public int BacSiDieuTriID { get; set; }
         
-        public int NhanVienTiepNhanID { get; set; }
+        public int? NhanVienTiepNhanID { get; set; }
 
+        [Display(Name = "Chẩn Đoán")]
         public String ChanDoan { get; set; }
 
         [DataType(DataType.Date)]

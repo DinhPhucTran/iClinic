@@ -1,0 +1,200 @@
+﻿@model iClinic.Models.GiayNhapVien
+
+@{
+    ViewBag.Title = "Lập giấy nhập viện";
+}
+
+@section Title{
+    Nhập viện
+}
+
+@section PageHeader
+{
+    Nhập viện
+}
+
+@section Breadcrumb
+{
+    <li class="active">Nhập viện</li>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Giấy nhập viện</h3>
+                </div>
+                <div class="form-horizontal">
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">
+                                @Html.LabelFor(model => model.BenhNhanID)
+                            </div>
+                            <div class="col-sm-8" style="padding-top: 8px;">
+                                @Html.DisplayFor(model => model.BenhNhanID)
+                                @Html.HiddenFor(model => model.BenhNhanID)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">
+                                @Html.LabelFor(model => model.BenhNhan.TenBenhNhan)
+                            </div>
+                            <div class="col-sm-8" style="padding-top: 8px;" id="tenBN">
+                                @Html.DisplayFor(model => model.BenhNhan.TenBenhNhan)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">
+                                @Html.LabelFor(model => model.BenhNhan.GioiTinh)
+                            </div>
+                            <div class="col-sm-8" style="padding-top: 8px;" id="gioiTinh">
+                                @Html.DisplayFor(model => model.BenhNhan.GioiTinh)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label col-sm-4">
+                                <label class="control-label">Bác Sĩ Chỉ Định</label>
+                            </div>
+                            <div class="col-sm-8" style="padding-top: 8px;" id="tenBS">
+                                @Html.DisplayFor(model => model.BacSiDieuTri.TenNhanVien)
+                                @Html.HiddenFor(model => model.BacSiDieuTriID)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label col-sm-4">
+                                @Html.LabelFor(model => model.ChanDoan)
+                            </div>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.ChanDoan, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ChanDoan)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label col-sm-4">
+                                @Html.LabelFor(model => model.NgayNhapVien)
+                            </div>
+                            <div class="col-sm-8" style="padding-top: 8px;" id="ngayNV">
+                                @Html.DisplayFor(model => model.NgayNhapVien)
+                                @Html.HiddenFor(mode => Model.NgayNhapVien)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label col-sm-4">
+                                @Html.LabelFor(model => model.GhiChu)
+                            </div>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.GhiChu, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.GhiChu)
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+                            <div style="float:right">
+                                <a class="btn btn-default" href="@Url.Action("Create", "KhamBenh")"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Trở lại</a>
+                                <button type="submit" class="btn btn-info" style="margin-left: 30px;" id="btnSave"><i class="fa fa-print" aria-hidden="true"></i> Lưu và In Giấy Nhập Viện</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div id="printArea" hidden="hidden">
+    <div align="center">
+        <p style="font-weight:bold">Phòng Khám Đa Khoa</p>
+        <h2>GIẤY NHẬP VIỆN</h2>
+        <p>&nbsp;</p>
+    </div>
+    <div style="margin-left: 20px;">
+        <p>Họ tên người bệnh: <span style="font-weight:bold" id="ten"></span></p>
+        <p>Ngày sinh: <span id="ns"></span> <span style="margin-left: 100px;">Giới tính: </span> <span id="gt"></span></p>
+        <p>Chẩn đoán: <span id="cd"></span></p>
+        <p>Bác sĩ chỉ định: <span id="bs"></span></p>
+        <p>Ngày nhập viện: <span id="ngay"></span></p>
+    </div>
+    <div style="text-align:center; float:right; margin-right: 20px;">
+        <p>Ngày @DateTime.Today.Day tháng @DateTime.Today.Month năm @DateTime.Today.Year</p>
+        <p>Bác sĩ</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p id="ktbs"></p>
+    </div>
+</div>
+
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+    
+@if(Model.BenhNhan != null && ViewBag.Saved == true)
+{ 
+<script>
+    $(window).load(function(){
+        $("#ten").text($("#tenBN").text());
+        $("#gt").text($("#gioiTinh").text());
+        $("#bs").text($("#tenBS").text());        
+        $("#cd").text($("#ChanDoan").val());
+        $("#ngay").text($("#ngayNV").text());
+        $("#ktbs").text($("#tenBS").text());
+        $("#ns").text("@Model.BenhNhan.NgaySinh.ToShortDateString()");
+        $("#btnSave").hide();
+        printDiv2('printArea');
+    });
+</script>
+}
+
+
+<script>
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>
+
+<script type="text/javascript">
+    function printDiv2(divName) {
+        var contents = document.getElementById(divName).innerHTML;
+        var frame1 = document.createElement('iframe');
+        frame1.name = "frame1";
+        frame1.style.position = "absolute";
+        frame1.style.top = "-1000000px";
+        document.body.appendChild(frame1);
+        var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+        frameDoc.document.open();
+        frameDoc.document.write('<html><head><title>DIV Contents</title>');
+        frameDoc.document.write('</head><body>');
+        frameDoc.document.write(contents);
+        frameDoc.document.write('</body></html>');
+        frameDoc.document.close();
+        setTimeout(function () {
+            window.frames["frame1"].focus();
+            window.frames["frame1"].print();
+            document.body.removeChild(frame1);
+        }, 500);
+        return false;
+    }
+</script>
+
+
+
+}

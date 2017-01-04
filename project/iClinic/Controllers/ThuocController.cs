@@ -38,7 +38,7 @@ namespace iClinic.Controllers
 
         //
         // GET: /Thuoc/Create
-
+        [Authorize(Roles = "5")]
         public ActionResult Create()
         {
             ViewBag.DonViTinhID = new SelectList(db.DbSetDonViTinh, "MaDonViTinh", "TenDonViTinh");
@@ -50,6 +50,7 @@ namespace iClinic.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "5")]
         public ActionResult Create(Thuoc thuoc)
         {
             if (ModelState.IsValid)
@@ -65,7 +66,7 @@ namespace iClinic.Controllers
 
         //
         // GET: /Thuoc/Edit/5
-
+        [Authorize(Roles = "5")]
         public ActionResult Edit(int id = 0)
         {
             Thuoc thuoc = db.DbSetThuoc.Find(id);
@@ -79,7 +80,7 @@ namespace iClinic.Controllers
 
         //
         // POST: /Thuoc/Edit/5
-
+        [Authorize(Roles = "5")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Thuoc thuoc)
@@ -96,7 +97,7 @@ namespace iClinic.Controllers
 
         //
         // GET: /Thuoc/Delete/5
-
+        [Authorize(Roles = "5")]
         public ActionResult Delete(int id = 0)
         {
             Thuoc thuoc = db.DbSetThuoc.Find(id);
@@ -109,7 +110,7 @@ namespace iClinic.Controllers
 
         //
         // POST: /Thuoc/Delete/5
-
+        [Authorize(Roles = "5")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

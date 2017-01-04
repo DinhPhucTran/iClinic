@@ -184,6 +184,7 @@
     <Compile Include="Controllers\BoPhanController.cs" />
     <Compile Include="Controllers\ChucVuController.cs" />
     <Compile Include="Controllers\DichVuController.cs" />
+    <Compile Include="Controllers\DieuTriController.cs" />
     <Compile Include="Controllers\DonThuocController.cs" />
     <Compile Include="Controllers\DonTiepController.cs" />
     <Compile Include="Controllers\DonViTinhController.cs" />
@@ -1312,6 +1313,12 @@
     <Content Include="Views\HoaDon\_SidePhieuKhamBenh.cshtml" />
     <Content Include="Views\PhieuYeuCauDichVu\Edit.cshtml" />
     <Content Include="Views\PhieuYeuCauDichVu\_SideBenhNhanCho.cshtml" />
+    <Content Include="Views\DieuTri\Create.cshtml" />
+    <Content Include="Views\DieuTri\NhapVien.cshtml" />
+    <Content Include="Views\DieuTri\Index.cshtml" />
+    <Content Include="Views\DieuTri\XuatVien.cshtml" />
+    <Content Include="Views\DieuTri\ChuyenVien.cshtml" />
+    <Content Include="Views\DieuTri\CapNhatTinhTrang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

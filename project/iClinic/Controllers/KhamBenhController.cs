@@ -11,6 +11,7 @@ using PagedList;
 
 namespace iClinic.Controllers
 {
+    [Authorize]
     public class KhamBenhController : Controller
     {
         private Entities db = new Entities();
@@ -78,14 +79,31 @@ namespace iClinic.Controllers
         //
         // GET: /KhamBenh/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int maPhieuKham = 0)
         {
             Message msgThongBao = (Message)TempData["msg"];
             ViewBag.Msg = msgThongBao;
 
+            List<ChiTietDonThuoc> ds = (List<ChiTietDonThuoc>)TempData["dsThuoc"];
+            if (ds != null)
+            {
+                foreach (ChiTietDonThuoc ct in ds)
+                {
+                    ct.Thuoc = db.DbSetThuoc.Find(ct.ThuocID);
+                }
+            }
+            ViewBag.dsThuoc = ds;
+
+            PhieuKhamBenh pk = db.DbSetPhieuKhamBenh.Find(maPhieuKham);
+
+
             ViewBag.BenhNhanSelect = 0;
             ViewBag.DichVuID = db.DbSetDichVu;
             ViewBag.DanhSachThuoc = db.DbSetThuoc;
+
+            if (pk != null)
+                return View(pk);
+
             return View();
         }
 
@@ -116,6 +134,7 @@ namespace iClinic.Controllers
                     msg.Title = "Thành công";
                     msg.Content = "Đã lưu dịch vụ khám";
                     TempData["msg"] = msg;
+                    //return RedirectToAction("Create", new { id =  });
                     return RedirectToAction("Create");
                 }
             }
@@ -125,12 +144,13 @@ namespace iClinic.Controllers
             return View(phieukhambenh);
         }
 
+        [Authorize(Roles = "2")]
         public ActionResult CreateDonThuoc(PhieuKhamBenh phieuKham, List<ChiTietDonThuoc> dsChiTietDonThuoc) 
         {
             TempData["msg"] = msg;
             if (ModelState.IsValid)
             {
-                if (phieuKham.MaPhieuKhamBenh > 0 && dsChiTietDonThuoc.Count > 0)
+                if (phieuKham != null && dsChiTietDonThuoc != null)
                 {
                     DonThuoc donThuoc = new DonThuoc {
                         BacSiID = 1,//todo
@@ -140,6 +160,7 @@ namespace iClinic.Controllers
                     };
                     db.DbSetDonThuoc.Add(donThuoc);
                     db.SaveChanges();
+
                     if (dsChiTietDonThuoc != null)
                     {
                         foreach (var item in dsChiTietDonThuoc)
@@ -150,6 +171,7 @@ namespace iClinic.Controllers
                         }
                         db.SaveChanges();
                     }
+
                     var dsPhieuCho = db.DbSetPhieuKhamBenhDangCho.Where(m => m.PhieuKhamBenhID == phieuKham.MaPhieuKhamBenh).ToList();
                     if (dsPhieuCho != null)
                     {
@@ -159,6 +181,7 @@ namespace iClinic.Controllers
                         }
                     }
                     db.SaveChanges();
+
                     var dsBNCho = db.DbSetBenhNhanChoKham.Where(m => m.BenhNhanID == phieuKham.BenhNhanID).ToList();
                     if (dsBNCho != null)
                     {
@@ -167,20 +190,27 @@ namespace iClinic.Controllers
                             db.DbSetBenhNhanChoKham.Remove(db.DbSetBenhNhanChoKham.Find(dsBNCho[i].MaBenhNhan));
                         }
                     }
+
                     db.SaveChanges();
                     msg = new Message();
                     msg.Type = "success";
                     msg.Title = "Thành công";
-                    msg.Content = "Đã lưu đơn thuốc";
+                    msg.Content = "Đã lưu đơn thuốc.";
                     TempData["msg"] = msg;
-                    return RedirectToAction("Create");
+                    TempData["dsThuoc"] = dsChiTietDonThuoc;
+                    return RedirectToAction("Create", new { maPhieuKham = phieuKham.MaPhieuKhamBenh });
                 }
             }
             var errors = ModelState.Values.SelectMany(m => m.Errors);
             ViewBag.DichVuID = db.DbSetDichVu;
             ViewBag.DanhSachThuoc = db.DbSetThuoc;
-            //return RedirectToAction("Create");
-            return View(phieuKham);
+            msg = new Message();
+            msg.Type = "error";
+            msg.Title = "Lỗi";
+            msg.Content = "Không thể lưu đơn thuốc.\n" + errors.ToString();
+            TempData["msg"] = msg;
+            return RedirectToAction("Create");
+            //return View(phieuKham);
         }
 
         //

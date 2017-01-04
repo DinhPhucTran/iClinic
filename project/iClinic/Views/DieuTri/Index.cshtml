@@ -1,0 +1,107 @@
+﻿@model PagedList.IPagedList<iClinic.Models.HoSoDieuTriNoiTru>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="box box-info">
+    @*<div class="box-header">
+            <h3 class="box-title">Danh sách bệnh nhân</h3>
+        </div>*@
+
+    <div class="box-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <p>
+                    @Html.ActionLink("Thêm mới", "NhapVien")
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <div class="pull-right">
+                    @using (Html.BeginForm("Index", "DieuTri", FormMethod.Get))
+                    {
+                        <p>
+                            Tìm tên bệnh nhân: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>
+                    Mã hồ sơ
+                </th>
+                <th>
+                    Mã bệnh nhân
+                </th>
+                <th>
+                    @Html.ActionLink("Tên bệnh nhân", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    Giới tính
+                </th>
+                <th>
+                    Tuổi
+                </th>
+                <th>
+                    Tiền sử bệnh
+                </th>
+                <th>
+                    @Html.ActionLink("Ngày tiếp nhận", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    Bác sĩ điều trị
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaHoSo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BenhNhanID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BenhNhan.TenBenhNhan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BenhNhan.GioiTinh)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.BenhNhan.NgaySinh)*@
+                        @(DateTime.Today.Year - item.BenhNhan.NgaySinh.Year)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BenhNhan.TienSuBenh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayBatDauDieuTri)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BacSiDieuTri.TenNhanVien)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Cập nhật", "CapNhatTinhTrang", new { maHoSo = item.MaHoSo })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Xuất viện", "XuatVien", new { id = item.MaHoSo })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        <br />
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>

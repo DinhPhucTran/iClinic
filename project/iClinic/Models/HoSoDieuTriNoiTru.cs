@@ -17,19 +17,20 @@ namespace iClinic.Models
         
         public int BacSiDieuTriID { get; set; }
         
-        public int YTaDieuTriID { get; set; }
+        public int? YTaDieuTriID { get; set; }
         
-        public int PhongID { get; set; }
+        public int? PhongID { get; set; }
+
+        public int GiayNhapVienID { get; set; }
         
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name="Ngày Bắt Đầu Điều Trị")]
         public DateTime NgayBatDauDieuTri { get; set; }
         
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name="Ngày Kết Thúc Điều Trị")]
-        public DateTime NgayKetThucDieuTri { get; set; }
+        public DateTime? NgayKetThucDieuTri { get; set; }
         
         [Display(Name="Chẩn Đoán")]
         public String ChanDoan { get; set; }
@@ -45,6 +46,9 @@ namespace iClinic.Models
         
         [ForeignKey("PhongID")]
         public virtual Phong Phong { get; set; }
+
+        [ForeignKey("GiayNhapVienID")]
+        public virtual GiayNhapVien GiayNhapVien { get; set;}
         
         public virtual ICollection<ChiTietDieuTri> ChiTietDieuTris { get; set; }
     }

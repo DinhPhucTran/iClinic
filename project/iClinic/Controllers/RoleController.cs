@@ -10,7 +10,7 @@ using System.Data.Entity;
 
 namespace iClinic.Controllers
 {
-    //[AuthLog(Roles = "Admin")]
+    [AuthLog(Roles = "1")]
     public class RoleController : Controller
     {
         ApplicationDbContext context;

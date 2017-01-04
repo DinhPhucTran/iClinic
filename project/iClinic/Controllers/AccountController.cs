@@ -140,7 +140,7 @@ namespace iClinic.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles = "1")]
         public ActionResult Register(int maNV = 0)
         {
             var model = new RegisterViewModel();
@@ -164,7 +164,7 @@ namespace iClinic.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "1")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register([Bind(Exclude = "UserPhoto")]RegisterViewModel model)
         {

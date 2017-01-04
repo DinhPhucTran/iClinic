@@ -48,7 +48,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Tên Bệnh Nhân</label>
                             <div class="col-sm-10">
-                                <input class="form-control" id="BenhNhanName" value="" />
+                                <input class="form-control" id="BenhNhanName" value='@(Model != null ? Model.BenhNhan.TenBenhNhan : "")' />
                             </div>
                         </div>
                         <div hidden>
@@ -60,7 +60,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.LyDoKham, "Lý Do Khám", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
-                                @Html.TextAreaFor(model => model.LyDoKham, new { @class = "form-control", id = "LyDoKham" })
+                                @Html.TextAreaFor(model => model.LyDoKham, new { @class = "form-control", id = "LyDoKham", @value = (Model != null) ? Model.LyDoKham : "" })
                             </div>
                             @*@Html.ValidationMessageFor(model => model.BenhNhan.TienSuBenh)*@
                         </div>
@@ -68,7 +68,7 @@
                             @Html.LabelFor(model => model.ChanDoan, new { @class = "col-sm-2 control-label" })
 
                             <div class="col-sm-10">
-                                @Html.TextBoxFor(model => model.ChanDoan, (String)"Chẩn đoán", new { @class = "form-control", id = "ChanDoan" })
+                                @Html.TextBoxFor(model => model.ChanDoan, (String)"Chẩn đoán", new { @class = "form-control", id = "ChanDoan", @value = (Model != null) ? Model.ChanDoan : "" })
                             </div>
                             @*@Html.ValidationMessageFor(model => model.ChanDoan)*@
                         </div>
@@ -76,7 +76,7 @@
                             @Html.LabelFor(model => model.LoiDan, new { @class = "col-sm-2 control-label" })
 
                             <div class="col-sm-10">
-                                @Html.TextBoxFor(model => model.LoiDan, (String)"Lời Dặn", new { @class = "form-control", id = "LoiDan" })
+                                @Html.TextBoxFor(model => model.LoiDan, (String)"Lời Dặn", new { @class = "form-control", id = "LoiDan", @value = (Model != null) ? Model.LoiDan : "" })
                             </div>
                             @*@Html.ValidationMessageFor(model => model.LoiDan)*@
                         </div>
@@ -119,6 +119,74 @@
                 </div>
             </div>
         </div>
+
+        <div>
+            @if (Model != null)
+            {
+                <a class="btn btn-default" href="@Url.Action("NhapVien", "DieuTri", new { MaBN = Model.BenhNhanID, MaBS = Model.BacSiID })">Nhập viện</a>
+            }
+        </div>
+
+        <div>
+            @using (Html.BeginForm("Create", "KhamBenh"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <div>
+                            <h3 class="box-title">Thêm Dịch Vụ</h3>
+                            <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;" onclick="clickAdd()">Add</button>
+                        </div>
+                    </div>
+                    <div class="form-horizontal">
+                        <div class="box-body table-responsive no-padding">
+                            <div hidden>
+                                @Html.LabelFor(model => model.MaPhieuKhamBenh, "Mã Phiếu Khám")
+                                <div class="col-sm-10">
+                                    @Html.TextBoxFor(model => model.MaPhieuKhamBenh, new { id = "MaPhieuKham2" })
+                                </div>
+                            </div>
+                            <table class="table table-hover" id="tb_dsPhieuYeuCauDichVu">
+                                @{IEnumerable<DichVu> dsDichVu = ViewBag.DichVuID as IEnumerable<DichVu>;}
+                                <tr class="tr_structure" id="tr_PhieuYCDV" hidden>
+                                    <td>
+                                        <select class="form-control ddl_DichVuID" name="" onchange="changeDichVu(this)">
+                                            <option value=""></option>
+                                            @foreach (var itemDV in dsDichVu)
+                                            {
+                                                <option value="@itemDV.MaDichVu">@itemDV.TenDichVu</option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td hidden>
+                                        <input class="txt_BenhNhan" name="" type="text" value="" hidden />
+                                        <input class="txt_BenhNhanShow" name="" type="text" value="" readonly hidden />
+                                    </td>
+                                    <td>
+                                        <input class="ddl_Phong" name="" type="text" value="" hidden />
+                                        <input class="form-control ddl_PhongShow" type="text" value="" readonly />
+                                    </td>
+                                    <td><input class="form-control txt_DonGia" name="" type="text" value="" readonly /></td>
+                                    <td><input type="button" value="Xóa" onclick="deleteDichVu(this)" /></td>
+                                </tr>
+                                <tr class="first_row" data-id="-1">
+                                    <th>Tên Dịch Vụ</th>
+                                    <th hidden>Bệnh Nhân</th>
+                                    <th>Phòng khám</th>
+                                    <th>Đơn Giá</th>
+                                    <th></th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="reset" class="btn btn-default">Hủy</button>
+                        <button type="submit" class="btn btn-info pull-right">Lưu và in phiếu khám</button>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 
     <div class="col-md-6">
@@ -126,127 +194,108 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-6">
-        @using (Html.BeginForm("Create", "KhamBenh"))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    <div>
-                        <h3 class="box-title">Thêm Dịch Vụ</h3>
-                        <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;" onclick="clickAdd()">Add</button>
-                    </div>
-                </div>
-                <div class="form-horizontal">
-                    <div class="box-body table-responsive no-padding">
-                        <div hidden>
-                            @Html.LabelFor(model => model.MaPhieuKhamBenh, "Mã Phiếu Khám")
-                            <div class="col-sm-10">
-                                @Html.TextBoxFor(model => model.MaPhieuKhamBenh, new { id = "MaPhieuKham2" })
-                            </div>
-                        </div>
-                        <table class="table table-hover" id="tb_dsPhieuYeuCauDichVu">
-                            @{IEnumerable<DichVu> dsDichVu = ViewBag.DichVuID as IEnumerable<DichVu>;}
-                            <tr class="tr_structure" id="tr_PhieuYCDV" hidden>
-                                <td>
-                                    <select class="form-control ddl_DichVuID" name="" onchange="changeDichVu(this)">
-                                        <option value=""></option>
-                                        @foreach (var itemDV in dsDichVu)
-                                        {
-                                            <option value="@itemDV.MaDichVu">@itemDV.TenDichVu</option>
-                                        }
-                                    </select>
-                                </td>
-                                <td hidden>
-                                    <input class="txt_BenhNhan" name="" type="text" value="" hidden />
-                                    <input class="txt_BenhNhanShow" name="" type="text" value="" readonly hidden />
-                                </td>
-                                <td>
-                                    <input class="ddl_Phong" name="" type="text" value="" hidden />
-                                    <input class="form-control ddl_PhongShow" type="text" value="" readonly />
-                                </td>
-                                <td><input class="form-control txt_DonGia" name="" type="text" value="" readonly /></td>
-                                <td><input type="button" value="Xóa" onclick="deleteDichVu(this)" /></td>
-                            </tr>
-                            <tr class="first_row" data-id="-1">
-                                <th>Tên Dịch Vụ</th>
-                                <th hidden>Bệnh Nhân</th>
-                                <th>Phòng khám</th>
-                                <th>Đơn Giá</th>
-                                <th></th>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="box-footer">
-                    <button type="reset" class="btn btn-default">Hủy</button>
-                    <button type="submit" class="btn btn-info pull-right">Lưu và in phiếu khám</button>
+<div>
+
+    @using (Html.BeginForm("CreateDonThuoc", "KhamBenh"))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <div>
+                    <h3 class="box-title">Kê Đơn Thuốc</h3>
+                    <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;" onclick="clickAddThuoc()">Add</button>
                 </div>
             </div>
-        }
-    </div>
-    <div class="col-md-6">
-        @using (Html.BeginForm("CreateDonThuoc", "KhamBenh"))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    <div>
-                        <h3 class="box-title">Kê Đơn Thuốc</h3>
-                        <button type="button" class="btn btn-info pull-right" style="float: right; background-color: #78d678;" onclick="clickAddThuoc()">Add</button>
-                    </div>
-                </div>
-                <div class="form-horizontal">
-                    <div class="box-body table-responsive no-padding">
-                        <div hidden>
-                            @Html.LabelFor(model => model.MaPhieuKhamBenh, "Mã Phiếu Khám")
-                            <div class="col-sm-10">
-                                @Html.TextBoxFor(model => model.MaPhieuKhamBenh, new { id = "MaPhieuKham3" })
-                            </div>
+            <div class="form-horizontal">
+                <div class="box-body table-responsive no-padding">
+                    <div hidden>
+                        @Html.LabelFor(model => model.MaPhieuKhamBenh, "Mã Phiếu Khám")
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.MaPhieuKhamBenh, new { id = "MaPhieuKham3" })
                         </div>
-                        <table class="table table-hover" id="tb_DanhSachThuoc">
-                            @{IEnumerable<Thuoc> dsThuoc = ViewBag.DanhSachThuoc as IEnumerable<Thuoc>;}
-                            <tr class="tr_structure" id="tr_Thuoc" hidden>
-                                <td>
-                                    <select class="form-control tb_MaThuoc" name="" onchange="changeDichVu(this)">
-                                        <option value=""></option>
-                                        @foreach (var itemDV in dsThuoc)
-                                        {
-                                            <option value="@itemDV.MaThuoc">@itemDV.TenThuoc</option>
-                                        }
-                                    </select>
-                                </td>
-                                <td><input class="form-control tb_SoLuongThuoc" type="number" name="" value="0" /></td>
-                                <td><input class="form-control tb_SangThuoc" type="number" name="" value="0" /></td>
-                                <td><input class="form-control tb_TruaThuoc" type="number" name="" value="0" /></td>
-                                <td><input class="form-control tb_ChieuThuoc" type="number" name="" value="0" /></td>
-                                <td><input class="form-control tb_ToiThuoc" type="number" name="" value="0" /></td>
-                                <td><input type="button" value="Xóa" onclick="deleteThuoc(this)"/></td>
-                            </tr>
-                            <tr class="first_row" data-id="-1">
-                                <th>Tên Thuốc</th>
-                                <th>Số Lượng</th>
-                                <th>Sáng</th>
-                                <th>Trưa</th>
-                                <th>Chiều</th>
-                                <th>Tối</th>
-                                <th></th>
-                            </tr>
-                        </table>
                     </div>
-                </div>
-                <div class="box-footer">
-                    <button type="reset" class="btn btn-default">Hủy</button>
-                    <button type="submit" class="btn btn-info pull-right">Lưu và in đơn thuốc</button>
+                    <table class="table table-hover" id="tb_DanhSachThuoc">
+                        @{IEnumerable<Thuoc> dsThuoc = ViewBag.DanhSachThuoc as IEnumerable<Thuoc>;}
+                        <tr class="tr_structure" id="tr_Thuoc" hidden>
+                            <td>
+                                <select class="form-control tb_MaThuoc" name="" onchange="changeDichVu(this)">
+                                    <option value=""></option>
+                                    @foreach (var itemDV in dsThuoc)
+                                    {
+                                        <option value="@itemDV.MaThuoc">@itemDV.TenThuoc</option>
+                                    }
+                                </select>
+                            </td>
+                            <td><input class="form-control tb_SoLuongThuoc" type="number" name="" value="0" /></td>
+                            <td><input class="form-control tb_SangThuoc" type="number" name="" value="0" /></td>
+                            <td><input class="form-control tb_TruaThuoc" type="number" name="" value="0" /></td>
+                            <td><input class="form-control tb_ChieuThuoc" type="number" name="" value="0" /></td>
+                            <td><input class="form-control tb_ToiThuoc" type="number" name="" value="0" /></td>
+                            <td><input type="button" value="Xóa" onclick="deleteThuoc(this)" /></td>
+                        </tr>
+                        <tr class="first_row" data-id="-1">
+                            <th>Tên Thuốc</th>
+                            <th>Số Lượng</th>
+                            <th>Sáng</th>
+                            <th>Trưa</th>
+                            <th>Chiều</th>
+                            <th>Tối</th>
+                            <th></th>
+                        </tr>
+                    </table>
                 </div>
             </div>
-        }
-    </div>
+            <div class="box-footer">
+                <button type="reset" class="btn btn-default">Hủy</button>
+                <button type="submit" class="btn btn-info pull-right">Lưu và in đơn thuốc</button>
+            </div>
+        </div>
+    }
 </div>
 
+<div>
+    @if (ViewBag.dsThuoc != null)
+    {
+        <div id="printArea" hidden="hidden">
+            <div align="center">
+                <p style="font-weight:bold">Phòng Khám Đa Khoa</p>
+                <h2>ĐƠN THUỐC</h2>
+                <p>&nbsp;</p>
+            </div>
+
+            <div style="margin-left: 20px;">
+                <p>Họ tên người bệnh: <span style="font-weight:bold" id="ten">@Model.BenhNhan.TenBenhNhan</span></p>
+                <p>Tuổi: <span id="tuoi"> @(DateTime.Today.Year - Model.BenhNhan.NgaySinh.Year)</span> <span style="margin-left: 100px;">Giới tính: </span><span>@Model.BenhNhan.GioiTinh</span></p>
+                <p>Chẩn đoán: <span id="cd">@Model.ChanDoan</span></p>
+            </div>
+
+            <div style="margin-left: 20px; margin-right: 40px; margin-top: 20px;">
+
+              
+
+                @foreach (ChiTietDonThuoc ct in ViewBag.dsThuoc)
+                {
+                    <div>
+                      <p style="font-weight: bold; float: left;">@ct.Thuoc.TenThuoc</p>
+                      <p style="float: right;"><span style="font-weight: bold;">@ct.SoLuong</span> @ct.Thuoc.DonViTinh.TenDonViTinh</p>
+                      <p style="clear:both;">Ngày uống <span>@ct.NgayDung</span> lần, sáng: <span>@ct.Sang</span>, trưa: <span>@ct.Trua</span>, chiều: <span>@ct.Chieu</span>, tối: <span>@ct.Toi</span>.</p>
+                    </div>
+                }
+                
+            </div>
+
+            <div style="text-align:center; float:right; margin-right: 20px;">
+                <p>Ngày @DateTime.Today.Day tháng @DateTime.Today.Month năm @DateTime.Today.Year</p>
+                <p>Bác sĩ</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>@Html.Action("GetFullName", "Account")</p>
+            </div>
+        </div>
+       
+    }
+</div>
 
 
 @section Scripts {
@@ -348,8 +397,7 @@
             tbNameBenhNhan.value = name;
             changeBenhNhan();
         }
-        function clearAll() 
-        {
+        function clearAll() {
             //xóa data của id LyDoKham, ChanDoan, LoiDan
             document.getElementById("LyDoKham").value = "";
             document.getElementById("ChanDoan").value = "";
@@ -413,15 +461,13 @@
         }
     </script>
     <script>
-        function deleteThuoc(elementCurrent)
-        {
+        function deleteThuoc(elementCurrent) {
             var eleParent = elementCurrent.parentElement.parentElement;
             $(eleParent).remove();
             updateAllRowThuoc();
         }
-        function clickAddThuoc()
-        {
-            //lay id cuoi cung tang len 1 
+        function clickAddThuoc() {
+            //lay id cuoi cung tang len 1
             var idRowLast = parseInt($('#tb_DanhSachThuoc').find("tr:last-child").attr("data-id")) + 1;
             //lay cau truc tr_Thuoc ra
             var structureRowThuoc = $("#tr_Thuoc").html();
@@ -432,8 +478,7 @@
             //update name cua moi row
             updateAllRowThuoc();
         }
-        function updateAllRowThuoc()
-        {
+        function updateAllRowThuoc() {
             var idFirst = parseInt($("#tb_DanhSachThuoc").find(".first_row").attr("data-id"));
             $(".trThuocAdded").each(function () {
                 idFirst++;
@@ -454,14 +499,13 @@
         }
     </script>
     <script>
-        function updatePhieuKham()
-        {
+        function updatePhieuKham() {
             //lay ma + thong tin can update.
             var maPhieuKham = (document.getElementById("MaPhieuKham").value).toString();
             var lyDoKham = document.getElementById("LyDoKham").value;
             var chanDoan = document.getElementById("ChanDoan").value;
             var loiDan = document.getElementById("LoiDan").value;
-            var dataSend = JSON.stringify({MaPhieuKhamBenh: maPhieuKham, LyDoKham: lyDoKham, ChanDoan: chanDoan, LoiDan: loiDan });
+            var dataSend = JSON.stringify({ MaPhieuKhamBenh: maPhieuKham, LyDoKham: lyDoKham, ChanDoan: chanDoan, LoiDan: loiDan });
             //update
             if (maPhieuKham != "" && (lyDoKham != "" || chanDoan != "" || loiDan != "")) {
                 $.ajax({
@@ -481,8 +525,7 @@
                     });
                 }
             }
-            else
-            {
+            else {
                 new PNotify({
                     title: 'Cảnh báo',
                     text: "Chọn bệnh nhân và điền thông tin cần update.",
@@ -492,4 +535,37 @@
             }
         }
     </script>
+
+@if (ViewBag.dsThuoc != null) 
+{ 
+<script>
+    $(window).load(function () {
+        printDiv('printArea');
+    });
+</script>
+}
+
+    <script type="text/javascript">
+    function printDiv(divName) {
+        var contents = document.getElementById(divName).innerHTML;
+        var frame1 = document.createElement('iframe');
+        frame1.name = "frame1";
+        frame1.style.position = "absolute";
+        frame1.style.top = "-1000000px";
+        document.body.appendChild(frame1);
+        var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+        frameDoc.document.open();
+        frameDoc.document.write('<html><head><title>DIV Contents</title>');
+        frameDoc.document.write('</head><body>');
+        frameDoc.document.write(contents);
+        frameDoc.document.write('</body></html>');
+        frameDoc.document.close();
+        setTimeout(function () {
+            window.frames["frame1"].focus();
+            window.frames["frame1"].print();
+            document.body.removeChild(frame1);
+        }, 500);
+        return false;
+    }
+</script>
 }

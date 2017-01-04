@@ -1,0 +1,147 @@
+﻿@model iClinic.Models.BenhNhan
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section PageHeader
+{
+    Tiếp nhận bệnh nhân nội trú
+}
+
+@section Breadcrumb
+{
+    <li class="active">Nhập viện</li>
+}
+
+@*<h2>Create</h2>*@
+
+<div class="row">
+    <div class="col-md-8">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Thông tin bệnh nhân</h3>
+                </div>
+
+                <div class="form-horizontal">
+                    <div class="box-body">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TenBenhNhan, new { @class = "col-sm-2 control-label" })
+
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.TenBenhNhan, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TenBenhNhan, String.Empty, new { @style = "color: #dd4b39;" })
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NgaySinh, new { @class = "col-sm-2 control-label" })
+
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.NgaySinh, new { @class = "form-control datepicker" })
+                                @Html.ValidationMessageFor(model => model.NgaySinh, String.Empty, new { @style = "color: #dd4b39;" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.GioiTinh, new { @class = "col-sm-2 control-label" })
+
+                            <div class="col-sm-10">
+                                @{
+            List<SelectListItem> listGt = new List<SelectListItem>();
+            listGt.Add(new SelectListItem { Text = "Nam", Value = "Nam" });
+            listGt.Add(new SelectListItem { Text = "Nữ", Value = "Nữ" });
+            listGt.Add(new SelectListItem { Text = "Khác", Value = "Khác" });
+                                }
+                                @*@Html.EditorFor(model => model.GioiTinh, new { @class = "form-control" })*@
+                                @Html.DropDownListFor(model => model.GioiTinh, listGt)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NgheNghiep, new { @class = "col-sm-2 control-label" })
+
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.NgheNghiep, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DiaChi, new { @class = "col-sm-2 control-label" })
+
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.DiaChi, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SoDT, new { @class = "col-sm-2 control-label" })
+
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.SoDT, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TienSuBenh, new { @class = "col-sm-2 control-label" })
+
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.TienSuBenh, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NgayTiepNhan, new { @class = "col-sm-2 control-label" })
+
+                            <div class="col-sm-10">
+                                <h4>@DateTime.Now.ToString()</h4>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-footer" style="float: right; width: 100%;">
+                        <button type="reset" class="btn btn-default">Hủy</button>
+                        <button type="submit" class="btn btn-info">Lưu</button>
+                        <div style="clear: left;"></div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="col-md-4">
+        @Html.Action("_SideListBN", "DonTiep")
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="@Url.Content("~/Scripts/js/pnotify.custom.min.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/datepicker/bootstrap-datepicker.js")"></script>
+
+    @if (ViewBag.Msg != null)
+    {
+        <script>
+            new PNotify({
+                title: '@ViewBag.Msg.Title',
+                text: '@ViewBag.Msg.Content',
+                type: '@ViewBag.Msg.Type',
+                styling: 'bootstrap3'
+            });
+        </script>
+    }
+
+    <script>
+        $('.datepicker').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+    </script>
+}

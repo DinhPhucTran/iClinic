@@ -1,0 +1,104 @@
+﻿@model iClinic.Models.GiayChuyenVien
+
+@{
+    ViewBag.Title = "Nhập viện";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Giấy chuyển viện</h3>
+                </div>
+                <div class="form-horizontal">
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">
+                                @Html.LabelFor(model => model.BenhNhan.TenBenhNhan)
+                            </div>
+                            <div class="col-sm-8" style="padding-top: 8px;">
+                                @Html.DisplayFor(model => model.BenhNhan.TenBenhNhan)
+                                @Html.HiddenFor(model => model.BenhNhanID)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">
+                                <label class="control-label">Bác sĩ điều trị</label>
+                            </div>
+                            <div class="col-sm-8" style="padding-top: 8px;">
+                                @Html.DisplayFor(model => model.BacSiDieuTri.TenNhanVien)
+                                @Html.HiddenFor(model => model.BacSiID)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label col-sm-4">
+                                @Html.LabelFor(model => model.NgayChuyenVien)
+                            </div>
+                            <div class="col-sm-8" style="padding-top: 8px;">
+                                @Html.DisplayFor(model => model.NgayChuyenVien)
+                                @Html.HiddenFor(model => model.NgayChuyenVien)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label col-sm-4">
+                                @Html.LabelFor(model => model.ChanDoan)
+                            </div>
+                            <div class="col-sm-8">
+                                @Html.DisplayFor(model => model.ChanDoan, new { @class = "form-control" })
+                                @Html.HiddenFor(model => model.ChanDoan)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label col-sm-4">
+                                @Html.LabelFor(model => model.TinhTrangLucChuyenVien)
+                            </div>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.TinhTrangLucChuyenVien, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label col-sm-4">
+                                @Html.LabelFor(model => model.LyDoChuyenVien)
+                            </div>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.LyDoChuyenVien, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label col-sm-4">
+                                @Html.LabelFor(model => model.TenBVChuyenDen)
+                            </div>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.TenBVChuyenDen, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="box-footer" style="float: left; width: 100%;">
+                            <button type="reset" class="btn btn-default">Hủy</button>
+                            <button type="submit" class="btn btn-info">Tạo</button>
+                            <div style="clear: right;"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

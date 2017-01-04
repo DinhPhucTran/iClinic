@@ -24,6 +24,7 @@
                 <th>Ngày Sinh</th>
                 <th>Tuổi</th>
                 <th>Giới tính</th>
+                <th></th>
             </tr>
 
             @foreach (var item in Model)
@@ -42,6 +43,9 @@
                     <td>@item.BenhNhan.GetAge.ToString()</td>
                     <td>
                         @Html.DisplayFor(modelItem => item.BenhNhan.GioiTinh)
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("Nhập viện", "NhapVien", "DieuTri", new {MaBN = item.BenhNhanID,MaBS = User.Identity.Name }, null))
                     </td>
                 </tr>
             }

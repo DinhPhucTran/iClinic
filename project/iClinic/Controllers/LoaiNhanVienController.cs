@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace iClinic.Controllers
 {
+    [Authorize(Roles = "1")]
     public class LoaiNhanVienController : Controller
     {
         private Entities db = new Entities();
@@ -59,7 +60,7 @@ namespace iClinic.Controllers
                     db.SaveChanges();
 
                     var role = new IdentityRole();
-                    role.Name = loainhanvien.TenLoaiNhanVien;
+                    role.Name = loainhanvien.MaLoaiNhanVien.ToString();
                     context.Roles.Add(role);
                     context.SaveChanges();
                 }
