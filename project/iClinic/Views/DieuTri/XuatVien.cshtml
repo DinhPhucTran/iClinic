@@ -17,60 +17,61 @@
                 </div>
                 <div class="form-horizontal">
                     <div class="box-body">
-
+                        @Html.HiddenFor(model => model.GiayNhapVienID)
                         <div class="form-group">
-                            <div class="col-sm-4 control-label">
-                                @Html.LabelFor(model => model.BenhNhan.TenBenhNhan)
+                            <div class="col-sm-3 control-label">
+                                <label class="control-label">Tên Bệnh Nhân</label>
                             </div>
-                            <div class="col-sm-8" style="padding-top: 8px;">
+                            <div class="col-sm-9" style="padding-top: 8px;" id="tenBN">
                                 @Html.DisplayFor(model => model.BenhNhan.TenBenhNhan)
                                 @Html.HiddenFor(model => model.BenhNhanID)
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="col-sm-4 control-label">
-                                @Html.LabelFor(model => model.BacSiDieuTri.TenNhanVien)
+                            <div class="col-sm-3 control-label">
+                                <label class="control-label">Bác Sĩ Điều Trị</label>
                             </div>
-                            <div class="col-sm-8" style="padding-top: 8px;">
+                            <div class="col-sm-9" style="padding-top: 8px;" id="tenBS">
                                 @Html.DisplayFor(model => model.BacSiDieuTri.TenNhanVien)
                                 @Html.HiddenFor(model => model.BacSiDieuTriID)
                             </div>
-                        </div>
+                        </div>                        
 
                         <div class="form-group">
-                            <div class="control-label col-sm-4">
-                                @Html.LabelFor(model => model.NgayRaVien)
-                            </div>
-                            <div class="col-sm-8" style="padding-top: 8px;">
-                                @Html.DisplayFor(model => model.NgayRaVien)
-                                @Html.HiddenFor(model => model.NgayRaVien)
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="control-label col-sm-4">
+                            <div class="control-label col-sm-3">
                                 @Html.LabelFor(model => model.ChanDoan)
                             </div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-9" id="chanDoan">
                                 @Html.DisplayFor(model => model.ChanDoan, new { @class = "form-control" })
                                 @Html.HiddenFor(model => model.ChanDoan)
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="control-label col-sm-4">
+                            <div class="control-label col-sm-3">
+                                @Html.LabelFor(model => model.NgayRaVien)
+                            </div>
+                            <div class="col-sm-9" style="padding-top: 8px;" id="ngayRa">
+                                @Html.DisplayFor(model => model.NgayRaVien)
+                                @Html.HiddenFor(model => model.NgayRaVien)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label col-sm-3">
                                 @Html.LabelFor(model => model.LoiDan)
                             </div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-9">
                                 @Html.TextBoxFor(model => model.LoiDan, new { @class = "form-control" })
                             </div>
                         </div>
 
-                        <div class="box-footer" style="float: left; width: 100%;">
-                            <button type="reset" class="btn btn-default">Hủy</button>
-                            <button type="submit" class="btn btn-info">Tạo</button>
-                            <div style="clear: right;"></div>
+                        <div class="box-footer">
+                            <div style="float: right;">
+                                <a class="btn btn-default" href="@Url.Action("Index")"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Trở lại</a>
+                                <button type="submit" class="btn btn-info" style="margin-left: 20px;" id="btnSave"><i class="fa fa-print" aria-hidden="true"></i> Lưu và In Giấy Ra Viện</button>
+                            </div>    
                         </div>
 
                     </div>
@@ -81,9 +82,72 @@
     </div>
 </div>
 
+<div id="printArea" hidden="hidden">
+    <div align="center">
+        <p style="font-weight:bold">Phòng Khám Đa Khoa</p>
+        <h2>GIẤY RA VIỆN</h2>
+        <p>&nbsp;</p>
+    </div>
+    <div style="margin-left: 20px;">
+        <p>Họ tên người bệnh: <span style="font-weight:bold" id="ten"></span></p>
+        <p>Chẩn đoán: <span id="cd"></span></p>
+        <p>Bác sĩ điều trị: <span id="bs"></span></p>
+        <p>Ngày ra viện: <span id="ngay"></span></p>
+        <p>Lời dặn: <span id="ld"></span></p>
+    </div>
+    <div style="text-align:center; float:right; margin-right: 20px;">
+        <p>Ngày @DateTime.Today.Day tháng @DateTime.Today.Month năm @DateTime.Today.Year</p>
+        <p>Bác sĩ</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p id="ktbs"></p>
+    </div>
+</div>
+
 
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+@if (ViewBag.Saved == true)
+{
+    <script>
+    $(window).load(function(){
+        $("#ten").text($("#tenBN").text());
+        $("#gt").text($("#gioiTinh").text());
+        $("#bs").text($("#tenBS").text());
+        $("#cd").text($("#chanDoan").text());
+        $("#ngay").text($("#ngayRa").text());
+        $("#ld").text($("#LoiDan").val());
+        $("#ktbs").text($("#tenBS").text());
+        $("#btnSave").hide();
+        printDiv('printArea');
+    });
+    </script>
+}
+
+<script type="text/javascript">
+    function printDiv(divName) {
+        var contents = document.getElementById(divName).innerHTML;
+        var frame1 = document.createElement('iframe');
+        frame1.name = "frame1";
+        frame1.style.position = "absolute";
+        frame1.style.top = "-1000000px";
+        document.body.appendChild(frame1);
+        var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+        frameDoc.document.open();
+        frameDoc.document.write('<html><head><title>DIV Contents</title>');
+        frameDoc.document.write('</head><body>');
+        frameDoc.document.write(contents);
+        frameDoc.document.write('</body></html>');
+        frameDoc.document.close();
+        setTimeout(function () {
+            window.frames["frame1"].focus();
+            window.frames["frame1"].print();
+            document.body.removeChild(frame1);
+        }, 500);
+        return false;
+    }
+</script>
 }

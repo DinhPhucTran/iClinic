@@ -2,7 +2,18 @@
 @using PagedList.Mvc
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Điều trị nội trú";
+    
+
+    @section PageHeader
+{
+    Bệnh nhân điều trị nội trú
+}
+
+@section Breadcrumb
+{
+    <li class="active">Danh sách điều trị nội trú</li>
+}
 }
 
 <div class="box box-info">
@@ -13,9 +24,7 @@
     <div class="box-body">
         <div class="row">
             <div class="col-sm-6">
-                <p>
-                    @Html.ActionLink("Thêm mới", "NhapVien")
-                </p>
+                
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
@@ -57,7 +66,6 @@
                     Bác sĩ điều trị
                 </th>
                 <th></th>
-                <th></th>
             </tr>
 
             @foreach (var item in Model)
@@ -89,10 +97,8 @@
                         @Html.DisplayFor(modelItem => item.BacSiDieuTri.TenNhanVien)
                     </td>
                     <td>
-                        @Html.ActionLink("Cập nhật", "CapNhatTinhTrang", new { maHoSo = item.MaHoSo })
-                    </td>
-                    <td>
-                        @Html.ActionLink("Xuất viện", "XuatVien", new { id = item.MaHoSo })
+                        @Html.ActionLink("Cập nhật", "CapNhatTinhTrang", new { maHoSo = item.MaHoSo }, new { @class = "btn btn-warning" }) 
+                        @Html.ActionLink("Xuất viện", "XuatVien", new { chanDoan = item.ChanDoan, maGiayNhapVien = item.GiayNhapVienID, maBN = item.BenhNhanID, maBS = item.BacSiDieuTriID }, new { @class = "btn btn-success" })
                     </td>
                 </tr>
             }

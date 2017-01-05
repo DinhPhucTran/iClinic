@@ -32,7 +32,7 @@ namespace iClinic.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var patients = from p in db.DbSetHoSoDieuTriNoiTru
+            var patients = from p in db.DbSetHoSoDieuTriNoiTru where p.NgayKetThucDieuTri == null
                            select p;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -108,8 +108,9 @@ namespace iClinic.Controllers
             return View(gnv);
         }
 
-        public ActionResult XuatVien(string chanDoan, int maGiayNhapVien = 0, int maBN = 0, int maBS = 0)
+        public ActionResult XuatVien(string chanDoan, string loiDan, int maGiayNhapVien = 0, int maBN = 0, int maBS = 0)
         {
+            ViewBag.Saved = TempData["saved"];
             GiayRaVien grv = new GiayRaVien
             {
                 GiayNhapVienID = maGiayNhapVien,
@@ -117,7 +118,11 @@ namespace iClinic.Controllers
                 BenhNhanID = maBN,
                 ChanDoan = chanDoan,
                 NgayRaVien = DateTime.Today,
+                LoiDan = loiDan,
             };
+
+            grv.BenhNhan = db.DbSetBenhNhan.Find(maBN);
+            grv.BacSiDieuTri = db.DbSetNhanVien.Find(maBS);
 
             return View(grv);
         }
@@ -128,10 +133,19 @@ namespace iClinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.DbSetGiayRaVien.Add(grv);
-
-                
+                db.DbSetGiayRaVien.Add(grv);                                
                 db.SaveChanges();
+
+                HoSoDieuTriNoiTru hs = (HoSoDieuTriNoiTru)db.DbSetHoSoDieuTriNoiTru.Where(h => h.GiayNhapVienID == grv.GiayNhapVienID).First();
+                if (hs != null)
+                {
+                    hs.NgayKetThucDieuTri = DateTime.Now;
+                    db.Entry(hs).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+                TempData["saved"] = true;
+                return RedirectToAction("XuatVien", new { chanDoan = grv.ChanDoan, maBN = grv.BenhNhanID, maBS = grv.BacSiDieuTriID, loiDan = grv.LoiDan });
             }
             return View(grv);
         }
@@ -169,10 +183,12 @@ namespace iClinic.Controllers
 
         public ActionResult CapNhatTinhTrang(int maHoSo = 0)
         {
+            ViewBag.Msg = (Message)TempData["msg"];
             HoSoDieuTriNoiTru hs = db.DbSetHoSoDieuTriNoiTru.Find(maHoSo);
             var dsChiTiet = db.DbSetChiTietDieuTri.ToList().FindAll(c => c.HoSoDieuTriNoiTruID == maHoSo);
             ViewBag.dsChiTiet = dsChiTiet;
             ChiTietDieuTri ct = new ChiTietDieuTri();
+            ct.HoSoDieuTriNoiTruID = maHoSo;
             ct.HoSoDieuTriNoiTru = hs;
             return View(ct);
         }
@@ -183,20 +199,30 @@ namespace iClinic.Controllers
         {
             if (ModelState.IsValid)
             {
+                ct.NgayDieuTri = DateTime.Now;
                 if(db.DbSetChiTietDieuTri.Find(ct.MaCTDT) != null)
                 {
                     db.Entry(ct).State = EntityState.Modified;
                     db.SaveChanges();
                     return View(ct);
                 }
+
                 db.DbSetChiTietDieuTri.Add(ct);
                 db.SaveChanges();
                 Message msg = new Message();
                 msg.Type = "success";
                 msg.Title = "Thành công";
                 msg.Content = "Đã cập nhật tình trạng bệnh nhân";
+                TempData["msg"] = msg;
+                return RedirectToAction("CapNhatTinhTrang", new { maHoSo = ct.HoSoDieuTriNoiTruID });
             }
-            return View(ct);
+
+            Message msg2 = new Message();
+            msg2.Type = "error";
+            msg2.Title = "Lỗi";
+            msg2.Content = "Đã có lỗi xảy ra. Vui lòng thử lại sau.";
+            TempData["msg"] = msg2;
+            return RedirectToAction("CapNhatTinhTrang", new { maHoSo = ct.HoSoDieuTriNoiTruID });
         }
     }
 }

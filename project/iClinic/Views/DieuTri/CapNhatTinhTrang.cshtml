@@ -22,7 +22,8 @@
             <label class="control-label col-sm-5">Tên bệnh nhân: </label>
             @Html.DisplayFor(model => model.HoSoDieuTriNoiTru.BenhNhan.TenBenhNhan)
         </div>
-
+    </div>
+    <div class="col-md-6">
         <div class="form-group">
             <label class="control-label col-sm-5">Chẩn đoán: </label>
             @Html.DisplayFor(model => model.HoSoDieuTriNoiTru.ChanDoan)
@@ -37,75 +38,91 @@
             <label class="control-label col-sm-5">Ngày bắt đầu điều trị: </label>
             @Html.DisplayFor(model => model.HoSoDieuTriNoiTru.NgayBatDauDieuTri)
         </div>
-
     </div>
 </div>
 
-<div>
-    <table class="table table-bordered table-striped">
-        <tr>
-            <th>Ngày</th>
-            <th>Tình trạng</th>
-            <th>Ghi chú</th>
-        </tr>
-        @if (ViewBag.dsChiTiet != null)
-        {
-            foreach (ChiTietDieuTri ct in ViewBag.dsChiTiet)
-            {
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <table class="table table-bordered table-striped">
+                <col width="250">
                 <tr>
-                    <td>
-                        @ct.NgayDieuTri
-                    </td>
-                    <td>
-                        @ct.TinhTrang
-                    </td>
-                    <td>
-                        @ct.GhiChu
-                    </td>
+                    <th>Ngày</th>
+                    <th>Tình trạng</th>
+                    <th>Ghi chú</th>
                 </tr>
-            }
-        }
-        
-        <tr>
+                @if (ViewBag.dsChiTiet != null)
+                {
+                    foreach (ChiTietDieuTri ct in ViewBag.dsChiTiet)
+                    {
+                        <tr>
+                            <td>
+                                @ct.NgayDieuTri
+                            </td>
+                            <td>
+                                @ct.TinhTrang
+                            </td>
+                            <td>
+                                @ct.GhiChu
+                            </td>
+                        </tr>
+                    }
+                }
 
-        
-    </table>
+                <tr>
+
+
+            </table>
+        </div>
+    </div>
 
     <div class="col-md-6">
-        <h3>Ngày @DateTime.Today.ToShortDateString()</h3>
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
+        <div class="box box-info">
 
-    <div class="form-group">
-        <div class="col-sm-4">
-            @Html.LabelFor(model => model.TinhTrang)
-        </div>
-        <div>
-            @Html.TextBoxFor(model => model.TinhTrang)
+            <div class="box-header with-border">
+                <h3 class="box-title">@DateTime.Now.ToString()</h3>
+            </div>
+            <div class="form-horizontal">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="box-body">
+                        @Html.HiddenFor(model => model.HoSoDieuTriNoiTruID)
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                @Html.LabelFor(model => model.TinhTrang)
+                            </div>
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(model => model.TinhTrang, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TinhTrang, String.Empty, new { @style = "color: #dd4b39;" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                @Html.LabelFor(model => model.GhiChu)
+                            </div>
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(model => model.GhiChu, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div style="float:right">
+                            <a class="btn btn-default" href="@Url.Action("Index")"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Trở lại</a>
+                            <button type="submit" class="btn btn-info" style="margin-left: 30px;" id="btnSave"><i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu</button>
+                        </div>
+                    </div>
+
+
+                }
+            </div>
+
         </div>
     </div>
 
-
-            <div class="form-group">
-        <div class="col-sm-4">
-            @Html.LabelFor(model => model.GhiChu)
-        </div>
-        <div>
-            @Html.TextBoxFor(model => model.GhiChu)
-        </div>
-    </div>
-
-            <button type="submit">Lưu</button>
-
-
-        }
-    </div>
-
-    
-
-    
 </div>
 
 
@@ -116,4 +133,17 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script src="@Url.Content("~/Scripts/js/pnotify.custom.min.js")"></script>
+
+@if (ViewBag.Msg != null)
+{
+    <script>
+            new PNotify({
+                title: '@ViewBag.Msg.Title',
+                text: '@ViewBag.Msg.Content',
+                type: '@ViewBag.Msg.Type',
+                styling: 'bootstrap3'
+            });
+    </script>
+}
 }

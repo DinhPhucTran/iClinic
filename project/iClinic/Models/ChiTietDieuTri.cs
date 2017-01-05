@@ -21,6 +21,7 @@ namespace iClinic.Models
         public DateTime NgayDieuTri { get; set; }
 
         [Display(Name = "Tình Trạng")]
+        [Required(ErrorMessage = "Vui lòng nhập tình trạng bệnh nhân")]
         public String TinhTrang { get; set; }
 
         [Display(Name = "Ghi Chú")]
