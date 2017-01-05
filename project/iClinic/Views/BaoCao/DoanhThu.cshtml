@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "Thống kê doanh thu";
+}
+
+<h2>DoanhThu</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Doanh thu theo tháng</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="chart">
+                    <canvas id="lineChartDoanhThu" style="height:250px"></canvas>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <button id="btnInDT" style="float: right;" class="btn btn-info"><i class="fa fa-print" aria-hidden="true"></i> In báo cáo</button>
+            </div>
+        </div>
+    </div>   
+    <div class="col-md-6">
+
+    </div> 
+</div>
+
+<div id="printDT" hidden="hidden">
+    <div align="center">
+        <p style="font-weight:bold">Phòng khám đa khoa</p>
+        <h2>BÁO CÁO DOANH THU NĂM @DateTime.Today.Year</h2>
+        <p>&nbsp;</p>
+    </div>
+
+    <div style="margin-left: 20px;">
+        <p>Tổng doanh thu: <span style="font-weight:bold" id="ten">@Html.Action("GetTongDoanhThuNam", "BaoCao", new { nam = DateTime.Now.Year })</span> VND</p>
+    </div>
+
+    <div style="margin-left: 20px; margin-right: 40px; margin-top: 20px;">
+        <p>Doanh thu từng tháng</p>
+        <table style="border: 1px solid black; border-collapse: collapse;">
+            <tr>
+                <th style="border: 1px solid black; padding: 15px;">Tháng</th>
+                <th style="border: 1px solid black; padding: 15px;">Doanh thu (VND)</th>
+            </tr>
+            @for (int i = 1; i < 13; i++ )
+            {
+            <tr>
+                <td style="border: 1px solid black;">@i</td>
+                <td style="border: 1px solid black;">@Html.Action("GetDoanhThuThang", "BaoCao", new { thang = i, nam = DateTime.Today.Year})</td>
+            </tr>
+            }
+        </table>
+    </div>
+
+    <div style="text-align:center; float:right; margin-right: 20px;">
+        <p>Ngày @DateTime.Today.Day tháng @DateTime.Today.Month năm @DateTime.Today.Year</p>
+        <p>Người lập báo cáo</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>@Html.Action("GetFullName", "Account")</p>
+    </div>
+</div>
+
+@section Scripts 
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Scripts/js/Chart.min.js")"></script>
+<script>
+  
+    var dataDoanhThu = {
+        labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+        datasets: [
+            {
+                label: "Doanh thu (VNĐ)",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "rgba(75,192,192,0.4)",
+                borderColor: "rgba(75,192,192,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: @(@Html.Action("GetDoanhThu", "BaoCao")),
+                spanGaps: false,
+            }
+        ]
+    };
+
+
+    var ctx1 = document.getElementById("lineChartDoanhThu");
+    var myChart = new Chart(ctx1, {
+        type: 'line',
+        data: dataDoanhThu,
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    function printDiv(divName) {
+        var contents = document.getElementById(divName).innerHTML;
+        var frame1 = document.createElement('iframe');
+        frame1.name = "frame1";
+        frame1.style.position = "absolute";
+        frame1.style.top = "-1000000px";
+        document.body.appendChild(frame1);
+        var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+        frameDoc.document.open();
+        frameDoc.document.write('<html><head><title>DIV Contents</title>');
+        frameDoc.document.write('</head><body>');
+        frameDoc.document.write(contents);
+        frameDoc.document.write('</body></html>');
+        frameDoc.document.close();
+        setTimeout(function () {
+            window.frames["frame1"].focus();
+            window.frames["frame1"].print();
+            document.body.removeChild(frame1);
+        }, 500);
+        return false;
+    }
+</script>
+
+    <script>
+        $("#btnInDT").click(function(){
+            printDiv('printDT');
+        });
+    </script>
+
+}
+
+    

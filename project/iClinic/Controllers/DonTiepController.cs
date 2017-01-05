@@ -192,7 +192,7 @@ namespace iClinic.Controllers
 
         //
         // GET: /DonTiep/Edit/5
-
+        [Authorize(Roles = "1")]
         public ActionResult Edit(int id = 0)
         {
             BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
@@ -208,6 +208,7 @@ namespace iClinic.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "1")]
         public ActionResult Edit(BenhNhan benhnhan)
         {
             if (ModelState.IsValid)
@@ -222,6 +223,7 @@ namespace iClinic.Controllers
         //
         // GET: /DonTiep/Delete/5
 
+        [Authorize(Roles = "1")]
         public ActionResult Delete(int id = 0)
         {
             BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
@@ -234,7 +236,7 @@ namespace iClinic.Controllers
 
         //
         // POST: /DonTiep/Delete/5
-
+        [Authorize(Roles = "1")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

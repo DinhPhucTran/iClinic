@@ -155,7 +155,7 @@ namespace iClinic.Controllers
             {
                 model.UserName = nv.MaNhanVien.ToString();
                 model.FullName = nv.TenNhanVien;
-                model.Role = nv.LoaiNhanVien.TenLoaiNhanVien;
+                model.Role = nv.LoaiNhanVien.MaLoaiNhanVien.ToString();
             }
 
             return View(model);

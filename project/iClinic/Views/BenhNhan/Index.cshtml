@@ -2,10 +2,22 @@
 @using PagedList.Mvc
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Danh sách bệnh nhân";
 }
 
-<h2>Index</h2>
+@section Title{
+    Danh sách bệnh nhân
+}
+
+@section PageHeader
+{
+    Danh sách bệnh nhân
+}
+
+@section Breadcrumb
+{
+    <li class="active">Danh sách bệnh nhân</li>
+}
 
 <div class="box box-info">
     @*<div class="box-header">
@@ -97,7 +109,6 @@
                         @Html.DisplayFor(modelItem => item.NgayTiepNhan)
                     </td>
                     <td>
-                        @Html.ActionLink("Sửa", "Edit", new { id = item.MaBenhNhan }) |
                         @Html.ActionLink("Chi tiết", "Details", new { id = item.MaBenhNhan }) |
                         @Html.ActionLink("Xóa", "Delete", new { id = item.MaBenhNhan })
                     </td>

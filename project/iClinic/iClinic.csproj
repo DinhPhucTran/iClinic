@@ -311,6 +311,7 @@
     <Content Include="Scripts\js\app.js" />
     <Content Include="Scripts\js\app.min.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
+    <Content Include="Scripts\js\Chart.min.js" />
     <Content Include="Scripts\js\demo.js" />
     <Content Include="Scripts\js\pages\dashboard.js" />
     <Content Include="Scripts\js\pages\dashboard2.js" />
@@ -1320,6 +1321,8 @@
     <Content Include="Views\DieuTri\XuatVien.cshtml" />
     <Content Include="Views\DieuTri\ChuyenVien.cshtml" />
     <Content Include="Views\DieuTri\CapNhatTinhTrang.cshtml" />
+    <Content Include="Views\BaoCao\DoanhThu.cshtml" />
+    <Content Include="Views\BaoCao\KhamBenh.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

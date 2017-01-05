@@ -74,7 +74,7 @@ namespace iClinic.Controllers
 
         //
         // GET: /BenhNhan/Edit/5
-
+        [Authorize(Roles = "1")]
         public ActionResult Edit(int id = 0)
         {
             BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
@@ -90,6 +90,7 @@ namespace iClinic.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "1")]
         public ActionResult Edit(BenhNhan benhnhan)
         {
             if (ModelState.IsValid)
