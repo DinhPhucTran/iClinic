@@ -1,4 +1,5 @@
 ﻿@model iClinic.Models.BenhNhan
+@using iClinic.Models
 
 @{
     ViewBag.Title = "Create";
@@ -45,7 +46,6 @@
 
                             <div class="col-sm-10">
                                 @Html.TextBoxFor(model => model.NgaySinh, new { @class = "form-control datepicker" })
-                                @Html.ValidationMessageFor(model => model.NgaySinh, String.Empty, new { @style = "color: #dd4b39;" })
                             </div>
                         </div>
 
@@ -89,10 +89,10 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.TienSuBenh, new { @class = "col-sm-2 control-label" })
+                            @Html.LabelFor(model => model.TienSuBenh, "Lý do khám", new { @class = "col-sm-2 control-label" })
 
                             <div class="col-sm-10">
-                                @Html.TextBoxFor(model => model.TienSuBenh, new { @class = "form-control" })
+                                @Html.TextAreaFor(model => model.TienSuBenh, new { @class = "form-control" })
                             </div>
                         </div>
 
@@ -103,6 +103,23 @@
                                 <h4>@DateTime.Now.ToString()</h4>
                             </div>
 
+                        </div>
+                        @{IEnumerable<Phong> dsPhongKham = ViewBag.PhongKham as IEnumerable<Phong>;}
+                        <div class="form-group">
+                            @Html.Label("", "Phòng khám", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-10">
+                                <select class="form-control" name="phongKham">
+                                    @{
+                                        if (dsPhongKham != null)
+                                        {
+                                            foreach (var itemDV in dsPhongKham)
+                                            {
+                                                <option value="@itemDV.MaPhong">@itemDV.TenPhong</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="box-footer" style="float: right; width: 100%;">

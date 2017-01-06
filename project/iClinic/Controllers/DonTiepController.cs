@@ -87,9 +87,9 @@ namespace iClinic.Controllers
         {
             Message msg = (Message)TempData["msg"];
             ViewBag.Msg = msg;
-
             BenhNhan benhnhan = db.DbSetBenhNhan.Find(id);
-
+            DichVu dv = db.DbSetDichVu.Where(m => m.TenDichVu == "Dịch vụ khám").First();
+            ViewBag.PhongKham = db.DbSetPhong.Where(m => m.DichVuID == dv.MaDichVu);//todo;
             return View(benhnhan);
         }
 
@@ -144,31 +144,39 @@ namespace iClinic.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BenhNhan benhnhan)
+        public ActionResult Create(BenhNhan benhnhan, String phongKham)
         {
             benhnhan.NgayTiepNhan = DateTime.Now;
+            DichVu dv = db.DbSetDichVu.Where(m => m.TenDichVu == "Dịch vụ khám").First();
+            Phong phongDV = db.DbSetPhong.Where(m => m.DichVuID == dv.MaDichVu).First();
+            int maPhong;
+            bool parsed = Int32.TryParse(phongKham, out maPhong);
+            if (!parsed || maPhong <= 0)
+                maPhong = phongDV.MaPhong;
             if (ModelState.IsValid)
             {
+                var tienSuBenh = benhnhan.TienSuBenh;
+                benhnhan.TienSuBenh = "";
                 db.DbSetBenhNhan.Add(benhnhan);
                 db.SaveChanges();
                 var pk = new PhieuKhamBenh
                 {
                     BenhNhanID = benhnhan.MaBenhNhan,
                     NgayKham = DateTime.Now,
-                    TinhTrangThanhToan = 0
+                    TinhTrangThanhToan = 0,
+                    LyDoKham = tienSuBenh
                 };
                 db.DbSetPhieuKhamBenh.Add(pk);
                 db.SaveChanges();
                 //them dich vu kham 
-                DichVu dv = db.DbSetDichVu.Where(m => m.TenDichVu == "Dịch vụ khám").First();
-                Phong phongDV = db.DbSetPhong.Where(m => m.DichVuID == dv.MaDichVu).First();
+                
                 var pkdv = new PhieuYeuCauDichVu { 
                     BenhNhanID = benhnhan.MaBenhNhan,
                     DichVuID = dv.MaDichVu,
                     DonGia = dv.DonGia,
                     NgayLap = DateTime.Now,
                     PhieuKhamBenhID = pk.MaPhieuKhamBenh,
-                    PhongID = phongDV.MaPhong,
+                    PhongID = maPhong,
                     ThoiGianThucHien = DateTime.Now
                 };
                 db.DbSetPhieuYeuCauDichVu.Add(pkdv);
@@ -177,7 +185,8 @@ namespace iClinic.Controllers
                     BenhNhanID = benhnhan.MaBenhNhan,
                     NgayKham = DateTime.Now,
                     TinhTrangThanhToan = 0,
-                    PhieuKhamBenhID = pk.MaPhieuKhamBenh
+                    PhieuKhamBenhID = pk.MaPhieuKhamBenh,
+                    LyDoKham = pk.LyDoKham
                 });
                 db.SaveChanges();
                 msg = new Message();
@@ -187,6 +196,8 @@ namespace iClinic.Controllers
                 TempData["msg"] = msg;
                 return RedirectToAction("Create");
             }
+            DichVu dvKham = db.DbSetDichVu.Where(m => m.TenDichVu == "Dịch vụ khám").First();
+            ViewBag.PhongKham = db.DbSetPhong.Where(m => m.DichVuID == dvKham.MaDichVu);//todo;
             return View(benhnhan);
         }
 

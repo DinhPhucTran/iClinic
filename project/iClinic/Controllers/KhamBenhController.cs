@@ -116,7 +116,7 @@ namespace iClinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (phieukhambenh.MaPhieuKhamBenh > 0 && dsPhieuYeuCauDichVu.Count > 0)
+                if (phieukhambenh != null && phieukhambenh.MaPhieuKhamBenh > 0 && dsPhieuYeuCauDichVu.Count > 0)
                 {
                     if (dsPhieuYeuCauDichVu != null)
                     {
@@ -138,7 +138,16 @@ namespace iClinic.Controllers
                     return RedirectToAction("Create");
                 }
             }
-            var errors = ModelState.Values.SelectMany(m => m.Errors);
+            if (phieukhambenh.BenhNhan == null)
+            {
+                msg = new Message();
+                msg.Type = "error";
+                msg.Title = "Cảnh báo";
+                msg.Content = "Chọn bệnh nhân và thêm dịch vụ khám";
+                TempData["msg"] = msg;
+                return RedirectToAction("Create");                
+            }
+            //var errors = ModelState.Values.SelectMany(m => m.Errors);
             ViewBag.DichVuID = db.DbSetDichVu;
             ViewBag.DanhSachThuoc = db.DbSetThuoc;
             return View(phieukhambenh);

@@ -108,7 +108,7 @@
                     <table class="table table-bordered table-hover" id="tb_DichVuDaThucHien">
                         <thead>
                             <tr>
-                                <th>Bác Sĩ Thực Hiện</th>
+                                <th hidden>Bác Sĩ Thực Hiện</th>
                                 <th>Tên Dịch Vụ</th>
                                 <th>Chỉ Số</th>
                                 <th>Kết Quả</th>
@@ -454,7 +454,7 @@
                     if (!ketQua) {
                         ketQua = '';
                     }
-                    var tbRow = "<tr><td>" + tenBS + "</td><td>" + tenDV + "</td><td>" + chiSo + "</td><td>" + ketQua + "</td></tr>";
+                    var tbRow = "<tr><td>" + tenDV + "</td><td>" + chiSo + "</td><td>" + ketQua + "</td></tr>";
                     $('#tb_DichVuDaThucHien > tbody:last-child').append(tbRow);
                 }
             }
